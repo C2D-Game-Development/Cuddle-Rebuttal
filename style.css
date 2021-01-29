@@ -1,0 +1,68 @@
+* {
+    margin: 0;
+}
+.hud {
+    display: flex;
+    flex-direction: row;
+    height: 30vh;
+}
+canvas {
+    border: 3px solid black;
+    background-image: url('./images/Fighting-Stage.png');
+    background-size: cover;
+    background-position-x: center;
+    background-repeat: no-repeat;
+    
+}
+.player1 {
+    border: 3px solid red;
+    width: 40%;
+    display: flex;  
+}
+.player-info {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    height: 100%;
+}
+.player-avatar {
+    width: 30%;
+    border: 3px solid red;
+}
+.time {
+    border: 2px solid orange;
+    width: 20%;
+    text-align: center;
+}
+.player2 {
+    border: 3px solid green;
+    width: 40%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+.player2 > .player-info {
+    display: flex;
+    flex-direction: column;
+}
+.health-bar {
+    border: 3px solid pink;
+    width: 95%;
+    height: 20%;
+    margin-top: 2%;
+    margin-right: 2%;
+    margin-left: 2%;
+}
+.energy-bar {
+    border: 3px solid blue;
+    width: 95%;
+    height: 10%;
+    margin: 2%;
+}
+.control-panel {
+    border:3px solid purple;
+    height: 60%;
+}
+.time {
+    display: flex;
+    flex-direction: column;
+}
