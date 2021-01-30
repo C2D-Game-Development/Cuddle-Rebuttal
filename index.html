@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&display=swap" rel="stylesheet">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>C2D: Cuddle Rebuttal</h1>
+        <h1>CUDDLE FIGHT</h1>
     </header>
     <div class="canvy">
         <canvas id="canvas">
@@ -18,13 +20,23 @@
         <div class="hud">
             <div class="player1">
                 <div class="player-avatar">
-                    <img id="icon-one">
+                    <div class="avatar-pic">
+                        <img id="icon-one">
+                    </div>
+                    <div>
+                        <h1>Player 1</h1>
+                    </div>
                 </div>
                 <div class="player-info">
                     <div class="health-bar">
-
+                        <div class="outer-bar">
+                            <div class="inner-bar" style="width:20%"><h3>20%</h3></div>
+                        </div>
                     </div>
                     <div class="energy-bar">
+                        <div class="outer-bar-energy">
+                            <div class="inner-bar-energy" style="width:20%"><h3>20%</h3></div>
+                        </div>
                     </div>
                     <div class="control-panel">
                     </div>
@@ -42,12 +54,23 @@
 
             <div class="player2">
                 <div class="player-avatar">
-                    <img id="icon-two">
+                    <div class="avatar-pic">
+                        <img id="icon-two">
+                    </div>
+                    <div>
+                        <h1>Player 2</h1>
+                    </div>
                 </div>
                 <div class="player-info">
                     <div class="health-bar">
+                        <div class="outer-bar">
+                            <div class="inner-bar" style="width:20%"><h3>20%</h3></div>
+                        </div>
                     </div>
                     <div class="energy-bar">
+                        <div class="outer-bar-energy">
+                            <div class="inner-bar-energy" style="width:20%"><h3>20%</h3></div>
+                        </div>
                     </div>
                     <div class="control-panel">
                     </div>
@@ -60,3 +83,4 @@
     
 </body>
 </html>
+
