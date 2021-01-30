@@ -109,6 +109,7 @@ header h1 {
     background: rgb(57, 221, 57);
     border: 0px solid rgb(57, 221, 57);
     border-radius: 10px;
+
 }
 .energy-bar {
     height: 10%;
@@ -124,6 +125,7 @@ header h1 {
 }
 .inner-bar-energy {
     height: 100%;
+    width: 20%;
     background:rgb(44, 75, 253)
 }
 
@@ -142,5 +144,5 @@ header h1 {
 .actual-time h1 {
     font-size: 50px;
     color:rgb(255, 42, 109);
-    text-shadow: 5px 5px 5px rgb(0, 0, 0);    
+    text-shadow: -2px 0 rgb(255, 255, 255), 0 2px rgb(255, 255, 255), 2px 0 rgb(255, 255, 255), 0 -2px rgb(255, 255, 255);    
 }
