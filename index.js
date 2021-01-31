@@ -124,11 +124,12 @@ floor.drawBarrier();
 //     height: platThickness
 // });
 
+
+// Setting a timer with a function to startTimer
 const TIME_LIMIT = 180
 let timePassed = 0
 let timeLeft = TIME_LIMIT
 let timerInterval = null
-
 
 document.querySelector('.actual-time').innerHTML = `
     <span id="base-timer-label" class="base-timer__label">
