@@ -1,6 +1,8 @@
 /* ---Window & Main Body--- */
 :root {
     --hp-1: 50%;
+    --energy-1: 20%;
+
 }
 * {
     margin: 0;
@@ -109,7 +111,6 @@ header h1 {
 }
 .inner-bar {
     height: 100%;
-
     background: rgb(57, 221, 57);
     border: 0px solid rgb(57, 221, 57);
     border-radius: 10px;
@@ -117,11 +118,13 @@ header h1 {
 #hp-1 {
     width: var(--hp-1)
 }
-
 .energy-bar {
     height: 10%;
     padding: 2%;
     color: white;
+}
+#energy-1 {
+    width: var(--energy-1)
 }
 .outer-bar-energy {
     height: 90%;
@@ -148,7 +151,7 @@ header h1 {
     width: 24%;
     text-align: center;
 }
-.actual-time h1 {
+.actual-time span {
     font-size: 50px;
     color:rgb(255, 42, 109);
     text-shadow: -2px 0 rgb(255, 255, 255), 0 2px rgb(255, 255, 255), 2px 0 rgb(255, 255, 255), 0 -2px rgb(255, 255, 255);    

@@ -20,7 +20,7 @@ class Player{
         this.w = w
         this.h = h
         this.health = getComputedStyle(root).getPropertyValue('--hp-1')
-        this.special = 0
+        this.special = getComputedStyle(root).getPropertyValue('--energy-1')
     }
     drawIdle(){
 
@@ -60,6 +60,7 @@ floorImg.src= './images/Floor.jpg'
 let floor = new Barrier(0,0,800, 100, floorImg)
 
 floor.drawBarrier();
+
 
 // //Arena barriers and platforms
 // let barriers = [
@@ -122,3 +123,34 @@ floor.drawBarrier();
 //     width: 180,
 //     height: platThickness
 // });
+
+const TIME_LIMIT = 180
+let timePassed = 0
+let timeLeft = TIME_LIMIT
+let timerInterval = null
+
+
+document.querySelector('.actual-time').innerHTML = `
+    <span id="base-timer-label" class="base-timer__label">
+      ${formatTimeLeft(timeLeft)}
+    </span>
+  `
+
+function startTimer() {
+    timerInterval = setInterval(() => {
+      timePassed = timePassed += 1;
+      timeLeft = TIME_LIMIT - timePassed
+      document.getElementById("base-timer-label").innerHTML = formatTimeLeft(timeLeft)
+    }, 1000);
+}
+
+function formatTimeLeft(time) {
+    const minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+    if (seconds < 10) {
+      seconds = `0${seconds}`;
+    }
+    return `${minutes}:${seconds}`;
+}
+
+
