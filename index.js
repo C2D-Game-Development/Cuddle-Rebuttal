@@ -1,9 +1,17 @@
-let canvas =document.querySelector('canvas')
-
+let canvas = document.querySelector('canvas')
+/*---root allows selection of css style variables
+    Player.health = (--hp-1) shows the health bar 
+    which is a variable set in CSS that
+    can be changed with (root.style.setProperty('--hp-1', ' X%')
+    Haven't figured out how to change the html hp display text 
+    with changes of (--hp-1) yet tho.
+--*/
+let root = document.documentElement;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight *0.60;
 let ctx = canvas.getContext('2d')
+
 
 class Player{
     constructor(x,y,w,h){
@@ -11,7 +19,7 @@ class Player{
         this.y = y
         this.w = w
         this.h = h
-        this.health = 100
+        this.health = getComputedStyle(root).getPropertyValue('--hp-1')
         this.special = 0
     }
     drawIdle(){
@@ -33,7 +41,7 @@ class Player{
 
     }
 }
-
+let playa = new Player(50, 50, 50, 50)
 class Barrier{
     constructor(x,y,w,h,img){
         this.x = x

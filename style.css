@@ -1,4 +1,7 @@
 /* ---Window & Main Body--- */
+:root {
+    --hp-1: 50%;
+}
 * {
     margin: 0;
 }
@@ -106,11 +109,15 @@ header h1 {
 }
 .inner-bar {
     height: 100%;
+
     background: rgb(57, 221, 57);
     border: 0px solid rgb(57, 221, 57);
     border-radius: 10px;
-
 }
+#hp-1 {
+    width: var(--hp-1)
+}
+
 .energy-bar {
     height: 10%;
     padding: 2%;
