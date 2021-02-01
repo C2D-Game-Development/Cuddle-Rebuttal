@@ -82,13 +82,29 @@ floor.src = './images/Floor.jpg'
 /////////////////////////////
 
 class Player{
-    constructor(x,y,w,h){
+    constructor(x,y,w,h,img){
         this.x = x
         this.y = y
         this.w = w
         this.h = h
-        this.health = getComputedStyle(root).getPropertyValue('--hp-1')
+        this.img = img
+        this.health = 100;
         this.special = getComputedStyle(root).getPropertyValue('--energy-1')
+    }
+    draw(ctx){
+      ctx.drawImage(this.img, this.x, this.y, this.w, this.h)
+    }
+    update(ctx){
+      this.y +=2;
+      this.draw(ctx)
+    }
+    receiveDamageP1(){
+      this.health -=10;
+      document.querySelector('#hp-1').style.width = `${this.health}%`
+    }
+    receiveDamageP2(){
+      this.health -=10;
+      document.querySelector('#hp-2').style.width = `${this.health}%`
     }
     drawIdle(){
 
@@ -135,20 +151,28 @@ class CanvasDisplay {
       width: window.innerWidth,
       height: window.innerHeight *0.60,
      };         
+     //create game objects to manipulate
      this.canvas.width = this.stageConfig.width;
      this.canvas.height = this.stageConfig.height;
      this.createFloor = new Barrier(0, this.stageConfig.height*0.9, this.stageConfig.width, 100, floor)
      this.createLeftWall = new Barrier(0, 0 , 20, this.stageConfig.height, floor)
      this.createRightWall = new Barrier(this.stageConfig.width*0.98, 0 , 30, this.stageConfig.height, floor)
      this.createPlatform = new Barrier(this.stageConfig.width*0.4, this.stageConfig.height*0.6 , 200, 50, floor)
+     this.createPlayer1 = new Player(50,50,50,50, floor)
+     this.createPlayer2 = new Player(400,50,50,50, floor)
     }
   
   animate() {
+    //Update canvas
      this.ctx.clearRect(0, 0, this.stageConfig.width, this.stageConfig.height);
      this.createFloor.update(this.ctx)
      this.createLeftWall.update(this.ctx)
      this.createRightWall.update(this.ctx)
      this.createPlatform.update(this.ctx)
+     this.createPlayer1.update(this.ctx)
+     this.createPlayer2.update(this.ctx)
+     //check collision
+     //check death
   }
 }
 

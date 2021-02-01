@@ -116,7 +116,11 @@ header h1 {
     border-radius: 10px;
 }
 #hp-1 {
-    width: var(--hp-1)
+    width: 100%;
+}
+
+#hp-2 {
+    width: 100%;
 }
 .energy-bar {
     height: 10%;
