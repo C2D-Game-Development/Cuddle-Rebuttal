@@ -125,8 +125,8 @@ floor.drawBarrier();
 // });
 
 
-// Setting a timer with a function to startTimer
-const TIME_LIMIT = 180
+// Setting a timer with a function to startTimer 
+const TIME_LIMIT = 120
 let timePassed = 0
 let timeLeft = TIME_LIMIT
 let timerInterval = null
@@ -136,12 +136,19 @@ document.querySelector('.actual-time').innerHTML = `
       ${formatTimeLeft(timeLeft)}
     </span>
   `
+startTimer()
 
+function onTimesUp() {
+    clearInterval(timerInterval)
+}
 function startTimer() {
     timerInterval = setInterval(() => {
       timePassed = timePassed += 1;
       timeLeft = TIME_LIMIT - timePassed
       document.getElementById("base-timer-label").innerHTML = formatTimeLeft(timeLeft)
+      if (timeLeft === 0) {
+        onTimesUp();
+      }
     }, 1000);
 }
 
@@ -153,5 +160,4 @@ function formatTimeLeft(time) {
     }
     return `${minutes}:${seconds}`;
 }
-
 
