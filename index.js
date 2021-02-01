@@ -1,4 +1,4 @@
-let canvas = document.querySelector('canvas')
+
 /*---root allows selection of css style variables
     Player.health = (--hp-1) shows the health bar 
     which is a variable set in CSS that
@@ -8,10 +8,78 @@ let canvas = document.querySelector('canvas')
 --*/
 let root = document.documentElement;
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight *0.60;
-let ctx = canvas.getContext('2d')
 
+
+
+
+
+
+
+
+/////////////////////////////
+//////  Timer ///////////////
+/////////////////////////////
+const TIME_LIMIT = 120
+let timePassed = 0
+let timeLeft = TIME_LIMIT
+let timerInterval = null
+
+document.querySelector('.actual-time').innerHTML = `
+    <span id="base-timer-label" class="base-timer__label">
+      ${formatTimeLeft(timeLeft)}
+    </span>
+  `
+startTimer()
+
+
+function onTimesUp() {
+  clearInterval(timerInterval)
+}
+function startTimer() {
+  timerInterval = setInterval(() => {
+    timePassed = timePassed += 1;
+    timeLeft = TIME_LIMIT - timePassed
+    document.getElementById("base-timer-label").innerHTML = formatTimeLeft(timeLeft)
+    if (timeLeft === 0) {
+      onTimesUp();
+    }
+  }, 1000);
+}
+
+function formatTimeLeft(time) {
+  const minutes = Math.floor(time / 60);
+  let seconds = time % 60;
+  if (seconds < 10) {
+    seconds = `0${seconds}`;
+  }
+  return `${minutes}:${seconds}`;
+}
+
+
+
+
+
+
+
+
+
+/////////////////////////////
+//////Images for game////////
+/////////////////////////////
+
+
+let floor = new Image;
+floor.src = './images/Floor.jpg'
+
+
+
+
+
+
+
+/////////////////////////////
+//////Classes for game///////
+/////////////////////////////
 
 class Player{
     constructor(x,y,w,h){
@@ -41,123 +109,57 @@ class Player{
 
     }
 }
-let playa = new Player(50, 50, 50, 50)
+
 class Barrier{
-    constructor(x,y,w,h,img){
-        this.x = x
-        this.y = y
-        this.w = w
-        this.h = h
-        this.img=img
+  constructor(x,y,w,h,img){
+      this.x = x
+      this.y = y
+      this.w = w
+      this.h = h
+      this.img = img
+  }
+  draw(ctx){
+      ctx.drawImage(this.img, this.x, this.y, this.w, this.h)
+  }
+
+  update(ctx){
+    this.draw(ctx)
+  }
+}
+
+class CanvasDisplay {
+  constructor() {
+     this.canvas = document.querySelector('canvas');
+     this.ctx = this.canvas.getContext('2d');
+     this.stageConfig = {
+      width: window.innerWidth,
+      height: window.innerHeight *0.60,
+     };         
+     this.canvas.width = this.stageConfig.width;
+     this.canvas.height = this.stageConfig.height;
+     this.createFloor = new Barrier(0, this.stageConfig.height*0.9, this.stageConfig.width, 100, floor)
+     this.createLeftWall = new Barrier(0, 0 , 20, this.stageConfig.height, floor)
+     this.createRightWall = new Barrier(this.stageConfig.width*0.98, 0 , 30, this.stageConfig.height, floor)
+     this.createPlatform = new Barrier(this.stageConfig.width*0.4, this.stageConfig.height*0.6 , 200, 50, floor)
     }
-    drawBarrier(){
-        ctx.drawImage(this.img, this.x, this.y, this.w, this.h)
-    }
-}
-ctx.clearRect(0,0,canvas.width,canvas.height)
-let floorImg = new Image()
-floorImg.src= './images/Floor.jpg'
-let floor = new Barrier(0,0,800, 100, floorImg)
-
-floor.drawBarrier();
-
-
-// //Arena barriers and platforms
-// let barriers = [
-//     floor
-// ]
-
-/*  */
-
-// //platforms
-// var platforms = [];
-// var platThickness = 10;
-
-// for (var k = 0; k < platforms.length; k++) {
-//     ctx.rect(platforms[k].x, platforms[k].y, platforms[k].width, platforms[k].height);
-
-// // left wall
-// platforms.push({
-//     x: 0,
-//     y: 0,
-//     width: 10,
-//     height: height
-// });
-// // right wall
-// platforms.push({
-//     x: width - 10,
-//     y: 0,
-//     width: 10,
-//     height: height
-// });
-// // floor
-// platforms.push({
-//     x: 0,
-//     y: height - 10,
-//     width: width,
-//     height: 50
-// });
-// // ceiling
-// platforms.push({
-//     x: 0,
-//     y: 0,
-//     width: width,
-//     height: platThickness
-// });
-// // platforms
-// platforms.push({
-//     x: 0,
-//     y: height - 140,
-//     width: 180,
-//     height: platThickness
-// });
-// platforms.push({
-//     x: width - 180,
-//     y: height - 140,
-//     width: 180,
-//     height: platThickness
-// });
-// platforms.push({
-//     x: 310,
-//     y: height - 240,
-//     width: 180,
-//     height: platThickness
-// });
-
-
-// Setting a timer with a function to startTimer 
-const TIME_LIMIT = 120
-let timePassed = 0
-let timeLeft = TIME_LIMIT
-let timerInterval = null
-
-document.querySelector('.actual-time').innerHTML = `
-    <span id="base-timer-label" class="base-timer__label">
-      ${formatTimeLeft(timeLeft)}
-    </span>
-  `
-startTimer()
-
-function onTimesUp() {
-    clearInterval(timerInterval)
-}
-function startTimer() {
-    timerInterval = setInterval(() => {
-      timePassed = timePassed += 1;
-      timeLeft = TIME_LIMIT - timePassed
-      document.getElementById("base-timer-label").innerHTML = formatTimeLeft(timeLeft)
-      if (timeLeft === 0) {
-        onTimesUp();
-      }
-    }, 1000);
+  
+  animate() {
+     this.ctx.clearRect(0, 0, this.stageConfig.width, this.stageConfig.height);
+     this.createFloor.update(this.ctx)
+     this.createLeftWall.update(this.ctx)
+     this.createRightWall.update(this.ctx)
+     this.createPlatform.update(this.ctx)
+  }
 }
 
-function formatTimeLeft(time) {
-    const minutes = Math.floor(time / 60);
-    let seconds = time % 60;
-    if (seconds < 10) {
-      seconds = `0${seconds}`;
-    }
-    return `${minutes}:${seconds}`;
+
+let canvasDisplay = new CanvasDisplay();
+
+let interval = null
+
+function playGame() {
+  interval = requestAnimationFrame(playGame)
+  canvasDisplay.animate()
 }
+
 

@@ -25,10 +25,10 @@ main {
 canvas {
     border: 4px solid rgb(248, 59, 255);
     border-radius: 10px;
-    background-image: url('./images/Fighting-Stage.png');
+    /* background-image: url('./images/Fighting-Stage.png');
     background-size: cover;
     background-position-x: center;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
     width: 80vw;
     height: 50vh;
     box-shadow: 5px 5px 5px 5px  rgba(83, 5, 83, 0.514);
