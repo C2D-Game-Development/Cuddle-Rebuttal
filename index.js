@@ -60,7 +60,7 @@ function formatTimeLeft(time) {
 /////////////////////////////
 
 let friction = 0.8
-let gravity = 0.2
+let gravity = 0.3
 
 
 
@@ -92,7 +92,7 @@ class Player{
         this.h = h
         this.velX = 0
         this.velY = 0
-        this.speed = 3
+        this.speed = 4
         this.jumping = false
         this.grounded = false
         this.img = img
@@ -110,7 +110,7 @@ class Player{
       //check collision
       if(!this.checkCollision())
       {
-        this.velY += gravity;
+        this.velY = Math.min((gravity + this.velY),7);
         this.y += this.velY;
       }else {
         this.velY = 0;
@@ -232,7 +232,6 @@ function playGame() {
 
 
 window.onkeydown = function (e) {
-  console.log(e.key)
   if (e.key === "ArrowLeft") {
       
   }
@@ -247,6 +246,8 @@ window.onkeydown = function (e) {
   }
   if (e.key === " ") {
     player1.jump();
-    console.log('jumped')
   }
 }
+
+
+playGame()
