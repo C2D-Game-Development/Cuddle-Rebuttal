@@ -92,7 +92,7 @@ class Player{
         this.h = h
         this.velX = 0
         this.velY = 0
-        this.speed = 4
+        this.speed = 8
         this.jumping = false
         this.grounded = false
         this.img = img
@@ -103,9 +103,23 @@ class Player{
       ctx.drawImage(this.img, this.x, this.y, this.w, this.h)
     }
     jump(){
-        this.velY = (-this.speed)*2;
+        this.velY = (-this.speed);
         this.y += this.velY
     }
+    moveRight(){
+      if (this.velX < this.speed) {
+        this.velX++;
+      }
+      this.x += this.velX
+    }
+
+    moveLeft(){
+      if (this.velX > -this.speed) {
+        this.velX--;
+      }
+      this.x += this.velX
+    }
+
     update(ctx){
       //check collision
       if(!this.checkCollision())
@@ -233,15 +247,18 @@ function playGame() {
 
 window.onkeydown = function (e) {
   if (e.key === "ArrowLeft") {
-      
+    player1.moveLeft()
+
   }
   if (e.key === "ArrowRight") {
+    player1.moveRight()
       
   }
   if (e.key === "ArrowUp") {
-      
+      player1.jump()
   }
   if (e.key === "ArrowDown") {
+    player1.duck()
       
   }
   if (e.key === " ") {
