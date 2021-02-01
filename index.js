@@ -1,9 +1,17 @@
-let canvas =document.querySelector('canvas')
-
+let canvas = document.querySelector('canvas')
+/*---root allows selection of css style variables
+    Player.health = (--hp-1) shows the health bar 
+    which is a variable set in CSS that
+    can be changed with (root.style.setProperty('--hp-1', ' X%')
+    Haven't figured out how to change the html hp display text 
+    with changes of (--hp-1) yet tho.
+--*/
+let root = document.documentElement;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight *0.60;
 let ctx = canvas.getContext('2d')
+
 
 class Player{
     constructor(x,y,w,h){
@@ -11,8 +19,8 @@ class Player{
         this.y = y
         this.w = w
         this.h = h
-        this.health = 100
-        this.special = 0
+        this.health = getComputedStyle(root).getPropertyValue('--hp-1')
+        this.special = getComputedStyle(root).getPropertyValue('--energy-1')
     }
     drawIdle(){
 
@@ -33,7 +41,7 @@ class Player{
 
     }
 }
-
+let playa = new Player(50, 50, 50, 50)
 class Barrier{
     constructor(x,y,w,h,img){
         this.x = x
@@ -52,6 +60,7 @@ floorImg.src= './images/Floor.jpg'
 let floor = new Barrier(0,0,800, 100, floorImg)
 
 floor.drawBarrier();
+
 
 // //Arena barriers and platforms
 // let barriers = [
@@ -114,3 +123,41 @@ floor.drawBarrier();
 //     width: 180,
 //     height: platThickness
 // });
+
+
+// Setting a timer with a function to startTimer 
+const TIME_LIMIT = 120
+let timePassed = 0
+let timeLeft = TIME_LIMIT
+let timerInterval = null
+
+document.querySelector('.actual-time').innerHTML = `
+    <span id="base-timer-label" class="base-timer__label">
+      ${formatTimeLeft(timeLeft)}
+    </span>
+  `
+startTimer()
+
+function onTimesUp() {
+    clearInterval(timerInterval)
+}
+function startTimer() {
+    timerInterval = setInterval(() => {
+      timePassed = timePassed += 1;
+      timeLeft = TIME_LIMIT - timePassed
+      document.getElementById("base-timer-label").innerHTML = formatTimeLeft(timeLeft)
+      if (timeLeft === 0) {
+        onTimesUp();
+      }
+    }, 1000);
+}
+
+function formatTimeLeft(time) {
+    const minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+    if (seconds < 10) {
+      seconds = `0${seconds}`;
+    }
+    return `${minutes}:${seconds}`;
+}
+
