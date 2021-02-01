@@ -55,9 +55,12 @@ function formatTimeLeft(time) {
   return `${minutes}:${seconds}`;
 }
 
+/////////////////////////////
+//////Physics variables//////
+/////////////////////////////
 
-
-
+let friction = 0.8
+let gravity = 0.2
 
 
 
@@ -87,6 +90,11 @@ class Player{
         this.y = y
         this.w = w
         this.h = h
+        this.velX = 0
+        this.velY = 0
+        this.speed = 3
+        this.jumping = false
+        this.grounded = false
         this.img = img
         this.health = 100;
         this.special = getComputedStyle(root).getPropertyValue('--energy-1')
@@ -94,10 +102,35 @@ class Player{
     draw(ctx){
       ctx.drawImage(this.img, this.x, this.y, this.w, this.h)
     }
+    jump(){
+        this.velY = (-this.speed)*2;
+        this.y += this.velY
+    }
     update(ctx){
-      this.y +=2;
+      //check collision
+      if(!this.checkCollision())
+      {
+        this.velY += gravity;
+        this.y += this.velY;
+      }else {
+        this.velY = 0;
+      }
+      
       this.draw(ctx)
     }
+    checkCollision(){
+      
+      for(let object of gameObjects){
+        
+        if (this.x < object.x + object.w &&
+          this.x + this.w > object.x &&
+          this.y < object.y + object.h &&
+          this.y + this.h > object.y) {
+            this.grounded=true
+           return true;
+      }
+    }
+  }
     receiveDamageP1(){
       this.health -=10;
       document.querySelector('#hp-1').style.width = `${this.health}%`
@@ -176,8 +209,19 @@ class CanvasDisplay {
   }
 }
 
-
 let canvasDisplay = new CanvasDisplay();
+
+let player1 = canvasDisplay.createPlayer1
+let player2 = canvasDisplay.createPlayer2
+
+let gameObjects = [
+  canvasDisplay.createPlatform,
+  canvasDisplay.createFloor,
+  canvasDisplay.createLeftWall,
+  canvasDisplay.createRightWall
+]
+
+
 
 let interval = null
 
@@ -187,3 +231,22 @@ function playGame() {
 }
 
 
+window.onkeydown = function (e) {
+  console.log(e.key)
+  if (e.key === "ArrowLeft") {
+      
+  }
+  if (e.key === "ArrowRight") {
+      
+  }
+  if (e.key === "ArrowUp") {
+      
+  }
+  if (e.key === "ArrowDown") {
+      
+  }
+  if (e.key === " ") {
+    player1.jump();
+    console.log('jumped')
+  }
+}
