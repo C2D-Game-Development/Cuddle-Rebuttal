@@ -92,7 +92,7 @@ class Player{
         this.h = h
         this.velX = 0
         this.velY = 0
-        this.speed = 8
+        this.speed = 15
         this.jumping = false
         this.grounded = false
         this.img = img
@@ -103,19 +103,27 @@ class Player{
       ctx.drawImage(this.img, this.x, this.y, this.w, this.h)
     }
     jump(){
-        this.velY = (-this.speed);
+        this.velY = (-this.speed)*0.5;
         this.y += this.velY
     }
     moveRight(){
+      if (this.velX<0)
+      {
+        this.velX=0;
+      }
       if (this.velX < this.speed) {
-        this.velX++;
+        this.velX = this.velX+2;
       }
       this.x += this.velX
     }
 
     moveLeft(){
+      if (this.velX>0)
+      {
+        this.velX=0;
+      }
       if (this.velX > -this.speed) {
-        this.velX--;
+        this.velX = this.velX-2;
       }
       this.x += this.velX
     }
@@ -126,6 +134,7 @@ class Player{
       {
         this.velY = Math.min((gravity + this.velY),7);
         this.y += this.velY;
+        this.x += this.velX;
       }else {
         this.velY = 0;
       }
