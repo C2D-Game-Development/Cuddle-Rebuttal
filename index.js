@@ -60,7 +60,8 @@ floor.src = './images/Floor.jpg'
 let dog = new Image;
 dog.src = './images/Dog.png'
 
-
+let cat = new Image;
+cat.src = './images/Cat-2.png'
 
 
 
@@ -76,7 +77,7 @@ class Player{
         this.h = h
         this.velX = 0
         this.velY = 0
-        this.speed = 6
+        this.speed = 5
         this.jumping = false
         this.grounded = false
         this.img = img
@@ -165,7 +166,7 @@ class Player{
       
       this.draw(ctx)
     }
-    checkCollision(){
+    checkCollision() {
       
       for(let object of gameObjects){
         
@@ -175,6 +176,7 @@ class Player{
           this.y + this.h > object.y) {
             this.grounded=true
            return true;
+          
       }
     }
   }
@@ -205,6 +207,10 @@ class Player{
 
     }
 }
+
+
+
+
 
 class Barrier{
   constructor(x,y,w,h,img){
@@ -239,7 +245,7 @@ class CanvasDisplay {
      this.createRightWall = new Barrier(this.stageConfig.width*0.98, 0 , 30, this.stageConfig.height, floor)
      this.createPlatform = new Barrier(this.stageConfig.width*0.4, this.stageConfig.height*0.6 , 200, 50, floor)
      this.createPlayer1 = new Player(50,50,100,100, dog)
-     this.createPlayer2 = new Player(400,50,50,50, floor)
+     this.createPlayer2 = new Player(400,50,100,100, cat)
     }
   
   animate() {
@@ -275,17 +281,17 @@ let interval = null
 function playGame() {
   /*--- key press codes, if true which is set on keydown, will check to see if player1 is within canvas, 
         then execute move functions in class--- */
-  if (keys[37] || keys[65]) {
+  if (keys[37]) {
     if((player1.x - 30) > 0) {
       player1.moveLeft()
     }
   }
-  if (keys[39] || keys[68]) {
+  if (keys[39]) {
     if(player1.x < 1365) {
       player1.moveRight()
     }
   }
-  if (keys[38] || keys[32] || keys[87]) {
+  if (keys[38]) {
     if((player1.y - player1.h) > 0) {
       if(!player1.jumping && player1.grounded){
         player1.grounded = false
@@ -295,10 +301,33 @@ function playGame() {
   }
   player1.velY += gravity;
   player1.grounded = false
+  if (keys[65]) {
+    if((player2.x - 30) > 0) {
+      player2.moveLeft()
+    }
+  }
+  if (keys[68]) {
+    if(player2.x < 1365) {
+      player2.moveRight()
+    }
+  }
+  if (keys[87]) {
+    if((player2.y - player2.h) > 0) {
+      if(!player2.jumping && player2.grounded){
+        player2.grounded = false
+        player2.jump()
+      }
+    }
+  }
+  player2.velY += gravity;
+  player2.grounded = false
+
 
   interval = requestAnimationFrame(playGame)
   canvasDisplay.animate() 
 }
+
+
 
 // ---listeners for key down and up--- //
 window.onkeydown = function(e) {
