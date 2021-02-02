@@ -38,16 +38,13 @@ function formatTimeLeft(time) {
   }
   return `${minutes}:${seconds}`;
 }
-/////////////////////////////
-//Global pointers to objects/
-/////////////////////////////
 
 /////////////////////////////
 //////Physics variables//////
 /////////////////////////////
 
 let friction = 0.8
-let gravity = 0.2
+let gravity = 0.3
 keys = []
 
 
@@ -94,14 +91,6 @@ class Player{
     }
  
   update(ctx) {
-    //check collision
-    if(!this.checkCollision())
-    {
-     this.velY += gravity;
-      this.y += this.velY;
-    }else {
-      this.velY = 0;
-    }
     
     this.draw(ctx)
   }
@@ -159,18 +148,6 @@ class Player{
       this.x += this.velX
     }
   
-    checkCollision(){
-      
-      for(let object of gameObjects){
-        
-        if (this.x < object.x + object.w &&
-          this.x + this.w > object.x &&
-          this.y < object.y + object.h &&
-          this.y + this.h > object.y) {
-           return true;
-      }
-    }
-  }
     receiveDamageP1(){
       this.health -=10;
       document.querySelector('#hp-1').style.width = `${this.health}%`
@@ -251,8 +228,17 @@ class CanvasDisplay {
 
 let canvasDisplay = new CanvasDisplay();
 
+/////////////////////////////
+//Global pointers to objects/
+/////////////////////////////
+
 let player1 = canvasDisplay.createPlayer1
 let player2 = canvasDisplay.createPlayer2
+
+ let platform =  canvasDisplay.createPlatform
+ let stage =     canvasDisplay.createFloor
+ let leftWall =  canvasDisplay.createLeftWall
+ let rightWall = canvasDisplay.createRightWall
 
 let gameObjects = [
   canvasDisplay.createPlatform,
@@ -261,7 +247,42 @@ let gameObjects = [
   canvasDisplay.createRightWall
 ]
 
+//collision check
 
+function colCheck(shapeA, shapeB) {
+  // get the vectors to check against
+  var vX = (shapeA.x + (shapeA.w / 2)) - (shapeB.x + (shapeB.w / 2)),
+      vY = (shapeA.y + (shapeA.h / 2)) - (shapeB.y + (shapeB.h / 2)),
+      // add the half widths and half heights of the objects
+      hWidths = (shapeA.w / 2) + (shapeB.w / 2),
+      hHeights = (shapeA.h / 2) + (shapeB.h / 2),
+      colDir = null;
+
+  // if the x and y vector are less than the half width or half height, they we must be inside the object, causing a collision
+  if (Math.abs(vX) < hWidths && Math.abs(vY) < hHeights) {
+      // figures out on which side we are colliding (top, bottom, left, or right)
+      var oX = hWidths - Math.abs(vX),
+          oY = hHeights - Math.abs(vY);
+      if (oX >= oY) {
+          if (vY > 0) {
+              colDir = "t";
+              shapeA.y += oY;
+          } else {
+              colDir = "b";
+              shapeA.y -= oY;
+          }
+      } else {
+          if (vX > 0) {
+              colDir = "l";
+              shapeA.x += oX;
+          } else {
+              colDir = "r";
+              shapeA.x -= oX;
+          }
+      }
+  }
+  return colDir;
+}
 
 let interval = null
 
@@ -269,12 +290,12 @@ function playGame() {
   /*--- key press codes, if true which is set on keydown, will check to see if player1 is within canvas, 
         then execute move functions in class--- */
   if (keys[37] || keys[65]) {
-    if((player1.x - 30) > 0) {
+    if((player1.x) > 0) {
       player1.moveLeft()
     }
   }
   if (keys[39] || keys[68]) {
-    if(player1.x < 1365) {
+    if(player1.x < 1000) {
       player1.moveRight()
     }
   }
@@ -286,8 +307,37 @@ function playGame() {
       }
     }
   }
+
   player1.velY += gravity;
+  player1.velX *= friction;
+
+
+
   player1.grounded = false
+
+  for (var i = 0; i < gameObjects.length; i++) {
+    
+    var dir = colCheck(player1, gameObjects[i]);
+
+    if (dir === "l" || dir === "r") {
+        player1.velX = 0;
+        player1.jumping = false;
+    } else if (dir === "b") {
+        player1.grounded = true;
+        player1.jumping = false;
+    } else if (dir === "t") {
+        player1.velY *= -1;
+    }
+
+}
+
+if(player1.grounded){
+     player1.velY = 0;
+}
+
+player1.x += player1.velX;
+player1.y += player1.velY;
+
 
   interval = requestAnimationFrame(playGame)
   canvasDisplay.animate() 
