@@ -57,7 +57,8 @@ keys = []
 let floor = new Image;
 floor.src = './images/Floor.jpg'
 
-
+let dog = new Image;
+dog.src = './images/Dog.png'
 
 
 
@@ -79,23 +80,74 @@ class Player{
         this.jumping = false
         this.grounded = false
         this.img = img
+        this.sx = 0 //frame of animation
+        this.sy = 0 //animation type
+        this.sw = img.width/10 
+        this.sh = img.height/5
+        this.numberTall = 5
+        this.numberWide = 10
         this.health = 100;
         this.special = 0;
     }
+  //   load() {
+  //     let img = new Image()
+  //     img.src = this.src
+  //     img.onload = () => {
+  //         this.img = img
+  //         this.sw = img.width / this.numberWide
+  //         this.sh = img.height / this.numberTall
+  //         this.draw(img)
+  //     }
+
+  // }
     draw(ctx){
-      ctx.drawImage(this.img, this.x, this.y, this.w, this.h)
+      this.sx += this.sw;
+      if (this.sx>=(this.numberWide-1)*this.sw)
+      {
+        this.sx=0;
+      }
+      ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.x, this.y, this.w, this.h,)
     }
     jump(){
         this.velY = (-this.speed)*2;
         this.y = this.y + this.velY
+        this.fall();
+    }
+    dead() {
+      this.numberWide = 10
+      this.sy = 0
+    }
+    fall() {
+      this.numberWide = 8
+      this.sy = this.sh
+    }
+    hurt() {
+      this.numberWide = 10
+      this.sy = this.sh * 2
+    }
+    idle() {
+      this.numberWide = 10
+      this.sy = this.sh * 3
+    }
+    run() {
+      this.numberWide = 8
+      this.sy = this.sh * 4
     }
     moveRight(){
+      if (this.velX<0)
+      {
+        this.velX=0;
+      }
       if (this.velX < this.speed) {
         this.velX = this.velX + 4;
       }
       this.x += this.velX
     }
     moveLeft(){
+      if (this.velX>0)
+      {
+        this.velX=0;
+      }
       if (this.velX > -this.speed) {
         this.velX = this.velX - 4;
       }
@@ -105,7 +157,7 @@ class Player{
       //check collision
       if(!this.checkCollision())
       {
-        this.velY += gravity;
+       this.velY += gravity;
         this.y += this.velY;
       }else {
         this.velY = 0;
@@ -186,7 +238,7 @@ class CanvasDisplay {
      this.createLeftWall = new Barrier(0, 0 , 20, this.stageConfig.height, floor)
      this.createRightWall = new Barrier(this.stageConfig.width*0.98, 0 , 30, this.stageConfig.height, floor)
      this.createPlatform = new Barrier(this.stageConfig.width*0.4, this.stageConfig.height*0.6 , 200, 50, floor)
-     this.createPlayer1 = new Player(50,50,50,50, floor)
+     this.createPlayer1 = new Player(50,50,100,100, dog)
      this.createPlayer2 = new Player(400,50,50,50, floor)
     }
   
@@ -255,4 +307,6 @@ window.onkeydown = function(e) {
 window.onkeyup = function(e) {
   keys[e.keyCode] = false
 }
+
+
 playGame()
