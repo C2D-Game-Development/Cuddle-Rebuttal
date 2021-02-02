@@ -315,10 +315,8 @@ function playGame() {
 
   player1.velY += gravity;
   player1.velX *= friction;
-
-
-
   player1.grounded = false
+
   if (keys[65]) {
     if((player2.x - 30) > 0) {
       player2.moveLeft()
@@ -338,6 +336,7 @@ function playGame() {
     }
   }
   player2.velY += gravity;
+  player2.velX *= friction;
   player2.grounded = false
 
 
@@ -363,6 +362,31 @@ if(player1.grounded){
 
 player1.x += player1.velX;
 player1.y += player1.velY;
+
+
+
+for (var i = 0; i < gameObjects.length; i++) {
+    
+  var dir = colCheck(player2, gameObjects[i]);
+
+  if (dir === "l" || dir === "r") {
+      player2.velX = 0;
+      player2.jumping = false;
+  } else if (dir === "b") {
+      player2.grounded = true;
+      player2.jumping = false;
+  } else if (dir === "t") {
+      player2.velY *= -1;
+  }
+
+}
+
+if(player2.grounded){
+  player2.velY = 0;
+}
+
+player2.x += player2.velX;
+player2.y += player2.velY;
 
 
   interval = requestAnimationFrame(playGame)
