@@ -44,7 +44,7 @@ function formatTimeLeft(time) {
 /////////////////////////////
 
 let friction = 0.8
-let gravity = 0.2
+let gravity = 0.3
 keys = []
 
 
@@ -90,17 +90,11 @@ class Player{
         this.health = 100;
         this.special = 0;
     }
-  //   load() {
-  //     let img = new Image()
-  //     img.src = this.src
-  //     img.onload = () => {
-  //         this.img = img
-  //         this.sw = img.width / this.numberWide
-  //         this.sh = img.height / this.numberTall
-  //         this.draw(img)
-  //     }
-
-  // }
+ 
+  update(ctx) {
+    
+    this.draw(ctx)
+  }
     draw(ctx){
       this.sx += this.sw;
       if (this.sx>=(this.numberWide-1)*this.sw)
@@ -154,32 +148,7 @@ class Player{
       }
       this.x += this.velX
     }
-    update(ctx) {
-      //check collision
-      if(!this.checkCollision())
-      {
-       this.velY += gravity;
-        this.y += this.velY;
-      }else {
-        this.velY = 0;
-      }
-      
-      this.draw(ctx)
-    }
-    checkCollision() {
-      
-      for(let object of gameObjects){
-        
-        if (this.x < object.x + object.w &&
-          this.x + this.w > object.x &&
-          this.y < object.y + object.h &&
-          this.y + this.h > object.y) {
-            this.grounded=true
-           return true;
-          
-      }
-    }
-  }
+  
     receiveDamageP1(){
       this.health -=10;
       document.querySelector('#hp-1').style.width = `${this.health}%`
@@ -234,9 +203,9 @@ class CanvasDisplay {
      this.canvas = document.querySelector('canvas');
      this.ctx = this.canvas.getContext('2d');
      this.stageConfig = {
-      width: window.innerWidth,
-      height: window.innerHeight *0.60,
-     };         
+      width: 1000,
+      height: 500
+     };          
      //create game objects to manipulate
      this.canvas.width = this.stageConfig.width;
      this.canvas.height = this.stageConfig.height;
@@ -264,8 +233,17 @@ class CanvasDisplay {
 
 let canvasDisplay = new CanvasDisplay();
 
+/////////////////////////////
+//Global pointers to objects/
+/////////////////////////////
+
 let player1 = canvasDisplay.createPlayer1
 let player2 = canvasDisplay.createPlayer2
+
+ let platform =  canvasDisplay.createPlatform
+ let stage =     canvasDisplay.createFloor
+ let leftWall =  canvasDisplay.createLeftWall
+ let rightWall = canvasDisplay.createRightWall
 
 let gameObjects = [
   canvasDisplay.createPlatform,
@@ -274,7 +252,42 @@ let gameObjects = [
   canvasDisplay.createRightWall
 ]
 
+//collision check
 
+function colCheck(shapeA, shapeB) {
+  // get the vectors to check against
+  var vX = (shapeA.x + (shapeA.w / 2)) - (shapeB.x + (shapeB.w / 2)),
+      vY = (shapeA.y + (shapeA.h / 2)) - (shapeB.y + (shapeB.h / 2)),
+      // add the half widths and half heights of the objects
+      hWidths = (shapeA.w / 2) + (shapeB.w / 2),
+      hHeights = (shapeA.h / 2) + (shapeB.h / 2),
+      colDir = null;
+
+  // if the x and y vector are less than the half width or half height, they we must be inside the object, causing a collision
+  if (Math.abs(vX) < hWidths && Math.abs(vY) < hHeights) {
+      // figures out on which side we are colliding (top, bottom, left, or right)
+      var oX = hWidths - Math.abs(vX),
+          oY = hHeights - Math.abs(vY);
+      if (oX >= oY) {
+          if (vY > 0) {
+              colDir = "t";
+              shapeA.y += oY;
+          } else {
+              colDir = "b";
+              shapeA.y -= oY;
+          }
+      } else {
+          if (vX > 0) {
+              colDir = "l";
+              shapeA.x += oX;
+          } else {
+              colDir = "r";
+              shapeA.x -= oX;
+          }
+      }
+  }
+  return colDir;
+}
 
 let interval = null
 
@@ -299,7 +312,12 @@ function playGame() {
       }
     }
   }
+
   player1.velY += gravity;
+  player1.velX *= friction;
+
+
+
   player1.grounded = false
   if (keys[65]) {
     if((player2.x - 30) > 0) {
@@ -321,6 +339,30 @@ function playGame() {
   }
   player2.velY += gravity;
   player2.grounded = false
+
+
+  for (var i = 0; i < gameObjects.length; i++) {
+    
+    var dir = colCheck(player1, gameObjects[i]);
+
+    if (dir === "l" || dir === "r") {
+        player1.velX = 0;
+        player1.jumping = false;
+    } else if (dir === "b") {
+        player1.grounded = true;
+        player1.jumping = false;
+    } else if (dir === "t") {
+        player1.velY *= -1;
+    }
+
+}
+
+if(player1.grounded){
+     player1.velY = 0;
+}
+
+player1.x += player1.velX;
+player1.y += player1.velY;
 
 
   interval = requestAnimationFrame(playGame)
