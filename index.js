@@ -1,20 +1,4 @@
 
-/*---root allows selection of css style variables
-    Player.health = (--hp-1) shows the health bar 
-    which is a variable set in CSS that
-    can be changed with (root.style.setProperty('--hp-1', ' X%')
-    Haven't figured out how to change the html hp display text 
-    with changes of (--hp-1) yet tho.
---*/
-let root = document.documentElement;
-
-
-
-
-
-
-
-
 
 /////////////////////////////
 //////  Timer ///////////////
@@ -60,9 +44,8 @@ function formatTimeLeft(time) {
 /////////////////////////////
 
 let friction = 0.8
-let gravity = 0.3
-
-
+let gravity = 0.2
+keys = []
 
 
 
@@ -92,19 +75,19 @@ class Player{
         this.h = h
         this.velX = 0
         this.velY = 0
-        this.speed = 15
+        this.speed = 6
         this.jumping = false
         this.grounded = false
         this.img = img
         this.health = 100;
-        this.special = getComputedStyle(root).getPropertyValue('--energy-1')
+        this.special = 0;
     }
     draw(ctx){
       ctx.drawImage(this.img, this.x, this.y, this.w, this.h)
     }
     jump(){
-        this.velY = (-this.speed)*0.5;
-        this.y += this.velY
+        this.velY = (-this.speed)*2;
+        this.y = this.y + this.velY
     }
     moveRight(){
       if (this.velX<0)
@@ -112,23 +95,21 @@ class Player{
         this.velX=0;
       }
       if (this.velX < this.speed) {
-        this.velX = this.velX+2;
+        this.velX = this.velX + 4;
       }
       this.x += this.velX
     }
-
     moveLeft(){
       if (this.velX>0)
       {
         this.velX=0;
       }
       if (this.velX > -this.speed) {
-        this.velX = this.velX-2;
+        this.velX = this.velX - 4;
       }
       this.x += this.velX
     }
-
-    update(ctx){
+    update(ctx) {
       //check collision
       if(!this.checkCollision())
       {
@@ -249,30 +230,39 @@ let gameObjects = [
 let interval = null
 
 function playGame() {
+  /*--- key press codes, if true which is set on keydown, will check to see if player1 is within canvas, 
+        then execute move functions in class--- */
+  if (keys[37] || keys[65]) {
+    if((player1.x - 30) > 0) {
+      player1.moveLeft()
+    }
+  }
+  if (keys[39] || keys[68]) {
+    if(player1.x < 1365) {
+      player1.moveRight()
+    }
+  }
+  if (keys[38] || keys[32] || keys[87]) {
+    if((player1.y - player1.h) > 0) {
+      if(!player1.jumping && player1.grounded){
+        player1.grounded = false
+        player1.jump()
+      }
+    }
+  }
+  player1.velY += gravity;
+  player1.grounded = false
+
   interval = requestAnimationFrame(playGame)
-  canvasDisplay.animate()
+  canvasDisplay.animate() 
 }
 
-
-window.onkeydown = function (e) {
-  if (e.key === "ArrowLeft") {
-    player1.moveLeft()
-
-  }
-  if (e.key === "ArrowRight") {
-    player1.moveRight()
-      
-  }
-  if (e.key === "ArrowUp") {
-      player1.jump()
-  }
-  if (e.key === "ArrowDown") {
-    player1.duck()
-      
-  }
-  if (e.key === " ") {
-    player1.jump();
-  }
+// ---listeners for key down and up--- //
+window.onkeydown = function(e) {
+  keys[e.keyCode] = true
+}
+window.onkeyup = function(e) {
+  keys[e.keyCode] = false
 }
 
 
