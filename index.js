@@ -38,6 +38,9 @@ function formatTimeLeft(time) {
   }
   return `${minutes}:${seconds}`;
 }
+/////////////////////////////
+//Global pointers to objects/
+/////////////////////////////
 
 /////////////////////////////
 //////Physics variables//////
@@ -89,17 +92,19 @@ class Player{
         this.health = 100;
         this.special = 0;
     }
-  //   load() {
-  //     let img = new Image()
-  //     img.src = this.src
-  //     img.onload = () => {
-  //         this.img = img
-  //         this.sw = img.width / this.numberWide
-  //         this.sh = img.height / this.numberTall
-  //         this.draw(img)
-  //     }
-
-  // }
+ 
+  update(ctx) {
+    //check collision
+    if(!this.checkCollision())
+    {
+     this.velY += gravity;
+      this.y += this.velY;
+    }else {
+      this.velY = 0;
+    }
+    
+    this.draw(ctx)
+  }
     draw(ctx){
       this.sx += this.sw;
       if (this.sx>=(this.numberWide-1)*this.sw)
@@ -153,18 +158,7 @@ class Player{
       }
       this.x += this.velX
     }
-    update(ctx) {
-      //check collision
-      if(!this.checkCollision())
-      {
-       this.velY += gravity;
-        this.y += this.velY;
-      }else {
-        this.velY = 0;
-      }
-      
-      this.draw(ctx)
-    }
+  
     checkCollision(){
       
       for(let object of gameObjects){
@@ -173,7 +167,6 @@ class Player{
           this.x + this.w > object.x &&
           this.y < object.y + object.h &&
           this.y + this.h > object.y) {
-            this.grounded=true
            return true;
       }
     }
@@ -228,9 +221,9 @@ class CanvasDisplay {
      this.canvas = document.querySelector('canvas');
      this.ctx = this.canvas.getContext('2d');
      this.stageConfig = {
-      width: window.innerWidth,
-      height: window.innerHeight *0.60,
-     };         
+      width: 1000,
+      height: 500
+     };          
      //create game objects to manipulate
      this.canvas.width = this.stageConfig.width;
      this.canvas.height = this.stageConfig.height;
