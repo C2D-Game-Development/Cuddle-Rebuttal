@@ -1,9 +1,4 @@
 /* ---Window & Main Body--- */
-:root {
-    --hp-1: 50%;
-    --energy-1: 20%;
-
-}
 * {
     margin: 0;
 }
@@ -118,7 +113,6 @@ header h1 {
 #hp-1 {
     width: 100%;
 }
-
 #hp-2 {
     width: 100%;
 }
