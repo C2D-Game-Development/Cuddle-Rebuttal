@@ -263,6 +263,7 @@ window.onkeydown = function(e) {
 }
 window.onkeyup = function(e) {
   keys[e.keyCode] = false
+
 }
 
 
