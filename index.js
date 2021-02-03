@@ -191,8 +191,6 @@ class Player{
       document.querySelector('#hp-2').style.width = `${this.health}%`
     }
     specialAttack() {
-      let specialA = new SpecialAttack(this.x, this.y, this.w, this.h, bloodBolt)
-      specialA.update(ctx)
     }
     drawRun(){
 
@@ -213,6 +211,7 @@ class SpecialAttack {
     this.sy = 0
     this.sw = img.width / 5
     this.sh = img.height
+    this.direction = null
   }
   update(ctx) {
     this.drawAttack(ctx)
@@ -224,12 +223,22 @@ class SpecialAttack {
     if (this.sx > this.sw * 4) {
       this.sx = 0
     }
-    this.x += 5
+    if (this.direction == 'right') {
+      this.x += 5
+    } else {
+      this.x -= 5
+    }
+  
     ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.x, this.y, this.w, this.h)
   }
-  reset() {
-    this.x = player1.x + player1.w
-    this.y = player1.y
+  reset(player) {
+    this.direction = player.direction
+    if (this.direction == 'right') {
+      this.x = player.x + player.w
+    } else {
+      this.x = player.x - player.w
+    }
+    this.y = player.y
   }
 }
 
@@ -269,6 +278,7 @@ class CanvasDisplay {
      this.createPlayer1 = new Player(50,50,100,100, dog)
      this.createPlayer2 = new Player(400,50,100,100, cat)
      this.createSpecialP1 = new SpecialAttack(2000, 2000, 300, 300, bloodBolt)
+     this.createSpecialP2 = new SpecialAttack(2000, 2000, 300, 300, bloodBolt)
      
      
     }
@@ -283,6 +293,7 @@ class CanvasDisplay {
      this.createPlayer1.update(this.ctx)
      this.createPlayer2.update(this.ctx)
      this.createSpecialP1.update(this.ctx)
+     this.createSpecialP2.update(this.ctx)
      //check collision
      //check death
   }
@@ -298,6 +309,7 @@ let ctx = canvasDisplay.ctx
 let player1 = canvasDisplay.createPlayer1
 let player2 = canvasDisplay.createPlayer2
 let specialP1 = canvasDisplay.createSpecialP1
+let specialP2 = canvasDisplay.createSpecialP2
 
  let platform =  canvasDisplay.createPlatform
  let stage =     canvasDisplay.createFloor
@@ -309,7 +321,8 @@ let gameObjects = [
   canvasDisplay.createFloor,
   canvasDisplay.createLeftWall,
   canvasDisplay.createRightWall,
-  canvasDisplay.createSpecialP1
+  canvasDisplay.createSpecialP1,
+  canvasDisplay.createSpecialP2,
 ]
 
 //collision check
@@ -355,7 +368,7 @@ let frame = 0
 function playGame() {
   /*--- key press codes, if true which is set on keydown, will check to see if player1 is within canvas, 
         then execute move functions in class--- */
-
+// P1 CONTROLS
   if (keys[37]) {
     if((player1.x - 30) > 0) {
       player1.moveLeft()
@@ -374,14 +387,16 @@ function playGame() {
       }
     }
   }
-  if (keys[81] || keys[88]) {
-    specialP1.reset()
+  //P1 SPECIAL ATTACK
+  if (keys[81]) {
+    specialP1.reset(player1)
     console.log("i pressed it!")
   }
   player1.velY += gravity;
   player1.velX *= friction;
   player1.grounded = false
 
+  //P2 CONTROLS
   if (keys[65]) {
    player2.moveLeft()
     }
@@ -390,10 +405,16 @@ function playGame() {
   }
   if (keys[87]) {
       if(!player2.jumping && player2.grounded){
-        player2.grounded = false
+        player2.grounded = ssdafalse
         player2.jump()
       }
   }
+  //P2 SPECIAL ATTACK
+  if (keys[16]) {
+    specialP2.reset(player2)
+    console.log("i pressed it!")
+  }
+
   player2.velY += gravity;
   player2.velX *= friction;
   player2.grounded = false
