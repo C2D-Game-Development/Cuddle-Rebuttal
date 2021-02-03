@@ -77,7 +77,8 @@ dog.src = './images/Dog.png'
 let cat = new Image;
 cat.src = './images/Cat-2.png'
 
-
+let bloodBolt = new Image;
+bloodBolt.src = './images/blood-blast.png'
 
 /////////////////////////////
 //////Classes for game///////
@@ -181,7 +182,6 @@ class Player{
       }
       this.x += this.velX
     }
-  
     receiveDamageP1(){
       this.health -=10;
       document.querySelector('#hp-1').style.width = `${this.health}%`
@@ -190,15 +190,9 @@ class Player{
       this.health -=10;
       document.querySelector('#hp-2').style.width = `${this.health}%`
     }
-    drawIdle(){
-
-    }
-    drawJump(){
-
-    }
-
-    drawAttack(){
-
+    specialAttack() {
+      let specialA = new SpecialAttack(this.x, this.y, this.w, this.h, bloodBolt)
+      specialA.update(ctx)
     }
     drawRun(){
 
@@ -208,6 +202,36 @@ class Player{
     }
 }
 
+class SpecialAttack {
+  constructor(x, y, w, h, img) {
+    this.x = x
+    this.y = y
+    this.w = w
+    this.h = h
+    this.img = img
+    this.sx = 0
+    this.sy = 0
+    this.sw = img.width / 5
+    this.sh = img.height
+  }
+  update(ctx) {
+    this.drawAttack(ctx)
+  }
+  drawAttack(ctx) {
+    if (frame % 5 == 0) {
+      this.sx += this.sw
+    }
+    if (this.sx > this.sw * 4) {
+      this.sx = 0
+    }
+    this.x += 5
+    ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.x, this.y, this.w, this.h)
+  }
+  reset() {
+    this.x = player1.x + player1.w
+    this.y = player1.y
+  }
+}
 
 
 
@@ -246,6 +270,9 @@ class CanvasDisplay {
      this.createPlatform = new Barrier(this.stageConfig.width*0.4, this.stageConfig.height*0.6 , 200, 50, floor)
      this.createPlayer1 = new Player(50,50,100,100, dog)
      this.createPlayer2 = new Player(400,50,100,100, cat)
+     this.createSpecialP1 = new SpecialAttack(this.createPlayer1.x, this.createPlayer1.y, this.createPlayer1.w, this.createPlayer1.h, bloodBolt)
+     
+     
     }
   
   animate() {
@@ -257,6 +284,7 @@ class CanvasDisplay {
      this.createPlatform.update(this.ctx)
      this.createPlayer1.update(this.ctx)
      this.createPlayer2.update(this.ctx)
+     this.createSpecialP1.update(this.ctx)
      //check collision
      //check death
   }
@@ -268,8 +296,10 @@ let canvasDisplay = new CanvasDisplay();
 //Global pointers to objects/
 /////////////////////////////
 
+let ctx = canvasDisplay.ctx
 let player1 = canvasDisplay.createPlayer1
 let player2 = canvasDisplay.createPlayer2
+let specialP1 = canvasDisplay.createSpecialP1
 
  let platform =  canvasDisplay.createPlatform
  let stage =     canvasDisplay.createFloor
@@ -280,7 +310,8 @@ let gameObjects = [
   canvasDisplay.createPlatform,
   canvasDisplay.createFloor,
   canvasDisplay.createLeftWall,
-  canvasDisplay.createRightWall
+  canvasDisplay.createRightWall,
+  canvasDisplay.createSpecialP1
 ]
 
 //collision check
@@ -326,6 +357,7 @@ let frame = 0
 function playGame() {
   /*--- key press codes, if true which is set on keydown, will check to see if player1 is within canvas, 
         then execute move functions in class--- */
+
   if (keys[37]) {
     if((player1.x - 30) > 0) {
       player1.moveLeft()
@@ -344,6 +376,10 @@ function playGame() {
       }
     }
   }
+  if (keys[81] || keys[88]) {
+    specialP1.reset()
+    console.log("i pressed it!")
+  }
   player1.velY += gravity;
   player1.velX *= friction;
   player1.grounded = false
@@ -359,7 +395,6 @@ function playGame() {
         player2.grounded = false
         player2.jump()
       }
-
   }
   player2.velY += gravity;
   player2.velX *= friction;
@@ -435,8 +470,8 @@ if (player2.velX > 0.3 || player2.velX < -0.3) {
 //   player2.fall()
 // }
 
-player1.x 
-player2.x
+// player1.x 
+// player2.x
 
 frame++
 
