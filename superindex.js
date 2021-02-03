@@ -5,8 +5,13 @@
 
 
 
-let player = new Player(10,10,100,100,'./images/Dog.png')
+let player = new Player(10, 10, 100, 100, './images/Dog.png')
 player.load();
+
+
+let player2 = new Player(50, 10, 100, 100, './images/Dog.png')
+player2.load();
+
 
 function update() {
     // check keys
@@ -34,15 +39,15 @@ function update() {
     player.velX *= friction;
     player.velY += gravity;
 
-    ctx.clearRect(0, 0, width, height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "black";
     ctx.beginPath();
-    
+
     player.grounded = false;
-    
+
     for (var i = 0; i < boxes.length; i++) {
         ctx.rect(boxes[i].x, boxes[i].y, boxes[i].width, boxes[i].height);
-        
+
         var dir = colCheck(player, boxes[i]);
 
         if (dir === "l" || dir === "r") {
@@ -56,17 +61,18 @@ function update() {
         }
 
     }
-    
-    if(player.grounded){
-         player.velY = 0;
+
+    if (player.grounded) {
+        player.velY = 0;
     }
-    
+
     player.x += player.velX;
     player.y += player.velY;
 
     ctx.fill();
     ctx.fillStyle = "red";
     player.draw();
+    player2.draw()
     frame++;
     requestAnimationFrame(update);
 }
