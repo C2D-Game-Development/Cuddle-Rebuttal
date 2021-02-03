@@ -419,19 +419,16 @@ if(player2.grounded){
 player2.x += player2.velX;
 player2.y += player2.velY;
 
-<<<<<<< HEAD
-  //computerLogic()
-=======
 if (player1.health <= 0) {
   player1.dead()
 }
 if (player2.health <= 0) {
   player2.dead()
 }
-if (player1.velX != 0) {
+if (player1.velX > 0.3 || player1.velX < -0.3) {
   player1.run()
 }
-if (player2.velX != 0) {
+if (player2.velX > 0.3 || player2.velX < -0.3) {
   player2.run()
 }
 // if (player1.grounded == false) {
@@ -445,7 +442,6 @@ player1.x
 player2.x
 
 frame++
->>>>>>> b01fdd2a56200762ebd2415c116dd772f000dd17
 
   interval = requestAnimationFrame(playGame)
   canvasDisplay.animate() 
