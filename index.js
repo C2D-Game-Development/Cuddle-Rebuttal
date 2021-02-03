@@ -336,7 +336,8 @@ let gameObjects = [
   canvasDisplay.createFloor,
   canvasDisplay.createLeftWall,
   canvasDisplay.createRightWall,
-  canvasDisplay.createSpecialP1
+  canvasDisplay.createSpecialP1,
+  canvasDisplay.createSpecialP2
 ]
 
 //collision check
@@ -458,7 +459,7 @@ player1.y += player1.velY;
 for (var i = 0; i < gameObjects.length; i++) {
     
   var dir = colCheck(player2, gameObjects[i]);
-
+  if(i<4){ //this is to effect collision only for platforms
   if (dir === "l" || dir === "r") {
       player2.velX = 0;
       player2.jumping = false;
@@ -468,7 +469,9 @@ for (var i = 0; i < gameObjects.length; i++) {
   } else if (dir === "t") {
       player2.velY *= -1;
   }
-
+  }else{
+    
+  }
 }
 
 if(player2.grounded){
