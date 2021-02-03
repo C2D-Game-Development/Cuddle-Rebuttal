@@ -234,8 +234,6 @@ class SpecialAttack {
 }
 
 
-
-
 class Barrier{
   constructor(x,y,w,h,img){
       this.x = x
@@ -270,7 +268,7 @@ class CanvasDisplay {
      this.createPlatform = new Barrier(this.stageConfig.width*0.4, this.stageConfig.height*0.6 , 200, 50, floor)
      this.createPlayer1 = new Player(50,50,100,100, dog)
      this.createPlayer2 = new Player(400,50,100,100, cat)
-     this.createSpecialP1 = new SpecialAttack(this.createPlayer1.x, this.createPlayer1.y, this.createPlayer1.w, this.createPlayer1.h, bloodBolt)
+     this.createSpecialP1 = new SpecialAttack(2000, 2000, 300, 300, bloodBolt)
      
      
     }
