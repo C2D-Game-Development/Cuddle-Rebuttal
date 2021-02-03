@@ -1,4 +1,23 @@
 /* ---Window & Main Body--- */
+@keyframes moveX1{
+    from{background-position-x:0px;}
+    to{background-position-x:-1800px;}
+  }
+@keyframes moveX2{
+    from{background-position-x:0px;}
+    to{background-position-x:-1380px;}
+  }
+@keyframes gradient {
+	0% {
+		background-position: 50% 0%;
+	}
+	50% {
+		background-position: 50% 100%;
+	}
+	100% {
+		background-position: 50% 0%;
+	}
+}
 * {
     margin: 0;
 }
@@ -18,6 +37,11 @@ body {
     flex-direction: column;
 }
 
+#canvy{
+    display:flex;
+    justify-content:center;
+}
+
 canvas {
     border: 4px solid rgb(248, 59, 255);
     border-radius: 10px;
@@ -31,8 +55,8 @@ canvas {
     top:0;
     left:0; */
     box-shadow: 5px 5px 5px 5px  rgba(83, 5, 83, 0.514);
-    transform-origin: center;
-    transform: scale(1) translate(0px, 0px)
+    /* transform-origin: center;
+    transform: scale(1) translate(0px, 0px) */
 }
 header {
     text-align: center;
@@ -49,17 +73,22 @@ header h1 {
 .hud {
     display: flex;
     flex-direction: row;
-    margin-top: 3%;
+    margin-top: 10%;
 }
 
 /* ---Player 1 & 2 Divs--- */
 .player1 {
-    background: #f76f718a;
+    background-image: url(images/bloody-background.png);
+    background-repeat: no-repeat, repeat;
+    background-color: #f76f718a;
     border: 5px solid #FFF699;
     border-radius: 20px;
     width: 38%;
     display: flex;
     box-shadow: 1px 1px 20px 1px #fb9e08;
+    /* background: linear-gradient(90deg, #ab0606, #ab0606, #ab0606, #fa0000, #f33f3f, #f15e5e, #FC9D9f, #ECB5B2, #DCD3CE, #cdeee6);
+    background-size: 500% 100%;
+    animation: gradient 10s ease infinite; */
 
 }
 .player2 {
@@ -72,6 +101,9 @@ header h1 {
     display: flex;
     flex-direction: row-reverse;
     box-shadow: 1px 1px 20px 1px #fb9e08;
+    /* background: linear-gradient(270deg, #ab0606, #ab0606, #ab0606, #fa0000, #f33f3f, #f15e5e, #FC9D9f, #ECB5B2, #DCD3CE, #cdeee6);
+    background-size: 500% 100%;
+    animation: gradient 5s ease infinite; */
 }
 .player2 > .player-info {
     display: flex;
@@ -95,18 +127,36 @@ header h1 {
     text-shadow: 3px 3px 3px rgb(255, 0, 242)
 }
 .avatar-pic {
-    height: 80%;
+    height: 15vh;
     border: 5px solid #FFF699;
     border-radius: 10px;
-    background: rgb(252, 219, 75);
-    overflow: hidden;
+
 }
 .avatar-pic img {
     object-fit: cover;
     width: 100%;
     height: 100%;
 }
-
+#ap1 {
+    background: linear-gradient(180deg, #ab0606, #ab0606, #ab0606, #fa0000, #f33f3f, #f15e5e, #FC9D9f, #ECB5B2, #DCD3CE, #cdeee6);
+    background-size: 500% 500%;
+    animation: gradient 5s ease infinite;
+    /* background-image : url(images/dog-crop.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation: moveX1 2s steps(8) infinite; */
+}
+#ap2 {
+    background: linear-gradient(180deg, #ab0606, #ab0606, #ab0606, #fa0000, #f33f3f, #f15e5e, #FC9D9f, #ECB5B2, #DCD3CE, #cdeee6);
+    background-size: 500% 500%;
+    animation: gradient 5s ease infinite;
+    /* background-image : url(images/cat-crop-2.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation: moveX2 2s steps(8) infinite; */
+}
 .control-panel {
     height: 60%;
 }

@@ -71,11 +71,17 @@ keys = []
 let floor = new Image;
 floor.src = './images/floor.jpg'
 
-let dog = new Image;
-dog.src = './images/Dog.png'
+let catReverse = new Image;
+catReverse.src = './images/Cat-r.png'
 
 let cat = new Image;
-cat.src = './images/Cat-2.png'
+cat.src = './images/Cat-l.png'
+
+let dog = new Image;
+dog.src = './images/dog-l.png'
+
+let dogReverse = new Image;
+dogReverse.src = './images/dog-r.png'
 
 let bloodBolt = new Image;
 bloodBolt.src = './images/blood-blast.png'
@@ -85,7 +91,7 @@ bloodBolt.src = './images/blood-blast.png'
 /////////////////////////////
 
 class Player{
-    constructor(x,y,w,h,img){
+    constructor(x,y,w,h,img,rImg,direction){
         this.x = x
         this.y = y
         this.w = w
@@ -96,8 +102,9 @@ class Player{
         this.jumping = false
         this.grounded = false
         this.img = img
+        this.rImg = rImg
         this.sx = 0 //frame of animation
-        this.sy = 0 //animation type
+        this.sy = img.height/5 //animation type
         this.sw = img.width/10 
         this.sh = img.height/5
         this.numberTall = 5
@@ -105,6 +112,7 @@ class Player{
         this.health = 100;
         this.special = 0;
         this.keepLooping = true
+        this.direction = direction
     }
  
   update(ctx) {
@@ -134,7 +142,11 @@ class Player{
         }
         
       }
-      ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.x, this.y, this.w, this.h,)
+      if(this.direction=='left'){
+        ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.x, this.y, this.w, this.h)
+      }else{
+      ctx.drawImage(this.rImg, this.sx, this.sy, this.sw, this.sh, this.x, this.y, this.w, this.h)
+      }
     }
     jump(){
         this.velY = (-this.speed)*2;
@@ -171,6 +183,7 @@ class Player{
         this.velX = this.velX + 4;
       }
       this.x += this.velX
+      this.direction = 'right'
     }
     moveLeft(){
       if (this.velX>0)
@@ -181,6 +194,7 @@ class Player{
         this.velX = this.velX - 4;
       }
       this.x += this.velX
+      this.direction ='left'
     }
     receiveDamageP1(){
       this.health -=10;
@@ -223,22 +237,22 @@ class SpecialAttack {
     if (this.sx > this.sw * 4) {
       this.sx = 0
     }
-    if (this.direction == 'right') {
-      this.x += 5
-    } else {
-      this.x -= 5
+    if(this.direction=='right'){
+    this.x += 5
+    }else{
+      this.x-=5
     }
-  
     ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.x, this.y, this.w, this.h)
   }
   reset(player) {
-    this.direction = player.direction
-    if (this.direction == 'right') {
-      this.x = player.x + player.w
-    } else {
-      this.x = player.x - player.w
+    this.direction=player.direction
+    if(this.direction=='right'){
+    this.x = player.x + player.w
+    }else{
+      this.x= player.x - player.w
     }
     this.y = player.y
+    
   }
 }
 
@@ -275,11 +289,10 @@ class CanvasDisplay {
      this.createLeftWall = new Barrier(0, 0 , 20, this.stageConfig.height, floor)
      this.createRightWall = new Barrier(this.stageConfig.width*0.98, 0 , 30, this.stageConfig.height, floor)
      this.createPlatform = new Barrier(this.stageConfig.width*0.4, this.stageConfig.height*0.6 , 200, 50, floor)
-     this.createPlayer1 = new Player(50,50,100,100, dog)
-     this.createPlayer2 = new Player(400,50,100,100, cat)
-     this.createSpecialP1 = new SpecialAttack(2000, 2000, 300, 300, bloodBolt)
-     this.createSpecialP2 = new SpecialAttack(2000, 2000, 300, 300, bloodBolt)
-     
+     this.createPlayer1 = new Player(50,50,100,100, dog, dogReverse, 'right')
+     this.createPlayer2 = new Player(825,50,100,100, cat, catReverse, 'left')
+     this.createSpecialP1 = new SpecialAttack(2000, 2000, 100, 100, bloodBolt)
+     this.createSpecialP2 = new SpecialAttack(2500, 2000, 100, 100, bloodBolt)
      
     }
   
@@ -322,7 +335,7 @@ let gameObjects = [
   canvasDisplay.createLeftWall,
   canvasDisplay.createRightWall,
   canvasDisplay.createSpecialP1,
-  canvasDisplay.createSpecialP2,
+  canvasDisplay.createSpecialP2
 ]
 
 //collision check
@@ -368,7 +381,10 @@ let frame = 0
 function playGame() {
   /*--- key press codes, if true which is set on keydown, will check to see if player1 is within canvas, 
         then execute move functions in class--- */
-// P1 CONTROLS
+  if (keys[17]) 
+        {
+          specialP1.reset(player1)
+        }
   if (keys[37]) {
     if((player1.x - 30) > 0) {
       player1.moveLeft()
@@ -387,9 +403,8 @@ function playGame() {
       }
     }
   }
-  //P1 SPECIAL ATTACK
-  if (keys[81]) {
-    specialP1.reset(player1)
+  if (keys[81] || keys[88]) {
+    specialP2.reset(player2)
     console.log("i pressed it!")
   }
   player1.velY += gravity;
@@ -449,7 +464,7 @@ player1.y += player1.velY;
 for (var i = 0; i < gameObjects.length; i++) {
     
   var dir = colCheck(player2, gameObjects[i]);
-
+  if(i<4){ //this is to effect collision only for platforms
   if (dir === "l" || dir === "r") {
       player2.velX = 0;
       player2.jumping = false;
@@ -459,7 +474,9 @@ for (var i = 0; i < gameObjects.length; i++) {
   } else if (dir === "t") {
       player2.velY *= -1;
   }
-
+  }else{
+    
+  }
 }
 
 if(player2.grounded){
@@ -476,10 +493,10 @@ if (player1.health <= 0) {
 if (player2.health <= 0) {
   player2.dead()
 }
-if (player1.velX > 0.3 || player1.velX < -0.3) {
+if ((player1.velX > 0.3 || player1.velX < -0.3)&&player1.grounded) {
   player1.run()
 }
-if (player2.velX > 0.3 || player2.velX < -0.3) {
+if ((player2.velX > 0.3 || player2.velX < -0.3)&&player2.grounded) {
   player2.run()
 }
 // if (player1.grounded == false) {
