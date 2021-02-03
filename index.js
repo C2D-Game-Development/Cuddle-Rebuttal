@@ -89,6 +89,7 @@ class Player{
         this.numberWide = 10
         this.health = 100;
         this.special = 0;
+        this.keepLooping = true
     }
  
   update(ctx) {
@@ -96,10 +97,27 @@ class Player{
     this.draw(ctx)
   }
     draw(ctx){
-      this.sx += this.sw;
+      //dead
+      if (this.sy == 0 && frame % 10 == 0) {
+        this.sx += this.sw 
+      }
+      // Idle-foolishness
+      // if (this.sy == this.sh*3 && frame % 10 == 0){
+      //   this.sx += this.sw
+      // }
+      if (this.sy == this.sh*4 && frame % 5 == 0) {
+        this.sx += this.sw
+      }
+
       if (this.sx>=(this.numberWide-1)*this.sw)
       {
-        this.sx=0;
+        if(this.keepLooping) {
+          this.sx=0;
+
+        } else {
+          this.sx = (this.numberWide -1)* this.sw
+        }
+        
       }
       ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.x, this.y, this.w, this.h,)
     }
@@ -109,8 +127,9 @@ class Player{
         this.fall();
     }
     dead() {
-      this.numberWide = 10
+      this.numberWide = 10//how many dead frames you have
       this.sy = 0
+      this.keepLooping = false
     }
     fall() {
       this.numberWide = 8
@@ -290,6 +309,7 @@ function colCheck(shapeA, shapeB) {
 }
 
 let interval = null
+let frame = 0
 
 function playGame() {
   /*--- key press codes, if true which is set on keydown, will check to see if player1 is within canvas, 
@@ -318,22 +338,17 @@ function playGame() {
   player1.grounded = false
 
   if (keys[65]) {
-    if((player2.x - 30) > 0) {
-      player2.moveLeft()
+   player2.moveLeft()
     }
-  }
   if (keys[68]) {
-    if(player2.x < 1365) {
       player2.moveRight()
-    }
   }
   if (keys[87]) {
-    if((player2.y - player2.h) > 0) {
       if(!player2.jumping && player2.grounded){
         player2.grounded = false
         player2.jump()
       }
-    }
+
   }
   player2.velY += gravity;
   player2.velX *= friction;
@@ -358,6 +373,7 @@ function playGame() {
 
 if(player1.grounded){
      player1.velY = 0;
+     player1.idle()
 }
 
 player1.x += player1.velX;
@@ -383,11 +399,35 @@ for (var i = 0; i < gameObjects.length; i++) {
 
 if(player2.grounded){
   player2.velY = 0;
+  player2.idle()
 }
 
 player2.x += player2.velX;
 player2.y += player2.velY;
 
+if (player1.health <= 0) {
+  player1.dead()
+}
+if (player2.health <= 0) {
+  player2.dead()
+}
+if (player1.velX != 0) {
+  player1.run()
+}
+if (player2.velX != 0) {
+  player2.run()
+}
+// if (player1.grounded == false) {
+//   player1.fall()
+// }
+// if (player2.grounded == false) {
+//   player2.fall()
+// }
+
+player1.x 
+player2.x
+
+frame++
 
   interval = requestAnimationFrame(playGame)
   canvasDisplay.animate() 
