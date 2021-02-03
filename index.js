@@ -69,7 +69,7 @@ keys = []
 
 
 let floor = new Image;
-floor.src = './images/Floor.jpg'
+floor.src = './images/floor.jpg'
 
 let dog = new Image;
 dog.src = './images/Dog.png'
@@ -196,9 +196,7 @@ class Player{
     drawJump(){
 
     }
-    drawSpecialAttack(){
 
-    }
     drawAttack(){
 
     }
@@ -346,7 +344,6 @@ function playGame() {
       }
     }
   }
-
   player1.velY += gravity;
   player1.velX *= friction;
   player1.grounded = false
@@ -456,6 +453,5 @@ window.onkeydown = function(e) {
 window.onkeyup = function(e) {
   keys[e.keyCode] = false
 }
-
 
 playGame()
