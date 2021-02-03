@@ -15,7 +15,6 @@ document.querySelector('.actual-time').innerHTML = `
   `
 startTimer()
 
-
 function onTimesUp() {
   clearInterval(timerInterval)
 }
@@ -78,7 +77,7 @@ let cat = new Image;
 cat.src = './images/Cat-2.png'
 
 let bloodBolt = new Image;
-bloodBolt.src = './images/blood-blast.png'
+bloodBolt.src = './images/blood-blast-2.png'
 
 /////////////////////////////
 //////Classes for game///////
@@ -269,7 +268,6 @@ class CanvasDisplay {
      this.createPlayer1 = new Player(50,50,100,100, dog)
      this.createPlayer2 = new Player(400,50,100,100, cat)
      this.createSpecialP1 = new SpecialAttack(2000, 2000, 300, 300, bloodBolt)
-     
      
     }
   
