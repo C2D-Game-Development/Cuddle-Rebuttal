@@ -27,7 +27,12 @@ canvas {
     background-repeat: no-repeat; */
 
     height: 50vh;
+    /* position:fixed;
+    top:0;
+    left:0; */
     box-shadow: 5px 5px 5px 5px  rgba(83, 5, 83, 0.514);
+    transform-origin: center;
+    transform: scale(1) translate(0px, 0px)
 }
 header {
     text-align: center;

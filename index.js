@@ -44,7 +44,7 @@ function formatTimeLeft(time) {
 /////////////////////////////
 
 let friction = 0.8
-let gravity = 0.2
+let gravity = 0.3
 keys = []
 
 
@@ -60,8 +60,8 @@ floor.src = './images/floor.jpg'
 let dog = new Image;
 dog.src = './images/Dog.png'
 
-let bloodBolt = new Image;
-bloodBolt.src = './images/blood-blast.png'
+let cat = new Image;
+cat.src = './images/Cat-2.png'
 
 
 
@@ -77,7 +77,7 @@ class Player{
         this.h = h
         this.velX = 0
         this.velY = 0
-        this.speed = 6
+        this.speed = 5
         this.jumping = false
         this.grounded = false
         this.img = img
@@ -89,23 +89,35 @@ class Player{
         this.numberWide = 10
         this.health = 100;
         this.special = 0;
+        this.keepLooping = true
     }
-  //   load() {
-  //     let img = new Image()
-  //     img.src = this.src
-  //     img.onload = () => {
-  //         this.img = img
-  //         this.sw = img.width / this.numberWide
-  //         this.sh = img.height / this.numberTall
-  //         this.draw(img)
-  //     }
-
-  // }
+ 
+  update(ctx) {
+    
+    this.draw(ctx)
+  }
     draw(ctx){
-      this.sx += this.sw;
+      //dead
+      if (this.sy == 0 && frame % 10 == 0) {
+        this.sx += this.sw 
+      }
+      // Idle-foolishness
+      // if (this.sy == this.sh*3 && frame % 10 == 0){
+      //   this.sx += this.sw
+      // }
+      if (this.sy == this.sh*4 && frame % 5 == 0) {
+        this.sx += this.sw
+      }
+
       if (this.sx>=(this.numberWide-1)*this.sw)
       {
-        this.sx=0;
+        if(this.keepLooping) {
+          this.sx=0;
+
+        } else {
+          this.sx = (this.numberWide -1)* this.sw
+        }
+        
       }
       ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.x, this.y, this.w, this.h,)
     }
@@ -115,8 +127,9 @@ class Player{
         this.fall();
     }
     dead() {
-      this.numberWide = 10
+      this.numberWide = 10//how many dead frames you have
       this.sy = 0
+      this.keepLooping = false
     }
     fall() {
       this.numberWide = 8
@@ -154,43 +167,7 @@ class Player{
       }
       this.x += this.velX
     }
-    drawSpecialAttack(ctx){
-      ctx.drawImage(bloodBolt, 50, 50, 50, 50)
-      // if (this.velX<0)
-      // {
-      //   this.velX=0;
-      // }
-      // if (this.velX < this.speed) {
-      //   this.velX = this.velX + 4;
-      // }
-      // this.x += this.velX
-    }
-
-    update(ctx) {
-      //check collision
-      if(!this.checkCollision())
-      {
-       this.velY += gravity;
-        this.y += this.velY;
-      }else {
-        this.velY = 0;
-      }
-      
-      this.draw(ctx)
-    }
-    checkCollision(){
-      
-      for(let object of gameObjects){
-        
-        if (this.x < object.x + object.w &&
-          this.x + this.w > object.x &&
-          this.y < object.y + object.h &&
-          this.y + this.h > object.y) {
-            this.grounded=true
-           return true;
-      }
-    }
-  }
+  
     receiveDamageP1(){
       this.health -=10;
       document.querySelector('#hp-1').style.width = `${this.health}%`
@@ -217,6 +194,10 @@ class Player{
     }
 }
 
+
+
+
+
 class Barrier{
   constructor(x,y,w,h,img){
       this.x = x
@@ -239,9 +220,9 @@ class CanvasDisplay {
      this.canvas = document.querySelector('canvas');
      this.ctx = this.canvas.getContext('2d');
      this.stageConfig = {
-      width: window.innerWidth,
-      height: window.innerHeight *0.60,
-     };         
+      width: 1000,
+      height: 500
+     };          
      //create game objects to manipulate
      this.canvas.width = this.stageConfig.width;
      this.canvas.height = this.stageConfig.height;
@@ -250,7 +231,7 @@ class CanvasDisplay {
      this.createRightWall = new Barrier(this.stageConfig.width*0.98, 0 , 30, this.stageConfig.height, floor)
      this.createPlatform = new Barrier(this.stageConfig.width*0.4, this.stageConfig.height*0.6 , 200, 50, floor)
      this.createPlayer1 = new Player(50,50,100,100, dog)
-     this.createPlayer2 = new Player(400,50,50,50, dog)
+     this.createPlayer2 = new Player(400,50,100,100, cat)
     }
   
   animate() {
@@ -269,8 +250,17 @@ class CanvasDisplay {
 
 let canvasDisplay = new CanvasDisplay();
 
+/////////////////////////////
+//Global pointers to objects/
+/////////////////////////////
+
 let player1 = canvasDisplay.createPlayer1
 let player2 = canvasDisplay.createPlayer2
+
+ let platform =  canvasDisplay.createPlatform
+ let stage =     canvasDisplay.createFloor
+ let leftWall =  canvasDisplay.createLeftWall
+ let rightWall = canvasDisplay.createRightWall
 
 let gameObjects = [
   canvasDisplay.createPlatform,
@@ -279,24 +269,60 @@ let gameObjects = [
   canvasDisplay.createRightWall
 ]
 
+//collision check
 
+function colCheck(shapeA, shapeB) {
+  // get the vectors to check against
+  var vX = (shapeA.x + (shapeA.w / 2)) - (shapeB.x + (shapeB.w / 2)),
+      vY = (shapeA.y + (shapeA.h / 2)) - (shapeB.y + (shapeB.h / 2)),
+      // add the half widths and half heights of the objects
+      hWidths = (shapeA.w / 2) + (shapeB.w / 2),
+      hHeights = (shapeA.h / 2) + (shapeB.h / 2),
+      colDir = null;
+
+  // if the x and y vector are less than the half width or half height, they we must be inside the object, causing a collision
+  if (Math.abs(vX) < hWidths && Math.abs(vY) < hHeights) {
+      // figures out on which side we are colliding (top, bottom, left, or right)
+      var oX = hWidths - Math.abs(vX),
+          oY = hHeights - Math.abs(vY);
+      if (oX >= oY) {
+          if (vY > 0) {
+              colDir = "t";
+              shapeA.y += oY;
+          } else {
+              colDir = "b";
+              shapeA.y -= oY;
+          }
+      } else {
+          if (vX > 0) {
+              colDir = "l";
+              shapeA.x += oX;
+          } else {
+              colDir = "r";
+              shapeA.x -= oX;
+          }
+      }
+  }
+  return colDir;
+}
 
 let interval = null
+let frame = 0
 
 function playGame() {
   /*--- key press codes, if true which is set on keydown, will check to see if player1 is within canvas, 
         then execute move functions in class--- */
-  if (keys[37] || keys[65]) {
+  if (keys[37]) {
     if((player1.x - 30) > 0) {
       player1.moveLeft()
     }
   }
-  if (keys[39] || keys[68]) {
+  if (keys[39]) {
     if(player1.x < 1365) {
       player1.moveRight()
     }
   }
-  if (keys[38] || keys[32] || keys[87]) {
+  if (keys[38]) {
     if((player1.y - player1.h) > 0) {
       if(!player1.jumping && player1.grounded){
         player1.grounded = false
@@ -304,16 +330,107 @@ function playGame() {
       }
     }
   }
-  if (keys[81]) {
-    player1.drawSpecialAttack()
-    console.log(player1)
-  }
   player1.velY += gravity;
+  player1.velX *= friction;
   player1.grounded = false
+
+  if (keys[65]) {
+   player2.moveLeft()
+    }
+  if (keys[68]) {
+      player2.moveRight()
+  }
+  if (keys[87]) {
+      if(!player2.jumping && player2.grounded){
+        player2.grounded = false
+        player2.jump()
+      }
+
+  }
+  player2.velY += gravity;
+  player2.velX *= friction;
+  player2.grounded = false
+
+
+  for (var i = 0; i < gameObjects.length; i++) {
+    
+    var dir = colCheck(player1, gameObjects[i]);
+
+    if (dir === "l" || dir === "r") {
+        player1.velX = 0;
+        player1.jumping = false;
+    } else if (dir === "b") {
+        player1.grounded = true;
+        player1.jumping = false;
+    } else if (dir === "t") {
+        player1.velY *= -1;
+    }
+
+}
+
+if(player1.grounded){
+     player1.velY = 0;
+     player1.idle()
+}
+
+player1.x += player1.velX;
+player1.y += player1.velY;
+
+
+
+for (var i = 0; i < gameObjects.length; i++) {
+    
+  var dir = colCheck(player2, gameObjects[i]);
+
+  if (dir === "l" || dir === "r") {
+      player2.velX = 0;
+      player2.jumping = false;
+  } else if (dir === "b") {
+      player2.grounded = true;
+      player2.jumping = false;
+  } else if (dir === "t") {
+      player2.velY *= -1;
+  }
+
+}
+
+if(player2.grounded){
+  player2.velY = 0;
+  player2.idle()
+}
+
+player2.x += player2.velX;
+player2.y += player2.velY;
+
+if (player1.health <= 0) {
+  player1.dead()
+}
+if (player2.health <= 0) {
+  player2.dead()
+}
+if (player1.velX != 0) {
+  player1.run()
+}
+if (player2.velX != 0) {
+  player2.run()
+}
+// if (player1.grounded == false) {
+//   player1.fall()
+// }
+// if (player2.grounded == false) {
+//   player2.fall()
+// }
+
+player1.x 
+player2.x
+
+frame++
 
   interval = requestAnimationFrame(playGame)
   canvasDisplay.animate() 
 }
+
+
 
 // ---listeners for key down and up--- //
 window.onkeydown = function(e) {
@@ -321,7 +438,6 @@ window.onkeydown = function(e) {
 }
 window.onkeyup = function(e) {
   keys[e.keyCode] = false
-
 }
 
 playGame()
