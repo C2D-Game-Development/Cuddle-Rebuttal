@@ -30,29 +30,29 @@ boxes.push({
 });
 boxes.push({
   x: 0,
-  y: height - 2,
+  y: height + 92,
   width: width,
-  height: 50,
+  height: 150,
 });
-boxes.push({
-  x: width - 10,
-  y: 0,
-  width: 50,
-  height: height,
-});
+// boxes.push({
+//   x: width - 10,
+//   y: 0,
+//   width: 50,
+//   height: height,
+// });
 
-boxes.push({
-  x: 120,
-  y: 10,
-  width: 80,
-  height: 80,
-});
-boxes.push({
-  x: 170,
-  y: 50,
-  width: 80,
-  height: 80,
-});
+// boxes.push({
+//   x: 120,
+//   y: 10,
+//   width: 80,
+//   height: 80,
+// });
+// boxes.push({
+//   x: 170,
+//   y: 50,
+//   width: 80,
+//   height: 80,
+// });
 boxes.push({
   x: 220,
   y: 100,
@@ -140,24 +140,24 @@ class Player {
         this.height
       );
       ctx.restore();
-    }else {
-        ctx.save()
-        ctx.translate(canvas.width, 0);
-        ctx.scale(-1, 1)
+    } else {
+      ctx.save()
+      ctx.translate(canvas.width, 0);
+      ctx.scale(-1, 1)
 
-        if (frame % 10 === 0) {
-            if (this.sx < this.img.width - this.sx) {
-                this.sx += this.sw
-            } else {
-                this.sx = 0;
-            }
+      if (frame % 10 === 0) {
+        if (this.sx < this.img.width - this.sx) {
+          this.sx += this.sw
+        } else {
+          this.sx = 0;
         }
+      }
 
 
-        ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.x, this.y, this.width, this.height)
-        ctx.restore()
+      ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.x, this.y, this.width, this.height)
+      ctx.restore()
     }
-    
+
   }
   reverse() {
     this.flip = !this.flip;
