@@ -49,6 +49,20 @@ keys = []
 
 
 
+// function computerLogic()
+// {
+//     if(player1.x<player2.x)
+//     {
+//         player2.moveLeft()
+//     }
+//     if(player1.x>player2.x)
+//     {   
+//         player2.moveRight()
+//     }
+// }
+
+
+
 /////////////////////////////
 //////Images for game////////
 /////////////////////////////
@@ -388,6 +402,7 @@ if(player2.grounded){
 player2.x += player2.velX;
 player2.y += player2.velY;
 
+  //computerLogic()
 
   interval = requestAnimationFrame(playGame)
   canvasDisplay.animate() 
