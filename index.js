@@ -83,8 +83,11 @@ dog.src = './images/dog-l.png'
 let dogReverse = new Image;
 dogReverse.src = './images/dog-r.png'
 
-let bloodBolt = new Image;
-bloodBolt.src = './images/blood-blast.png'
+let bloodBoltR = new Image;
+bloodBoltR.src = './images/blood-blast-2.png'
+
+let bloodBoltL = new Image;
+bloodBoltL.src = './images/blood-blast-l.png'
 
 /////////////////////////////
 //////Classes for game///////
@@ -204,10 +207,6 @@ class Player{
       this.health -=10;
       document.querySelector('#hp-2').style.width = `${this.health}%`
     }
-    specialAttack() {
-      let specialA = new SpecialAttack(this.x, this.y, this.w, this.h, bloodBolt)
-      specialA.update(ctx)
-    }
     drawRun(){
 
     }
@@ -217,12 +216,13 @@ class Player{
 }
 
 class SpecialAttack {
-  constructor(x, y, w, h, img) {
+  constructor(x, y, w, h, img, img2) {
     this.x = x
     this.y = y
     this.w = w
     this.h = h
     this.img = img
+    this.img2 = img2
     this.sx = 0
     this.sy = 0
     this.sw = img.width / 5
@@ -244,12 +244,17 @@ class SpecialAttack {
     }else{
       this.x-=5
     }
+    if(this.direction=='right'){
     ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.x, this.y, this.w, this.h)
+    }else {
+      ctx.drawImage(this.img2, this.sx, this.sy, this.sw, this.sh, this.x, this.y, this.w, this.h)
+    }
   }
   reset(player) {
     this.direction=player.direction
     if(this.direction=='right'){
     this.x = player.x + player.w
+    
     }else{
       this.x= player.x - player.w
     }
@@ -293,8 +298,8 @@ class CanvasDisplay {
      this.createPlatform = new Barrier(this.stageConfig.width*0.4, this.stageConfig.height*0.6 , 200, 50, floor)
      this.createPlayer1 = new Player(50,50,100,100, dog, dogReverse, 'right')
      this.createPlayer2 = new Player(825,50,100,100, cat, catReverse, 'left')
-     this.createSpecialP1 = new SpecialAttack(2000, 2000, 100, 100, bloodBolt)
-     this.createSpecialP2 = new SpecialAttack(2500, 2000, 100, 100, bloodBolt)
+     this.createSpecialP1 = new SpecialAttack(2000, 2000, 100, 100, bloodBoltR, bloodBoltL)
+     this.createSpecialP2 = new SpecialAttack(2500, 2000, 100, 100, bloodBoltR, bloodBoltL )
      
     }
   
@@ -459,7 +464,7 @@ player1.y += player1.velY;
 for (var i = 0; i < gameObjects.length; i++) {
     
   var dir = colCheck(player2, gameObjects[i]);
-  if(i<4){ //this is to effect collision only for platforms
+  
   if (dir === "l" || dir === "r") {
       player2.velX = 0;
       player2.jumping = false;
@@ -469,9 +474,7 @@ for (var i = 0; i < gameObjects.length; i++) {
   } else if (dir === "t") {
       player2.velY *= -1;
   }
-  }else{
-    
-  }
+  
 }
 
 if(player2.grounded){
