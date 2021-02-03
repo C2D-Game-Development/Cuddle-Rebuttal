@@ -91,7 +91,7 @@ bloodBolt.src = './images/blood-blast.png'
 /////////////////////////////
 
 class Player{
-    constructor(x,y,w,h,img,rImg){
+    constructor(x,y,w,h,img,rImg,direction){
         this.x = x
         this.y = y
         this.w = w
@@ -112,7 +112,7 @@ class Player{
         this.health = 100;
         this.special = 0;
         this.keepLooping = true
-        this.direction = 'left'
+        this.direction = direction
     }
  
   update(ctx) {
@@ -291,8 +291,8 @@ class CanvasDisplay {
      this.createLeftWall = new Barrier(0, 0 , 20, this.stageConfig.height, floor)
      this.createRightWall = new Barrier(this.stageConfig.width*0.98, 0 , 30, this.stageConfig.height, floor)
      this.createPlatform = new Barrier(this.stageConfig.width*0.4, this.stageConfig.height*0.6 , 200, 50, floor)
-     this.createPlayer1 = new Player(50,50,100,100, cat, catReverse)
-     this.createPlayer2 = new Player(400,50,100,100, dog, dogReverse)
+     this.createPlayer1 = new Player(50,50,100,100, dog, dogReverse, 'right')
+     this.createPlayer2 = new Player(825,50,100,100, cat, catReverse, 'left')
      this.createSpecialP1 = new SpecialAttack(2000, 2000, 100, 100, bloodBolt)
      this.createSpecialP2 = new SpecialAttack(2500, 2000, 100, 100, bloodBolt)
      

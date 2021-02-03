@@ -20,7 +20,7 @@ setInterval(function () {
     // }
     // //distance = (Math.abs(player2.x-player1.x))+500
     // distance = Math.sqrt(((player1.x-player2.x+padding+player1.w)**2)+((player1.y-player2.y+padding + player1.h)**2))
-    console.log(midpoint)
+    
     zoomfactor = Math.max(Math.min((Math.sqrt(canvas.width**2 +canvas.height**2)/distance)*0.7,1.5),0.9)
     
     // if (zoomfactor < 2) {a
