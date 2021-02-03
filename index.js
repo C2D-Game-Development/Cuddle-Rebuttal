@@ -55,12 +55,13 @@ keys = []
 
 
 let floor = new Image;
-floor.src = './images/Floor.jpg'
+floor.src = './images/floor.jpg'
 
 let dog = new Image;
 dog.src = './images/Dog.png'
 
-
+let bloodBolt = new Image;
+bloodBolt.src = './images/blood-blast.png'
 
 
 
@@ -153,6 +154,18 @@ class Player{
       }
       this.x += this.velX
     }
+    drawSpecialAttack(ctx){
+      ctx.drawImage(bloodBolt, 50, 50, 50, 50)
+      // if (this.velX<0)
+      // {
+      //   this.velX=0;
+      // }
+      // if (this.velX < this.speed) {
+      //   this.velX = this.velX + 4;
+      // }
+      // this.x += this.velX
+    }
+
     update(ctx) {
       //check collision
       if(!this.checkCollision())
@@ -192,9 +205,7 @@ class Player{
     drawJump(){
 
     }
-    drawSpecialAttack(){
 
-    }
     drawAttack(){
 
     }
@@ -239,7 +250,7 @@ class CanvasDisplay {
      this.createRightWall = new Barrier(this.stageConfig.width*0.98, 0 , 30, this.stageConfig.height, floor)
      this.createPlatform = new Barrier(this.stageConfig.width*0.4, this.stageConfig.height*0.6 , 200, 50, floor)
      this.createPlayer1 = new Player(50,50,100,100, dog)
-     this.createPlayer2 = new Player(400,50,50,50, floor)
+     this.createPlayer2 = new Player(400,50,50,50, dog)
     }
   
   animate() {
@@ -293,6 +304,10 @@ function playGame() {
       }
     }
   }
+  if (keys[81]) {
+    player1.drawSpecialAttack()
+    console.log(player1)
+  }
   player1.velY += gravity;
   player1.grounded = false
 
@@ -308,6 +323,5 @@ window.onkeyup = function(e) {
   keys[e.keyCode] = false
 
 }
-
 
 playGame()

@@ -3,7 +3,7 @@
     margin: 0;
 }
 html {
-    background: url(images/tree-friends-background.jpg) no-repeat center center fixed;
+    background: url(images/c2d-background.png) no-repeat center center fixed;
     background-size: cover;
     height: 100%;
     overflow: hidden;
@@ -13,10 +13,11 @@ body {
     flex-direction: column;
     align-items: center;
 }
-main {
-    width: 80%;
-    padding: 1%;
+.container {
+    display: flex;
+    flex-direction: column;
 }
+
 canvas {
     border: 4px solid rgb(248, 59, 255);
     border-radius: 10px;
@@ -24,42 +25,48 @@ canvas {
     background-size: cover;
     background-position-x: center;
     background-repeat: no-repeat; */
-    width: 80vw;
+
     height: 50vh;
     box-shadow: 5px 5px 5px 5px  rgba(83, 5, 83, 0.514);
+}
+header {
+    text-align: center;
 }
 header h1 {
     color:rgb(40, 81, 218);
     font-family: 'Bowlby One', cursive;
     font-size: 40px;
     letter-spacing: 3px;
-    text-shadow: 3px 3px 3px rgb(243, 81, 243)
+    text-shadow: 3px 3px 3px rgb(243, 81, 243);
 }
 
 /* ---HUD Section--- */
 .hud {
     display: flex;
     flex-direction: row;
-    height: 30vh;
+    margin-top: 3%;
 }
 
 /* ---Player 1 & 2 Divs--- */
 .player1 {
-    background: rgba(125, 245, 175, 0.521);
-    border: 5px solid rgb(255, 0, 242);
+    background: #f76f718a;
+    border: 5px solid #FFF699;
     border-radius: 20px;
     width: 38%;
     display: flex;
-    box-shadow: 5px 5px 5px 5px  rgba(83, 5, 83, 0.514);
+    box-shadow: 1px 1px 20px 1px #fb9e08;
+
 }
 .player2 {
-    background: rgba(125, 245, 175, 0.521);
-    border: 5px solid rgb(255, 0, 242);
+    background-image: url(images/bloody-background.png);
+    background-repeat: no-repeat, repeat;
+    background-color: #f76f718a;
+    border: 5px solid #FFF699;
     border-radius: 20px;
     width: 38%;
     display: flex;
     flex-direction: row-reverse;
-    box-shadow: 5px 5px 5px 5px  rgba(83, 5, 83, 0.514);
+    box-shadow: 1px 1px 20px 1px #fb9e08;
 }
 .player2 > .player-info {
     display: flex;
@@ -69,13 +76,13 @@ header h1 {
     display: flex;
     flex-direction: column;
     width: 70%;
-    height: 100%;
+    padding: 3%;
 }
 .player-avatar {
     display: flex;
     flex-direction: column;
     width: 30%;
-    padding: 1%;
+    padding: 3%;
     font-family: 'Bowlby One', cursive;
     font-size: 14px;
     color: rgb(0, 217, 255);
@@ -84,10 +91,17 @@ header h1 {
 }
 .avatar-pic {
     height: 80%;
-    border: 4px solid blueviolet;
+    border: 5px solid #FFF699;
     border-radius: 10px;
-    background: rgb(252, 219, 75)
+    background: rgb(252, 219, 75);
+    overflow: hidden;
 }
+.avatar-pic img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
 .control-panel {
     height: 60%;
 }
@@ -126,7 +140,6 @@ header h1 {
 }
 .outer-bar-energy {
     height: 90%;
-    width: 80%;
     background: rgb(142, 142, 224);
     border: 3px solid blue;
     border-radius: 8px;

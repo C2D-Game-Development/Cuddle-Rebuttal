@@ -9,75 +9,77 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>CUDDLE FIGHT</h1>
-    </header>
-    <div class="canvy">
-        <canvas id="canvas">
-        </canvas>
-    </div>
-    <main>
-        <div class="hud">
-            <div class="player1">
-                <div class="player-avatar">
-                    <div class="avatar-pic">
-                        <img id="icon-one">
-                    </div>
-                    <div>
-                        <h1>Player 1</h1>
-                    </div>
-                </div>
-                <div class="player-info">
-                    <div class="health-bar">
-                        <div class="outer-bar">
-                            <div class="inner-bar" id="hp-1"><h3>HP</h3></div>
-                        </div>
-                    </div>
-                    <div class="energy-bar">
-                        <div class="outer-bar-energy">
-                            <div class="inner-bar-energy" id="energy-1"><h3>EP</h3></div>
-                        </div>
-                    </div>
-                    <div class="control-panel">
-                    </div>
-                </div>
-            </div>
-
-            <div class="time">
-                <div class='timer'>
-                    <h1>Fight Time:</h1>
-                </div>
-                <div class="actual-time">
-                </div>
-            </div>
-
-            <div class="player2">
-                <div class="player-avatar">
-                    <div class="avatar-pic">
-                        <img id="icon-two">
-                    </div>
-                    <div>
-                        <h1>Player 2</h1>
-                    </div>
-                </div>
-                <div class="player-info">
-                    <div class="health-bar">
-                        <div class="outer-bar">
-                            <div class="inner-bar" id="hp-2"><h3>HP</h3></div>
-                        </div>
-                    </div>
-                    <div class="energy-bar">
-                        <div class="outer-bar-energy">
-                            <div class="inner-bar-energy"><h3>EP</h3></div>
-                        </div>
-                    </div>
-                    <div class="control-panel">
-                    </div>
-                </div>
-            </div>
-
+    <div class="container">
+        <header>
+            <h1>CUDDLE FIGHT</h1>
+        </header>
+        <div class="canvy">
+            <canvas id="canvas">
+            </canvas>
         </div>
-    </main>
+        <main>
+            <div class="hud">
+                <div class="player1">
+                    <div class="player-avatar">
+                        <div class="avatar-pic">
+                            <img src="images/blood-dog.png">
+                        </div>
+                        <div>
+                            <h1>Player 1</h1>
+                        </div>
+                    </div>
+                    <div class="player-info">
+                        <div class="health-bar">
+                            <div class="outer-bar">
+                                <div class="inner-bar" id="hp-1"><h3>HP</h3></div>
+                            </div>
+                        </div>
+                        <div class="energy-bar">
+                            <div class="outer-bar-energy">
+                                <div class="inner-bar-energy" id="energy-1"><h3>EP</h3></div>
+                            </div>
+                        </div>
+                        <div class="control-panel">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="time">
+                    <div class='timer'>
+                        <h1>Fight Time:</h1>
+                    </div>
+                    <div class="actual-time">
+                    </div>
+                </div>
+
+                <div class="player2">
+                    <div class="player-avatar">
+                        <div class="avatar-pic">
+                            <img src="/images/blood-cat.png">
+                        </div>
+                        <div>
+                            <h1>Player 2</h1>
+                        </div>
+                    </div>
+                    <div class="player-info">
+                        <div class="health-bar">
+                            <div class="outer-bar">
+                                <div class="inner-bar" id="hp-2"><h3>HP</h3></div>
+                            </div>
+                        </div>
+                        <div class="energy-bar">
+                            <div class="outer-bar-energy">
+                                <div class="inner-bar-energy"><h3>EP</h3></div>
+                            </div>
+                        </div>
+                        <div class="control-panel">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
     <script src="index.js"></script>
 </body>
 </html>
