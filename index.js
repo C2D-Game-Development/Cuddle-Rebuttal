@@ -427,7 +427,7 @@ function playGame() {
   }
   if (keys[87]) {
       if(!player2.jumping && player2.grounded){
-        player2.grounded = ssdafalse
+        player2.grounded = false
         player2.jump()
       }
   }
@@ -494,10 +494,15 @@ player2.y += player2.velY;
 
 if (player1.health <= 0) {
   player1.dead()
-}
+} 
+// else {
+//   alert("GAME OVER")
+//   document.location.reload()
+//   clearInterval(interval)
+// }
 if (player2.health <= 0) {
   player2.dead()
-}
+} 
 if ((player1.velX > 0.3 || player1.velX < -0.3)&&player1.grounded) {
   player1.run()
 }
