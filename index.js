@@ -37,7 +37,7 @@ function formatTimeLeft(time) {
     seconds = `0${seconds}`;
   }
   return `${minutes}:${seconds}`;
-}
+}ver 
 
 /////////////////////////////
 //////Physics variables//////
