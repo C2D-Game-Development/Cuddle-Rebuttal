@@ -89,10 +89,33 @@ bloodBoltR.src = './images/blood-blast-2.png'
 let bloodBoltL = new Image;
 bloodBoltL.src = './images/blood-blast-l.png'
 
+let blood = new Image;
+blood.src = './images/dropsplash.png'
+
 /////////////////////////////
 //////Classes for game///////
 /////////////////////////////
-
+class Blood{
+    constructor(player,w,h,img){
+      this.x=player.x
+      this.y=player.y
+      this.w=w
+      this.h=h
+      this.img=img
+      this.sx=0
+      this.sy=0
+      this.sw=img.width/3
+      this.sh=img.height/2
+    }
+    update(ctx)
+    {
+      this.draw(ctx)
+    }
+    draw(ctx)
+    {
+      ctx.drawImage(this.img,this.sx,this.sy,this.sw,this.sh,this.x,this.y,this.w,this.h)
+    }
+}
 class Player{
     constructor(x,y,w,h,img,rImg,direction){
         this.x = x
@@ -124,7 +147,18 @@ class Player{
   }
     draw(ctx){
       //dead
-      if (this.sy == 0 && frame % 10 == 0) {
+      if(frame % 3 ==0 && this.special<100)
+      {
+        this.special++
+        if(this.img==cat)
+        {
+        document.querySelector('#energy-1').style.width = `${this.special}%`
+        }else{
+        document.querySelector('#energy-2').style.width = `${this.special}%`
+        }
+      }
+      
+      if (this.sy == 0 && frame % 20 == 0) {
         this.sx += this.sw 
       }
       // Idle-foolishness
@@ -300,7 +334,7 @@ class CanvasDisplay {
      this.createPlayer2 = new Player(825,50,100,100, cat, catReverse, 'left')
      this.createSpecialP1 = new SpecialAttack(2000, 2000, 100, 100, bloodBoltR, bloodBoltL)
      this.createSpecialP2 = new SpecialAttack(2500, 2000, 100, 100, bloodBoltR, bloodBoltL )
-     
+     this.createBloodP1 = new Blood(this.createPlayer1,100,100,blood)
     }
   
   animate() {
@@ -314,6 +348,7 @@ class CanvasDisplay {
      this.createPlayer2.update(this.ctx)
      this.createSpecialP1.update(this.ctx)
      this.createSpecialP2.update(this.ctx)
+     this.createBloodP1.update(this.ctx)
      //check collision
      //check death
   }
@@ -388,9 +423,10 @@ let frame = 0
 function playGame() {
   /*--- key press codes, if true which is set on keydown, will check to see if player1 is within canvas, 
         then execute move functions in class--- */
-  if (keys[17]) 
+  if (keys[17] && player2.special==100) 
         {
           specialP1.reset(player1)
+          player2.special=0
         }
   if (keys[37]) {
     if((player1.x - 30) > 0) {
@@ -410,8 +446,9 @@ function playGame() {
       }
     }
   }
-  if (keys[81] || keys[88]) {
+  if ((keys[81] || keys[88]) && player1.special==100) {
     specialP2.reset(player2)
+    player1.special=0
     console.log("i pressed it!")
   }
   player1.velY += gravity;
@@ -439,6 +476,7 @@ function playGame() {
     
     var dir = colCheck(player1, gameObjects[i]);
 
+    if(i<4){
     if (dir === "l" || dir === "r") {
         player1.velX = 0;
         player1.jumping = false;
@@ -448,7 +486,12 @@ function playGame() {
     } else if (dir === "t") {
         player1.velY *= -1;
     }
-
+  }else{
+    if(dir!=null){
+      player1.receiveDamageP1()
+      specialP2.y=-500;
+    }
+  }
 }
 
 if(player1.grounded){
@@ -464,7 +507,7 @@ player1.y += player1.velY;
 for (var i = 0; i < gameObjects.length; i++) {
     
   var dir = colCheck(player2, gameObjects[i]);
-  
+  if(i<4){
   if (dir === "l" || dir === "r") {
       player2.velX = 0;
       player2.jumping = false;
@@ -473,6 +516,11 @@ for (var i = 0; i < gameObjects.length; i++) {
       player2.jumping = false;
   } else if (dir === "t") {
       player2.velY *= -1;
+  }}else{
+    if(dir!=null){
+      player2.receiveDamageP2()
+      specialP1.y=-500;
+    }
   }
   
 }
