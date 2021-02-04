@@ -1,3 +1,17 @@
+window.addEventListener("click", function() {
+  let splashTarget = document.querySelector('#splash-screen')
+  let splashEffect = setInterval(function() {
+    if (!splashTarget.style.opacity) {
+      splashTarget.style.opacity = 1;
+    }
+    if (splashTarget.style.opacity > 0) {
+      splashTarget.style.opacity -= 0.1;
+    }
+    else {
+      clearInterval(splashTarget)
+    }
+  }, 100)
+})
 
 
 /////////////////////////////
@@ -14,7 +28,6 @@ document.querySelector('.actual-time').innerHTML = `
     </span>
   `
 startTimer()
-
 
 function onTimesUp() {
   clearInterval(timerInterval)
@@ -38,6 +51,7 @@ function formatTimeLeft(time) {
   }
   return `${minutes}:${seconds}`;
 }ver 
+
 
 /////////////////////////////
 //////Physics variables//////
@@ -121,6 +135,7 @@ class Player{
   update(ctx) {
     
     this.draw(ctx)
+    this.lowHealth()
   }
     draw(ctx){
       //dead
@@ -201,10 +216,18 @@ class Player{
     }
     receiveDamageP1(){
       this.health -=10;
+      if(this.health < 50) {
+        document.querySelector('#hp-1').style.cssText = `width: ${this.health}%; background-image: linear-gradient(#ff0404, #ec4141, #f16a63,  #ec4141, #ff0404)`
+        document.querySelector('.player1').style.cssText = "animation: healthGlow 2s infinite;"
+      }
       document.querySelector('#hp-1').style.width = `${this.health}%`
     }
     receiveDamageP2(){
       this.health -=10;
+      if(this.health < 50) {
+        document.querySelector('#hp-2').style.cssText = `width: ${this.health}%; background-image: linear-gradient(#ff0404, #ec4141, #f16a63,  #ec4141, #ff0404)`
+        document.querySelector('.player2').style.cssText = "animation: healthGlow 2s infinite;"
+      }
       document.querySelector('#hp-2').style.width = `${this.health}%`
     }
     drawRun(){
@@ -212,6 +235,16 @@ class Player{
     }
     drawBlock(){
 
+    }
+    lowHealth() {
+      if (this.health <= 40) {
+        document.querySelector('body').style.background = getBodyValue
+        document.querySelector('body').style.backgroundSize = "cover"
+      }
+      if (this.health <= 20) {
+        document.querySelector('body').style.background = getBodyValue1
+        document.querySelector('body').style.backgroundSize = "cover"
+      }
     }
 }
 
@@ -520,11 +553,10 @@ if ((player2.velX > 0.3 || player2.velX < -0.3)&&player2.grounded) {
 // player2.x
 
 frame++
-
+  
   interval = requestAnimationFrame(playGame)
   canvasDisplay.animate() 
 }
-
 
 
 // ---listeners for key down and up--- //
@@ -534,5 +566,13 @@ window.onkeydown = function(e) {
 window.onkeyup = function(e) {
   keys[e.keyCode] = false
 }
+// ---dom selectors for healthbar image changes--- //
+let getBody = document.querySelector('body')
+let getBodyCss = window.getComputedStyle(getBody)
+let getBodySize = getBodyCss.getPropertyValue('background-size')
+let getBodyValue = getBodyCss.getPropertyValue('background')
+getBodyValue = "url(images/c2d-background-dark.jpg) no-repeat center center fixed"
+getBodyValue1 = "url(images/c2d-background-blood.png) no-repeat center center fixed"
+
 
 playGame()
