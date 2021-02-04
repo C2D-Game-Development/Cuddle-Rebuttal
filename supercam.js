@@ -25,7 +25,6 @@ setInterval(function () {
     
     // if (zoomfactor < 2) {a
 
-        canvas.style.border = '10px solid blue'
 
         canvas.style.transform = `scale(${zoomfactor})`
         canvas.style.transformOrigin = `${midpoint.x}px  ${midpoint.y}px`
