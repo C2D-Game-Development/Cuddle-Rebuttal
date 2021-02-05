@@ -626,3 +626,8 @@ socket.on("keyUpFromServer", ({ keyCode, id }) => {
 });
 
 playGame();
+
+//shield
+//attack
+//must
+//duck?
