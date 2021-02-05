@@ -48,8 +48,9 @@ canvas {
 
 }
 #low-health-bg {
-    /* background: url(images/c2d-background-dark-2.jpg) no-repeat center center fixed; */
-    background-size: cover;
+    background: url(images/c2d-background-dark-2.jpg) no-repeat center center fixed;
+    object-fit: cover;
+    width: 100%;
     height: 100%;
     opacity: 0;
     position: absolute;
