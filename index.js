@@ -1,16 +1,14 @@
 window.addEventListener("click", function () {
-
   let splashTarget = document.querySelector(".splash-screen");
   let playGameAudio = document.querySelector("#splash-audio");
-  if (soundPlayed) { 
-    playGameAudio.play()
-    soundPlayed = false
+  if (soundPlayed) {
+    playGameAudio.play();
+    soundPlayed = false;
   }
-  splashTarget.style.animation = "fade-out 2s 1 ease forwards"
-  if (splashTarget.style.opacity == 0) backgroundMusic.play() 
-  
+  splashTarget.style.animation = "fade-out 2s 1 ease forwards";
+  if (splashTarget.style.opacity == 0) backgroundMusic.play();
 });
-let soundPlayed = true
+let soundPlayed = true;
 /* ---game over function that doesn't call fades out canvas and plays anims--- */
 function gameOver() {
   if (player1.health <= 0 || player2.health <= 0) {
@@ -158,10 +156,7 @@ backgroundMusic.volume = 0.09;
 let killSound = new Audio("./Audio/Kill Sound.mp3");
 killSound.loop = false;
 
-
-
-
-
+let attackSound = new Audio("./Audio/Attack.wav");
 
 /////////////////////////////`
 //////Classes for game///////
@@ -722,13 +717,10 @@ let attackP2 = canvasDisplay.createAttackP2;
 let attackDropP1 = canvasDisplay.createAttackDropP1;
 let attackDropP2 = canvasDisplay.createAttackDropP2;
 
-
-
 let platform = canvasDisplay.createPlatform;
 let stage = canvasDisplay.createFloor;
 let leftWall = canvasDisplay.createLeftWall;
 let rightWall = canvasDisplay.createRightWall;
-
 
 let gameObjects = [
   canvasDisplay.createPlatform,
@@ -793,14 +785,15 @@ function playGame() {
     killSound.play();
     playerDied++;
   }
-  if (keys[17] && player2.special >= 100) {
+  if (keys[74] && player2.special >= 100) {
     //special attack
     specialP1.reset(player1);
     player2.special = 0;
   }
 
-  if (keys[16] && player2.special > 25) {
+  if (keys[76] && player2.special > 25) {
     //attack
+    attackSound.play();
     player2.special -= 25;
     if (player1.direction == "right") {
       attackP1.y = player1.y + player1.h / 4;
@@ -853,12 +846,13 @@ function playGame() {
   }
 
   //PLAYER2
-  if (keys[81] && player1.special >= 100) {
+  if (keys[50] && player1.special >= 100) {
     specialP2.reset(player2);
     player1.special = 0;
     console.log("i pressed it!");
   }
-  if (keys[69] && player1.special > 25) {
+  if (keys[51] && player1.special > 25) {
+    attackSound.play();
     player1.special -= 25;
     //attack
     if (player2.direction == "right") {
