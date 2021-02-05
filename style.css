@@ -34,6 +34,7 @@ canvas {
 .splash-screen {
     width: 100%;
     position: absolute;
+    opacity: 1;
     z-index: 3;
     background: url(images/c2d-background.png) no-repeat center center fixed;
     background-size: cover;
@@ -75,11 +76,12 @@ canvas {
     position: absolute;
     display: block;
     margin: auto;
-    top: -150%;
+    top: -170%;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 2;
+    opacity: 0;
     /* animation: dog-drop 2s ease-in forwards; */
 }
 
@@ -292,10 +294,12 @@ header img {
 }
 @keyframes dog-drop {
     0% {
-        top: -150%;
+        top: -170%;
+        opacity: 1;
     }
     100% {
         top: -40%;
+        opacity: 1;
     }
 }
 @keyframes game-drop {

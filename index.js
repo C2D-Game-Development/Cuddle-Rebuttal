@@ -1,17 +1,16 @@
 window.addEventListener("click", function () {
-  let splashTarget = document.querySelector(".splash-screen");
-  let splashEffect = setInterval(function () {
-    if (!splashTarget.style.opacity) {
-      splashTarget.style.opacity = 1;
-    }
-    if (splashTarget.style.opacity > 0) {
-      splashTarget.style.opacity -= 0.1;
-    } else {
-      clearInterval(splashTarget);
-    }
-  }, 100);
-});
 
+  let splashTarget = document.querySelector(".splash-screen");
+  let playGameAudio = document.querySelector("#splash-audio");
+  if (soundPlayed) {
+    playGameAudio.play()
+    soundPlayed = false
+  }
+  splashTarget.style.animation = "fade-out 2s 1 ease forwards"
+  if (splashTarget.style.opacity == 0) backgroundMusic.play() 
+  
+});
+let soundPlayed = true
 /* ---game over function that doesn't call fades out canvas and plays anims--- */
 function gameOver() {
   if (player1.health <= 0 || player2.health <= 0) {
@@ -152,9 +151,14 @@ attackDrop.src = "./images/attack-2.png";
 /////////////////////////////
 //////Audio for game////////
 /////////////////////////////
+let backgroundMusic = new Audio("./Audio/background-music.mp3");
+backgroundMusic.loop = true;
+backgroundMusic.volume = 0.09;
 
 let killSound = new Audio("./Audio/Kill Sound.mp3");
 killSound.loop = false;
+
+
 /////////////////////////////
 //////Classes for game///////
 /////////////////////////////
@@ -714,10 +718,13 @@ let attackP2 = canvasDisplay.createAttackP2;
 let attackDropP1 = canvasDisplay.createAttackDropP1;
 let attackDropP2 = canvasDisplay.createAttackDropP2;
 
+
+
 let platform = canvasDisplay.createPlatform;
 let stage = canvasDisplay.createFloor;
 let leftWall = canvasDisplay.createLeftWall;
 let rightWall = canvasDisplay.createRightWall;
+
 
 let gameObjects = [
   canvasDisplay.createPlatform,
@@ -782,7 +789,7 @@ function playGame() {
     killSound.play();
     playerDied++;
   }
-  if (keys[17] && player2.special == 100) {
+  if (keys[17] && player2.special >= 100) {
     //special attack
     specialP1.reset(player1);
     player2.special = 0;
@@ -842,7 +849,7 @@ function playGame() {
   }
 
   //PLAYER2
-  if ((keys[81] || keys[88]) && player1.special == 100) {
+  if (keys[81] && player1.special >= 100) {
     specialP2.reset(player2);
     player1.special = 0;
     console.log("i pressed it!");
