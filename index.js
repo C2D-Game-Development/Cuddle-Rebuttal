@@ -149,6 +149,8 @@ flowers.src = "./PNG Objects/flower.png";
 /////////////////////////////
 //////Audio for game////////
 /////////////////////////////
+let backgroundMusic = new Audio("./Audio/background-music.mp3");
+backgroundMusic.loop = true;
 
 let killSound = new Audio("./Audio/Kill Sound.mp3");
 killSound.loop = false;
@@ -672,6 +674,7 @@ let canvasDisplay = new CanvasDisplay();
 /////////////////////////////
 
 let ctx = canvasDisplay.ctx;
+
 let player1 = canvasDisplay.createPlayer1;
 let player2 = canvasDisplay.createPlayer2;
 let specialP1 = canvasDisplay.createSpecialP1;
@@ -683,10 +686,13 @@ let shieldP2 = canvasDisplay.createShieldP2;
 let attackP1 = canvasDisplay.createAttackP1;
 let attackP2 = canvasDisplay.createAttackP2;
 
+
+let backgroundMusic = canvasDisplay.createBackgroundMusic;
 let platform = canvasDisplay.createPlatform;
 let stage = canvasDisplay.createFloor;
 let leftWall = canvasDisplay.createLeftWall;
 let rightWall = canvasDisplay.createRightWall;
+
 
 let gameObjects = [
   canvasDisplay.createPlatform,
