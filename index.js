@@ -9,6 +9,7 @@ window.addEventListener("click", function () {
   if (splashTarget.style.opacity == 0) backgroundMusic.play();
 });
 let soundPlayed = true;
+
 /* ---game over function that doesn't call fades out canvas and plays anims--- */
 function gameOver() {
   if (player1.health <= 0 || player2.health <= 0) {
@@ -30,7 +31,7 @@ function gameOver() {
     }
   }
 }
-let muted = false;
+
 /////////////////////////////
 //////  Timer ///////////////
 /////////////////////////////
@@ -147,27 +148,37 @@ let attackDrop = new Image();
 attackDrop.src = "./images/attack-2.png";
 
 ///declare Audio variables
-let allAudio = 1;
-let bM = 0.39;
+let allAudio = 1.5;
+let bM = .30;
 let kS = 2;
-let SFX = 0.8;
-bM.muted = false;
+let SFX = 3;
+
 /////////////////////////////
 //////Audio for game////////
 /////////////////////////////
 let backgroundMusic = new Audio("./Audio/background-music.mp3");
+backgroundMusic.muted = false;
 backgroundMusic.loop = true;
-backgroundMusic.volume = 0.04 * bM * allAudio;
+backgroundMusic.volume = 0.2 * bM * allAudio;
 
 let playGameAudioX = document.querySelector("#splash-audio");
-playGameAudioX.volume = 0.09 * kS * allAudio;
+playGameAudioX.volume = 0.2 * kS * allAudio;
 
 let killSound = new Audio("./Audio/Kill Sound.mp3");
 killSound.loop = false;
-killSound.volume = 0.24 * kS * allAudio;
+killSound.volume = 0.33 * kS * allAudio;
 
 let attackSound = new Audio("./Audio/Attack.wav");
 attackSound.volume = 0.09 * SFX * allAudio;
+
+let bloodBlastSound = new Audio("./Audio/bloodBlast.mp3");
+bloodBlastSound.volume = 0.18 * SFX * allAudio;
+
+let bloodyBlastSound = new Audio("./Audio/bloodyBlast.mp3");
+bloodyBlastSound.volume = 0.18 * SFX * allAudio;
+
+let gameOverSound = new Audio("./Audio/gameOverSound.mp3");
+gameOverSound.volume = 0.27 * kS * allAudio;
 
 let hit1Sound = new Audio("./Audio/Hit 1.mp3");
 hit1Sound.volume = 0.06 * SFX * allAudio;
@@ -808,11 +819,13 @@ function playGame() {
   /*--- key press codes, if true which is set on keydown, will check to see if player1 is within canvas, 
         then execute move functions in class--- */
   if (playerDied == 1) {
-    killSound.play();
+    setTimeout(killSound.play(),1000);
+    gameOverSound.play();
     playerDied++;
   }
   if (keys[74] && player2.special >= 100) {
     //special attack
+    bloodBlastSound.play();
     specialP1.reset(player1);
     player2.special = 0;
   }
@@ -873,6 +886,7 @@ function playGame() {
 
   //PLAYER2
   if (keys[50] && player1.special >= 100) {
+    bloodyBlastSound.play();
     specialP2.reset(player2);
     player1.special = 0;
     console.log("i pressed it!");
@@ -928,12 +942,10 @@ function playGame() {
     player2.blocking = false;
   }
   if (keys[77]) {
-    if (bM.muted == false) {
-      bM = 0;
-      bM.muted = true;
-    } else {
-      bM = 0.39;
-      bM.muted = false;
+    if (backgroundMusic.muted == false)
+      backgroundMusic.muted = true;
+    else {
+      backgroundMusic.muted = false;
     }
   }
 
@@ -1028,7 +1040,6 @@ function playGame() {
   // player1.x
   // player2.x
 
-  // ---- DON't KNOW IF THIS frame++ IS SUPPOSED TO BE HERE ROBERTO--- //
   frame++;
   gameOver();
   interval = requestAnimationFrame(playGame);
