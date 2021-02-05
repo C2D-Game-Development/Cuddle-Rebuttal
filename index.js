@@ -9,6 +9,7 @@ window.addEventListener("click", function () {
   if (splashTarget.style.opacity == 0) backgroundMusic.play();
 });
 let soundPlayed = true;
+
 /* ---game over function that doesn't call fades out canvas and plays anims--- */
 function gameOver() {
   if (player1.health <= 0 || player2.health <= 0) {
@@ -30,7 +31,7 @@ function gameOver() {
     }
   }
 }
-let muted = false;
+
 /////////////////////////////
 //////  Timer ///////////////
 /////////////////////////////
@@ -147,25 +148,25 @@ let attackDrop = new Image();
 attackDrop.src = "./images/attack-2.png";
 
 ///declare Audio variables
-let allAudio = 1;
-let bM = 0.39;
+let allAudio = 1.5;
+let bM = .30;
 let kS = 2;
-let SFX = 0.8;
-bM.muted = false;
+let SFX = 3;
+
 /////////////////////////////
 //////Audio for game////////
 /////////////////////////////
 let backgroundMusic = new Audio("./Audio/background-music.mp3");
 backgroundMusic.muted = false;
 backgroundMusic.loop = true;
-backgroundMusic.volume = 0.04 * bM * allAudio;
+backgroundMusic.volume = 0.2 * bM * allAudio;
 
 let playGameAudioX = document.querySelector("#splash-audio");
-playGameAudioX.volume = 0.09 * kS * allAudio;
+playGameAudioX.volume = 0.2 * kS * allAudio;
 
 let killSound = new Audio("./Audio/Kill Sound.mp3");
 killSound.loop = false;
-killSound.volume = 0.24 * kS * allAudio;
+killSound.volume = 0.3 * kS * allAudio;
 
 let attackSound = new Audio("./Audio/Attack.wav");
 attackSound.volume = 0.09 * SFX * allAudio;
@@ -929,12 +930,10 @@ function playGame() {
     player2.blocking = false;
   }
   if (keys[77]) {
-    if (bM.muted == false) {
-      bM = 0;
-      bM.muted = true;
-    } else {
-      bM = 0.39;
-      bM.muted = false;
+    if (backgroundMusic.muted == false)
+      backgroundMusic.muted = true;
+    else {
+      backgroundMusic.muted = false;
     }
   }
 
@@ -1029,7 +1028,6 @@ function playGame() {
   // player1.x
   // player2.x
 
-  // ---- DON't KNOW IF THIS frame++ IS SUPPOSED TO BE HERE ROBERTO--- //
   frame++;
   gameOver();
   interval = requestAnimationFrame(playGame);
