@@ -30,7 +30,7 @@ function gameOver() {
     }
   }
 }
-
+let muted = false;
 /////////////////////////////
 //////  Timer ///////////////
 /////////////////////////////
@@ -146,18 +146,40 @@ flowers.src = "./PNG Objects/flower.png";
 let attackDrop = new Image();
 attackDrop.src = "./images/attack-2.png";
 
+///declare Audio variables
+let allAudio = 1;
+let bM = 0.39;
+let kS = 2;
+let SFX = 0.8;
+bM.muted = false;
 /////////////////////////////
 //////Audio for game////////
 /////////////////////////////
 let backgroundMusic = new Audio("./Audio/background-music.mp3");
 backgroundMusic.muted = false;
 backgroundMusic.loop = true;
-backgroundMusic.volume = 0.09
+backgroundMusic.volume = 0.04 * bM * allAudio;
+
+let playGameAudioX = document.querySelector("#splash-audio");
+playGameAudioX.volume = 0.09 * kS * allAudio;
 
 let killSound = new Audio("./Audio/Kill Sound.mp3");
 killSound.loop = false;
+killSound.volume = 0.24 * kS * allAudio;
 
 let attackSound = new Audio("./Audio/Attack.wav");
+attackSound.volume = 0.09 * SFX * allAudio;
+
+let hit1Sound = new Audio("./Audio/Hit 1.mp3");
+hit1Sound.volume = 0.06 * SFX * allAudio;
+let hit2Sound = new Audio("./Audio/Hit 2.mp3");
+hit2Sound.volume = 0.09 * SFX * allAudio;
+let hit3Sound = new Audio("./Audio/Hit 3.mp3");
+hit3Sound.volume = 0.09 * SFX * allAudio;
+let hit4Sound = new Audio("./Audio/Hit 4.mp3");
+hit4Sound.volume = 0.09 * SFX * allAudio;
+
+////Audio Controls
 
 /////////////////////////////`
 //////Classes for game///////
@@ -355,6 +377,7 @@ class Player {
   receiveDamageP1(multiplier) {
     if (this.blocking == false) {
       this.health -= 10 * multiplier;
+      hit1Sound.play();
       if (player2.direction == "right") {
         this.y -= this.h * 1;
         this.x += this.w;
@@ -364,6 +387,7 @@ class Player {
       }
     } else {
       this.health -= 2 * multiplier;
+      hit2Sound.play();
     }
     bloodP1.sx = 0;
     bloodP1.sy = 0;
@@ -381,6 +405,7 @@ class Player {
   receiveDamageP2(multiplier) {
     if (this.blocking == false) {
       this.health -= 10 * multiplier;
+      hit3Sound.play();
       if (player1.direction == "right") {
         this.y -= this.h * 1;
         this.x -= this.w;
@@ -389,6 +414,7 @@ class Player {
         this.x -= this.w;
       }
     } else {
+      hit4Sound.play();
       this.health -= 2 * multiplier;
     }
 
@@ -903,8 +929,15 @@ function playGame() {
     player2.blocking = false;
   }
   if (keys[77]) {
-    backgroundMusic.muted = true;
+    if (bM.muted == false) {
+      bM = 0;
+      bM.muted = true;
+    } else {
+      bM = 0.39;
+      bM.muted = false;
+    }
   }
+
   player2.velY += gravity;
   player2.velX *= friction;
   player2.grounded = false;
