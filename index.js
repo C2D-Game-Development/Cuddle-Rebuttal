@@ -1,8 +1,15 @@
 window.addEventListener("click", function () {
-  let splashTarget = document.querySelector(".splash-screen");
-  splashTarget.style.animation = "fade-out 1.5s 1 ease forwards"
-});
 
+  let splashTarget = document.querySelector(".splash-screen");
+  let playGameAudio = document.querySelector("#splash-audio");
+  if (soundPlayed) {
+    playGameAudio.play()
+    soundPlayed = false
+  }
+  splashTarget.style.animation = "fade-out 2s 1 ease forwards"
+  
+});
+let soundPlayed = true
 /* ---game over function that doesn't call fades out canvas and plays anims--- */
 function gameOver() {
   if (player1.health <= 0 || player2.health <= 0) {
