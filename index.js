@@ -781,7 +781,7 @@ let frame = 0;
 function playGame() {
   /*--- key press codes, if true which is set on keydown, will check to see if player1 is within canvas, 
         then execute move functions in class--- */
-  if (keys[17] && player2.special == 100) {
+  if (keys[17] && player2.special >= 100) {
     //special attack
     specialP1.reset(player1);
     player2.special = 0;
@@ -833,7 +833,7 @@ function playGame() {
   }
 
   //PLAYER2
-  if ((keys[81] || keys[88]) && player1.special == 100) {
+  if (keys[81] && player1.special >= 100) {
     specialP2.reset(player2);
     player1.special = 0;
     console.log("i pressed it!");

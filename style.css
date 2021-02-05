@@ -75,7 +75,7 @@ canvas {
     position: absolute;
     display: block;
     margin: auto;
-    top: -150%;
+    top: -170%;
     left: 0;
     right: 0;
     bottom: 0;
@@ -292,7 +292,7 @@ header img {
 }
 @keyframes dog-drop {
     0% {
-        top: -150%;
+        top: -170%;
     }
     100% {
         top: -40%;
