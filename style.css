@@ -54,7 +54,7 @@ canvas {
     border: 5px solid #baf3f5;
     border-radius: 15px;
     height: 50vh;
-    box-shadow: 1px 1px 20px 5px rgb(40 230 230)
+    box-shado`w: 1px 1px 20px 5px rgb(40 230 230)
 }
 #splash-screen {
     height: 70%;
@@ -204,7 +204,7 @@ header img {
     color: white;
 }
 #energy-1 {
-    width: var(--energy-1)
+    width: 0%
 }
 .outer-bar-energy {
     height: 90%;
@@ -219,7 +219,9 @@ header img {
     background-image: linear-gradient(rgb(80, 80, 255),rgb(125, 125, 255), rgb(148, 148, 255), rgb(125, 125, 255), rgb(80, 80, 255));
     border-radius: 5px;
 }
-
+#energy-2 {
+    width: 0%
+}
 /* ---Fight Timer--- */
 .time {
     display: flex;
