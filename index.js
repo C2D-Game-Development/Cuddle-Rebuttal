@@ -145,6 +145,9 @@ shrooms.src = "./PNG Objects/mushrooms.png";
 let flowers = new Image();
 flowers.src = "./PNG Objects/flower.png";
 
+let attackDrop = new Image();
+attackDrop.src = "./images/attack-2.png";
+
 /////////////////////////////
 //////Audio for game////////
 /////////////////////////////
@@ -160,7 +163,7 @@ killSound.loop = false;
 
 
 
-/////////////////////////////
+/////////////////////////////`
 //////Classes for game///////
 /////////////////////////////
 class SpecialEffects {
@@ -508,6 +511,15 @@ class Beautify {
   update(ctx) {
     this.draw(ctx);
   }
+  reset(player) {
+    this.direction = player.direction;
+    if (this.direction == "right") {
+      this.x = player.x + player.w * 0.5;
+    } else {
+      this.x = player.x - player.w * 0.5;
+    }
+    this.y = player.y;
+  }
 }
 
 class Barrier {
@@ -640,6 +652,20 @@ class CanvasDisplay {
     this.createShrooms = new Beautify(400, 410, 50, 50, shrooms);
     this.createFlowers = new Beautify(920, 405, 50, 50, flowers);
     this.createFlowers2 = new Beautify(200, 405, 50, 50, flowers);
+    this.createAttackDropP1 = new Beautify(
+      this.createAttackP1.x,
+      this.createAttackP1.y,
+      100,
+      100,
+      attackDrop
+    );
+    this.createAttackDropP2 = new Beautify(
+      this.createAttackP2.x,
+      this.createAttackP2.y,
+      100,
+      100,
+      attackDrop
+    );
   }
 
   animate() {
@@ -668,6 +694,9 @@ class CanvasDisplay {
     this.createShieldP2.update(this.ctx);
     this.createAttackP1.update(this.ctx);
     this.createAttackP2.update(this.ctx);
+    this.createAttackDropP1.update(this.ctx);
+    this.createAttackDropP2.update(this.ctx);
+
     //check collision
     //check death
   }
@@ -690,6 +719,8 @@ let shieldP1 = canvasDisplay.createShieldP1;
 let shieldP2 = canvasDisplay.createShieldP2;
 let attackP1 = canvasDisplay.createAttackP1;
 let attackP2 = canvasDisplay.createAttackP2;
+let attackDropP1 = canvasDisplay.createAttackDropP1;
+let attackDropP2 = canvasDisplay.createAttackDropP2;
 
 
 
@@ -750,7 +781,8 @@ function colCheck(shapeA, shapeB) {
     return colDir;
   }
 }
-
+let timeToDissapear = 100;
+let timeToDissapear1 = 100;
 let interval = null;
 let frame = 0;
 let playerDied = 0;
@@ -766,6 +798,7 @@ function playGame() {
     specialP1.reset(player1);
     player2.special = 0;
   }
+
   if (keys[16] && player2.special > 25) {
     //attack
     player2.special -= 25;
@@ -776,7 +809,14 @@ function playGame() {
       attackP1.y = player1.y + player1.h / 4;
       attackP1.x = player1.x - player1.w * 0.4;
     }
+    timeToDissapear1 = 100;
+    attackDropP1.reset(player1);
   } else {
+    timeToDissapear1 -= 4;
+    if (timeToDissapear1 == 0) {
+      attackDropP1.y = -1000;
+      timeToDissapear1 = 100;
+    }
     attackP1.y = -1000;
   }
   if (keys[37]) {
@@ -828,7 +868,14 @@ function playGame() {
       attackP2.y = player2.y + player2.h / 4;
       attackP2.x = player2.x - player2.w * 0.4;
     }
+    timeToDissapear = 100;
+    attackDropP2.reset(player2);
   } else {
+    timeToDissapear -= 4;
+    if (timeToDissapear == 0) {
+      attackDropP2.y = -1000;
+      timeToDissapear = 100;
+    }
     attackP2.y = -1000;
   }
 
