@@ -1,34 +1,35 @@
-window.addEventListener("click", function() {
-  let splashTarget = document.querySelector('.splash-screen')
-  let splashEffect = setInterval(function() {
+window.addEventListener("click", function () {
+  let splashTarget = document.querySelector(".splash-screen");
+  let splashEffect = setInterval(function () {
     if (!splashTarget.style.opacity) {
       splashTarget.style.opacity = 1;
     }
     if (splashTarget.style.opacity > 0) {
       splashTarget.style.opacity -= 0.1;
+    } else {
+      clearInterval(splashTarget);
     }
-    else {
-      clearInterval(splashTarget)
-    }
-  }, 100)
-})
+  }, 100);
+});
 
 /* ---game over function that doesn't call fades out canvas and plays anims--- */
 function gameOver() {
   if (player1.health <= 0 || player2.health <= 0) {
-    let gameOver = document.querySelector('#evil-game-over')
-    let bloodBg = document.querySelector('#blood-bg')
-    let deadDog = document.querySelector('#dead-dog')
-    let deadCat = document.querySelector('#dead-cat')
-    let canvasContainer = document.querySelector('.container')
-    canvasContainer.style.animation = "fade-out 1s 1.5s ease-in forwards"
-    gameOver.style.animation = "fade-in 2s 2.5s ease-in forwards, game-drop .6s 5.6s forwards"
-    bloodBg.style.animation = "fade-in 2.5s 2s ease forwards"
+    playerDied++;
+
+    let gameOver = document.querySelector("#evil-game-over");
+    let bloodBg = document.querySelector("#blood-bg");
+    let deadDog = document.querySelector("#dead-dog");
+    let deadCat = document.querySelector("#dead-cat");
+    let canvasContainer = document.querySelector(".container");
+    canvasContainer.style.animation = "fade-out 1s 1.5s ease-in forwards";
+    gameOver.style.animation =
+      "fade-in 2s 2.5s ease-in forwards, game-drop .6s 5.6s forwards";
+    bloodBg.style.animation = "fade-in 2.5s 2s ease forwards";
     if (player1.health <= 0) {
-      deadDog.style.animation = "dog-drop 2s 4s ease-in forwards"
-    }
-    else {
-      deadCat.style.animation = "dog-drop 2s 4s ease-in forwards"
+      deadDog.style.animation = "dog-drop 2s 4s ease-in forwards";
+    } else {
+      deadCat.style.animation = "dog-drop 2s 4s ease-in forwards";
     }
   }
 }
@@ -134,7 +135,7 @@ let tree = new Image();
 tree.src = "./PNG Objects/tree.png";
 
 let box = new Image();
-box.src= "./PNG Objects/box.png";
+box.src = "./PNG Objects/box.png";
 
 let birds = new Image();
 birds.src = "./PNG Objects/birds.png";
@@ -145,6 +146,12 @@ shrooms.src = "./PNG Objects/mushrooms.png";
 let flowers = new Image();
 flowers.src = "./PNG Objects/flower.png";
 
+/////////////////////////////
+//////Audio for game////////
+/////////////////////////////
+
+let killSound = new Audio("./Audio/Kill Sound.mp3");
+killSound.loop = false;
 /////////////////////////////
 //////Classes for game///////
 /////////////////////////////
@@ -340,20 +347,17 @@ class Player {
   }
   receiveDamageP1(multiplier) {
     if (this.blocking == false) {
-      this.health -= 10*multiplier;
+      this.health -= 10 * multiplier;
       if (player2.direction == "right") {
-        this.y -= this.h*1;
+        this.y -= this.h * 1;
         this.x += this.w;
-       
       } else {
-        this.y -= this.h*1;
+        this.y -= this.h * 1;
         this.x -= this.w;
-  
       }
     } else {
-      this.health -= 2*multiplier;
+      this.health -= 2 * multiplier;
     }
-
     bloodP1.sx = 0;
     bloodP1.sy = 0;
     bloodP1.y = this.y;
@@ -369,18 +373,16 @@ class Player {
   }
   receiveDamageP2(multiplier) {
     if (this.blocking == false) {
-      this.health -= 10*multiplier;
+      this.health -= 10 * multiplier;
       if (player1.direction == "right") {
-        this.y -= this.h*1;
+        this.y -= this.h * 1;
         this.x -= this.w;
-      
       } else {
-        this.y -= this.h*1;
+        this.y -= this.h * 1;
         this.x -= this.w;
-        
       }
     } else {
-      this.health -= 2*multiplier;
+      this.health -= 2 * multiplier;
     }
 
     bloodP2.sx = 0;
@@ -412,8 +414,8 @@ class Player {
   }
   lowHealth() {
     if (this.health <= 40) {
-      let lowHealthDarkBg = document.querySelector('#low-health-bg')
-      lowHealthDarkBg.style.animation= "fade-in 1.5s ease-in forwards"
+      let lowHealthDarkBg = document.querySelector("#low-health-bg");
+      lowHealthDarkBg.style.animation = "fade-in 1.5s ease-in forwards";
     }
   }
 }
@@ -486,7 +488,7 @@ class SpecialAttack {
 
 class Beautify {
   constructor(x, y, w, h, img) {
-    this.x = x; 
+    this.x = x;
     this.y = y;
     this.w = w;
     this.h = h;
@@ -497,9 +499,8 @@ class Beautify {
   }
   update(ctx) {
     this.draw(ctx);
-  } 
+  }
 }
-
 
 class Barrier {
   constructor(x, y, w, h, img) {
@@ -529,15 +530,21 @@ class CanvasDisplay {
     //create game objects to manipulate
     this.canvas.width = this.stageConfig.width;
     this.canvas.height = this.stageConfig.height;
-    
+
     this.createFloor = new Barrier(
       -100,
       this.stageConfig.height * 0.9,
-      this.stageConfig.width *1.2,
+      this.stageConfig.width * 1.2,
       50,
       floor
     );
-    this.createLeftWall = new Barrier(-800, 0, 800, this.stageConfig.height, floor);
+    this.createLeftWall = new Barrier(
+      -800,
+      0,
+      800,
+      this.stageConfig.height,
+      floor
+    );
     this.createRightWall = new Barrier(
       1000,
       0,
@@ -618,55 +625,13 @@ class CanvasDisplay {
       2,
       1
     );
-    this.createTree = new Beautify(
-      -2, 
-      255,
-      200,
-      200,
-      tree
-    );
-    this.createTree2 = new Beautify(
-      800, 
-      255,
-      200,
-      200,
-      tree
-    );
-    this.createBox = new Beautify(
-      400,
-      250,
-      50,
-      50,
-      box
-    );
-    this.createBirds = new Beautify(
-      900,
-      55,
-      100,
-      100,
-      birds
-    );
-    this.createShrooms = new Beautify(
-      400,
-      410,
-      50,
-      50,
-      shrooms
-    );
-    this.createFlowers = new Beautify(
-      920,
-      405,
-      50,
-      50,
-      flowers
-    );
-    this.createFlowers2 = new Beautify(
-      200,
-      405,
-      50,
-      50,
-      flowers
-    );
+    this.createTree = new Beautify(-2, 255, 200, 200, tree);
+    this.createTree2 = new Beautify(800, 255, 200, 200, tree);
+    this.createBox = new Beautify(400, 250, 50, 50, box);
+    this.createBirds = new Beautify(900, 55, 100, 100, birds);
+    this.createShrooms = new Beautify(400, 410, 50, 50, shrooms);
+    this.createFlowers = new Beautify(920, 405, 50, 50, flowers);
+    this.createFlowers2 = new Beautify(200, 405, 50, 50, flowers);
   }
 
   animate() {
@@ -676,8 +641,8 @@ class CanvasDisplay {
     this.createTree.update(this.ctx);
     this.createTree2.update(this.ctx);
     this.createBox.update(this.ctx);
-    this.createBirds.update(this.ctx); 
-    this.createShrooms.update(this.ctx); 
+    this.createBirds.update(this.ctx);
+    this.createShrooms.update(this.ctx);
     this.createFlowers.update(this.ctx);
     this.createFlowers2.update(this.ctx);
     //End stuffff
@@ -777,10 +742,14 @@ function colCheck(shapeA, shapeB) {
 
 let interval = null;
 let frame = 0;
-
+let playerDied = 0;
 function playGame() {
   /*--- key press codes, if true which is set on keydown, will check to see if player1 is within canvas, 
         then execute move functions in class--- */
+  if (playerDied == 1) {
+    killSound.play();
+    playerDied++;
+  }
   if (keys[17] && player2.special >= 100) {
     //special attack
     specialP1.reset(player1);
@@ -800,28 +769,28 @@ function playGame() {
     attackP1.y = -1000;
   }
   if (keys[37]) {
-    leftkey.style.animation = "buttonGlow 5s alternate-reverse"
-    if((player1.x - 30) > 0) {
-      player1.moveLeft()
+    leftkey.style.animation = "buttonGlow 5s alternate-reverse";
+    if (player1.x - 30 > 0) {
+      player1.moveLeft();
     }
   }
   if (keys[39]) {
-    rightkey.style.animation = "buttonGlow 5s alternate-reverse"
-    if(player1.x < 1365) {
-      player1.moveRight()
+    rightkey.style.animation = "buttonGlow 5s alternate-reverse";
+    if (player1.x < 1365) {
+      player1.moveRight();
     }
   }
   if (keys[38]) {
-    upkey.style.animation = "buttonGlow 5s alternate-reverse"
-    if((player1.y - player1.h) > 0) {
-      if(!player1.jumping && player1.grounded){
-        player1.grounded = false
-        player1.jump()
+    upkey.style.animation = "buttonGlow 5s alternate-reverse";
+    if (player1.y - player1.h > 0) {
+      if (!player1.jumping && player1.grounded) {
+        player1.grounded = false;
+        player1.jump();
       }
     }
   }
   if (keys[40] && player2.special > 10) {
-    downkey.style.animation = "buttonGlow 5s alternate-reverse"
+    downkey.style.animation = "buttonGlow 5s alternate-reverse";
     shieldP1.x = player1.x;
     shieldP1.y = player1.y;
     player1.drawBlockP1();
@@ -857,22 +826,22 @@ function playGame() {
   player1.grounded = false;
 
   if (keys[65]) {
-    aakey.style.animation = "buttonGlow 5s alternate-reverse"
-    player2.moveLeft()
-    }
+    aakey.style.animation = "buttonGlow 5s alternate-reverse";
+    player2.moveLeft();
+  }
   if (keys[68]) {
-    ddkey.style.animation = "buttonGlow 5s alternate-reverse"
-    player2.moveRight()
+    ddkey.style.animation = "buttonGlow 5s alternate-reverse";
+    player2.moveRight();
   }
   if (keys[87]) {
-    wwkey.style.animation = "buttonGlow 5s alternate-reverse"
-      if(!player2.jumping && player2.grounded){
-        player2.grounded = false
-        player2.jump()
-      }
+    wwkey.style.animation = "buttonGlow 5s alternate-reverse";
+    if (!player2.jumping && player2.grounded) {
+      player2.grounded = false;
+      player2.jump();
+    }
   }
   if (keys[83] && player1.special > 10) {
-    sskey.style.animation = "buttonGlow 5s alternate-reverse"
+    sskey.style.animation = "buttonGlow 5s alternate-reverse";
     player2.drawBlockP2();
     player2.blocking = true;
     player1.special -= 2;
@@ -972,41 +941,39 @@ function playGame() {
   // player1.x
   // player2.x
 
+  // ---- DON't KNOW IF THIS frame++ IS SUPPOSED TO BE HERE ROBERTO--- //
   frame++;
-// ---- DON't KNOW IF THIS frame++ IS SUPPOSED TO BE HERE ROBERTO--- //
-  frame++
-  gameOver()
-  interval = requestAnimationFrame(playGame)
-  canvasDisplay.animate() 
+  gameOver();
+  interval = requestAnimationFrame(playGame);
+  canvasDisplay.animate();
 }
 
 // ---listeners for key down and up--- //
 // ---added selectors for key IDs to animate in HUD--- //
-let leftkey = document.querySelector('#leftkey')
-let rightkey = document.querySelector('#rightkey')
-let upkey = document.querySelector('#upkey')
-let downkey = document.querySelector('#downkey')
-let aakey = document.querySelector('#aakey')
-let ddkey = document.querySelector('#ddkey')
-let wwkey = document.querySelector('#wwkey')
-let sskey = document.querySelector('#sskey')
+let leftkey = document.querySelector("#leftkey");
+let rightkey = document.querySelector("#rightkey");
+let upkey = document.querySelector("#upkey");
+let downkey = document.querySelector("#downkey");
+let aakey = document.querySelector("#aakey");
+let ddkey = document.querySelector("#ddkey");
+let wwkey = document.querySelector("#wwkey");
+let sskey = document.querySelector("#sskey");
 
-window.onkeydown = function(e) {
-  keys[e.keyCode] = true
-}
+window.onkeydown = function (e) {
+  keys[e.keyCode] = true;
+};
 
 // ---cancels animations added to keys upon key up--- //
-window.onkeyup = function(e) {
-  keys[e.keyCode] = false
-  document.querySelector('#leftkey').style.removeProperty('animation')
-  document.querySelector('#rightkey').style.removeProperty('animation')
-  document.querySelector('#upkey').style.removeProperty('animation')
-  document.querySelector('#downkey').style.removeProperty('animation')
-  document.querySelector('#aakey').style.removeProperty('animation')
-  document.querySelector('#ddkey').style.removeProperty('animation')
-  document.querySelector('#wwkey').style.removeProperty('animation')
-  document.querySelector('#sskey').style.removeProperty('animation')
-}
+window.onkeyup = function (e) {
+  keys[e.keyCode] = false;
+  document.querySelector("#leftkey").style.removeProperty("animation");
+  document.querySelector("#rightkey").style.removeProperty("animation");
+  document.querySelector("#upkey").style.removeProperty("animation");
+  document.querySelector("#downkey").style.removeProperty("animation");
+  document.querySelector("#aakey").style.removeProperty("animation");
+  document.querySelector("#ddkey").style.removeProperty("animation");
+  document.querySelector("#wwkey").style.removeProperty("animation");
+  document.querySelector("#sskey").style.removeProperty("animation");
+};
 
-
-playGame()
+playGame();
