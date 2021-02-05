@@ -150,8 +150,9 @@ attackDrop.src = "./images/attack-2.png";
 //////Audio for game////////
 /////////////////////////////
 let backgroundMusic = new Audio("./Audio/background-music.mp3");
+backgroundMusic.muted = false;
 backgroundMusic.loop = true;
-backgroundMusic.volume = 0.09;
+backgroundMusic.volume = 0.09
 
 let killSound = new Audio("./Audio/Kill Sound.mp3");
 killSound.loop = false;
@@ -901,7 +902,9 @@ function playGame() {
     shieldP2.y = -1000;
     player2.blocking = false;
   }
-
+  if (keys[77]) {
+    backgroundMusic.muted = true;
+  }
   player2.velY += gravity;
   player2.velX *= friction;
   player2.grounded = false;
