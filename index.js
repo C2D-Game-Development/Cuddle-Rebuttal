@@ -15,12 +15,13 @@ window.addEventListener("click", function () {
 /* ---game over function that doesn't call fades out canvas and plays anims--- */
 function gameOver() {
   if (player1.health <= 0 || player2.health <= 0) {
+    playerDied++;
+
     let gameOver = document.querySelector("#evil-game-over");
     let bloodBg = document.querySelector("#blood-bg");
     let deadDog = document.querySelector("#dead-dog");
     let deadCat = document.querySelector("#dead-cat");
     let canvasContainer = document.querySelector(".container");
-    killSound.pause();
     canvasContainer.style.animation = "fade-out 1s 1.5s ease-in forwards";
     gameOver.style.animation =
       "fade-in 2s 2.5s ease-in forwards, game-drop .6s 5.6s forwards";
@@ -150,7 +151,7 @@ flowers.src = "./PNG Objects/flower.png";
 /////////////////////////////
 
 let killSound = new Audio("./Audio/Kill Sound.mp3");
-
+killSound.loop = false;
 /////////////////////////////
 //////Classes for game///////
 /////////////////////////////
@@ -304,7 +305,6 @@ class Player {
     this.fall();
   }
   dead() {
-    killSound.play();
     this.numberWide = 10; //how many dead frames you have
     this.sy = 0;
     this.keepLooping = false;
@@ -345,18 +345,18 @@ class Player {
     this.x += this.velX;
     this.direction = "left";
   }
-  receiveDamageP1() {
+  receiveDamageP1(multiplier) {
     if (this.blocking == false) {
-      this.health -= 10;
+      this.health -= 10 * multiplier;
+      if (player2.direction == "right") {
+        this.y -= this.h * 1;
+        this.x += this.w;
+      } else {
+        this.y -= this.h * 1;
+        this.x -= this.w;
+      }
     } else {
-      this.health -= 5;
-    }
-    if (player2.direction == "right") {
-      this.y -= this.h * 2;
-      this.x += this.w;
-    } else {
-      this.y -= this.h * 2;
-      this.x -= this.w;
+      this.health -= 2 * multiplier;
     }
     bloodP1.sx = 0;
     bloodP1.sy = 0;
@@ -371,19 +371,20 @@ class Player {
     }
     document.querySelector("#hp-1").style.width = `${this.health}%`;
   }
-  receiveDamageP2() {
+  receiveDamageP2(multiplier) {
     if (this.blocking == false) {
-      this.health -= 10;
+      this.health -= 10 * multiplier;
+      if (player1.direction == "right") {
+        this.y -= this.h * 1;
+        this.x -= this.w;
+      } else {
+        this.y -= this.h * 1;
+        this.x -= this.w;
+      }
     } else {
-      this.health -= 5;
+      this.health -= 2 * multiplier;
     }
-    if (player1.direction == "right") {
-      this.y -= this.h * 2;
-      this.x -= this.w;
-    } else {
-      this.y += this.h * 2;
-      this.x -= this.w;
-    }
+
     bloodP2.sx = 0;
     bloodP2.sy = 0;
     bloodP2.y = this.y;
@@ -741,10 +742,14 @@ function colCheck(shapeA, shapeB) {
 
 let interval = null;
 let frame = 0;
-
+let playerDied = 0;
 function playGame() {
   /*--- key press codes, if true which is set on keydown, will check to see if player1 is within canvas, 
         then execute move functions in class--- */
+  if (playerDied == 1) {
+    killSound.play();
+    playerDied++;
+  }
   if (keys[17] && player2.special == 100) {
     //special attack
     specialP1.reset(player1);
@@ -864,12 +869,12 @@ function playGame() {
       }
     } else if (i == 5) {
       if (dir != null) {
-        player1.receiveDamageP1();
+        player1.receiveDamageP1(3);
         specialP2.y = -500;
       }
     } else if (i == 7) {
       if (dir != null) {
-        player1.receiveDamageP1();
+        player1.receiveDamageP1(1);
       }
     }
   }
@@ -896,12 +901,12 @@ function playGame() {
       }
     } else if (i == 4) {
       if (dir != null) {
-        player2.receiveDamageP2();
+        player2.receiveDamageP2(3);
         specialP1.y = -500;
       }
     } else if (i == 6) {
       if (dir != null) {
-        player2.receiveDamageP2();
+        player2.receiveDamageP2(1);
       }
     }
   }
@@ -936,7 +941,6 @@ function playGame() {
   // player1.x
   // player2.x
 
-  frame++;
   // ---- DON't KNOW IF THIS frame++ IS SUPPOSED TO BE HERE ROBERTO--- //
   frame++;
   gameOver();
