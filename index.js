@@ -785,13 +785,13 @@ function playGame() {
     killSound.play();
     playerDied++;
   }
-  if (keys[17] && player2.special >= 100) {
+  if (keys[74] && player2.special >= 100) {
     //special attack
     specialP1.reset(player1);
     player2.special = 0;
   }
 
-  if (keys[16] && player2.special > 25) {
+  if (keys[76] && player2.special > 25) {
     //attack
     attackSound.play();
     player2.special -= 25;
@@ -846,12 +846,12 @@ function playGame() {
   }
 
   //PLAYER2
-  if (keys[81] && player1.special >= 100) {
+  if (keys[50] && player1.special >= 100) {
     specialP2.reset(player2);
     player1.special = 0;
     console.log("i pressed it!");
   }
-  if (keys[69] && player1.special > 25) {
+  if (keys[51] && player1.special > 25) {
     attackSound.play();
     player1.special -= 25;
     //attack
