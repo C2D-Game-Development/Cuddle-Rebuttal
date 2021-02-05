@@ -1,4 +1,267 @@
 /* ---Window & Main Body--- */
+* {
+    margin: 0;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: url(images/c2d-background.png) no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+    overflow: hidden;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    opacity: 1;
+}
+.canvy{
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    height: 450px;
+    width: 920px;
+}
+canvas {
+    border: 5px solid #baf3f5;
+    border-radius: 15px;
+    animation: borderHype 4s linear infinite;
+}
+
+.splash-screen {
+    width: 100%;
+    position: absolute;
+    z-index: 3;
+    background: url(images/c2d-background.png) no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+#splash-screen-img {
+    margin: auto;
+    width: 60%;
+
+}
+#low-health-bg {
+    /* background: url(images/c2d-background-dark-2.jpg) no-repeat center center fixed; */
+    background-size: cover;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    z-index: 0
+}
+.game-over-splash {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+#blood-bg {
+    position: absolute;
+    display: block;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 1
+    /* animation: fade-in 1.5s ease-in; */
+}
+.dead {
+    position: absolute;
+    display: block;
+    margin: auto;
+    top: -150%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    /* animation: dog-drop 2s ease-in forwards; */
+}
+
+#evil-game-over {
+    position: absolute;
+    margin: auto;
+    display: block;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    opacity: 0;
+    z-index: 1
+    /* animation: fade-in-gameover 1.5s ease-in forwards; */
+}
+header {
+    text-align: center;
+    margin: 1%;
+}
+header img {
+    display: initial;
+    width: 60%;
+    height: 100%;
+}
+
+/* ---HUD Section--- */
+.hud {
+    display: flex;
+    flex-direction: row;
+    width: 1000px;
+    height: 245px;
+    margin-top: 8%;
+}
+
+/* ---Player 1 & 2 Divs--- */
+.player1 {
+    background-image: url(images/bloody-background.png);
+    background-repeat: no-repeat, repeat;
+    background-position: center;
+    background-color: #f39597;
+    border: 5px solid #ffd1f4;
+    border-radius: 20px;
+    width: 38%;
+    display: flex;
+    box-shadow: 1px 1px 20px 5px #ff00ff;
+}
+.player2 {
+    background-image: url(images/bloody-background.png);
+    background-repeat: no-repeat, repeat;
+    background-position: center;
+    background-color: #f39597;
+    border: 5px solid #ffd1f4;
+    border-radius: 20px;
+    width: 38%;
+    display: flex;
+    flex-direction: row-reverse;
+    box-shadow: 1px 1px 20px 5px #ff00ff;
+
+}
+.player-info {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    padding: 3%;
+}
+.player-avatar {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    padding: 3%;
+    font-family: 'Bowlby One', cursive;
+    font-size: 14px;
+    color: rgb(0, 217, 255);
+    text-shadow: 3px 3px 3px rgb(255, 0, 242)
+}
+.avatar-pic {
+    height: 15vh;
+    border: 5px solid #ffd1f4;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #ca0000, #ca0000, #ca0000, #fa0000, #f33f3f, #f15e5e, #FC9D9f, #ECB5B2, #DCD3CE, #cdeee6);
+    background-size: 500% 500%;
+    animation: gradient 6s ease-in infinite;
+}
+.avatar-pic img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    animation: pet-idles 2s linear infinite;
+}
+#ted {
+    width: 65%;
+    padding-top: 8%;
+}
+#jeff {
+    width: 110%;
+    padding-top: 8%;
+}
+.control-panel {
+    padding: 8%;
+    height: 60%;
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: center;
+    align-content: flex-start;
+}
+.control-panel div {
+    width: 23%;
+    height: 30%;
+    border: 5px solid #d1fffa;
+    box-shadow: 1px 1px 15px 2px #00fdff;
+    border-radius: 10px;
+    margin: 2%;
+    text-align: center;
+    font-family: 'Bowlby One', cursive;
+    color: #81ECF1;
+    background:rgb(255, 134, 113)
+}
+
+/* ---Health & Energy Bars--- */
+.health-bar {
+    height: 20%;
+    padding: 2%;
+    color: white;
+}
+.outer-bar {
+    height: 90%;
+    background:rgb(103, 175, 172);
+    border: 3px solid white;
+    border-radius: 10px;
+}
+.inner-bar {
+    height: 100%;
+    background-image: linear-gradient(rgb(0 202 0), rgb(119, 247, 119), rgb(158 251 158), rgb(97 255 97), rgb(0 202 0));
+    border: 0px solid rgb(57, 221, 57);
+    border-radius: 10px;
+    transition: width .5s linear;
+}
+#hp-1 {
+    width: 100%;
+}
+#hp-2 {
+    width: 100%;
+}
+.energy-bar {
+    height: 10%;
+    padding: 2%;
+    color: white;
+}
+.outer-bar-energy {
+    height: 90%;
+    background: rgb(247, 119, 252);
+    border: 3px solid rgb(255, 255, 255);
+    border-radius: 8px;
+}
+.inner-bar-energy {
+    height: 100%;
+    width: 20%;
+    background-image: linear-gradient(rgb(124, 4, 148),rgb(176, 77, 185), rgb(179, 107, 212), rgb(176, 77, 185), rgb(124, 4, 148));
+    border-radius: 5px;
+}
+
+/* ---Fight Timer--- */
+.time {
+    display: flex;
+    flex-direction: column;
+    color: rgb(40, 81, 218);
+    font-family: 'Bowlby One', cursive;
+    letter-spacing: 3px;
+    text-shadow: 3px 3px 3px rgb(243, 81, 243);
+    border-radius: 20px;
+    width: 24%;
+    text-align: center;
+}
+.timer img {
+    width: 85%;
+}
+.actual-time span {
+    font-size: 50px;
+    color:rgb(243, 47, 83);
+    text-shadow: -2px 0 rgb(255, 255, 255), 0 2px rgb(255, 255, 255), 2px 0 rgb(255, 255, 255), 0 -2px rgb(255, 255, 255);    
+}
+
+/* ---animations--- */
 @keyframes gradient {
 	0% {
 		background-position: 50% 0%;
@@ -24,219 +287,99 @@
         background-color: #f752557e;
     }
 }
+@keyframes dog-drop {
+    0% {
+        top: -150%;
+    }
+    100% {
+        top: -40%;
+    }
+}
+@keyframes game-drop {
+    0% {
+        top: 0
+    }
+    100% {
+        top: 30%;
+    }
+}
+@keyframes fade-in {
+    0% {
+        opacity: 0.2
+    }
+    25% {
+        opacity: 0.4
+    }
+    50% {
+        opacity: 0.6
+    }
+    75% {
+        opacity: 0.8
+    }
+    100% {
+        opacity: 1
+    }
+}
+@keyframes fade-out {
+    0% {
+        opacity: 1;
 
-* {
-    margin: 0;
-}
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: url(images/c2d-background.png) no-repeat center center fixed;
-    background-size: cover;
-    height: 100%;
-    overflow: hidden;
-}
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    }
+    20% {
+        opacity: 0.8;
 
-.canvy{
-    display: flex;
-    justify-content: center;
-    border-radius: 10px;
-    height: 450px;
-    width: 920px;
-}
-canvas {
-    border: 5px solid #baf3f5;
-    border-radius: 15px;
-    height: 50vh;
-    box-shadow: 1px 1px 20px 5px rgb(40 230 230)
-}
-#splash-screen {
-    height: 70%;
-    width: 70%;
-    position: absolute;
-    z-index: 1;
-    background: url(images/c2d-background.png) no-repeat center center fixed;
-    background-size: cover;
-    height: 100%;
-    overflow: hidden;
-}
-header {
-    text-align: center;
-    margin: 1%;
-}
-header img {
-    display: initial;
-    width: 60%;
-    height: 100%;
-}
+    }
+    40% {
+        opacity: 0.6;
 
-/* ---HUD Section--- */
-.hud {
-    display: flex;
-    flex-direction: row;
-    width: 1000px;
-    margin-top: 8%;
-}
+    }
+    60% {
+        opacity: 0.4;
 
-/* ---Player 1 & 2 Divs--- */
-.player1 {
-    background-image: url(images/bloody-background.png);
-    background-repeat: no-repeat, repeat;
-    background-color: #f76f718a;
-    border: 5px solid #ffd1f4;
-    border-radius: 20px;
-    width: 38%;
-    display: flex;
-    box-shadow: 1px 1px 17px 0px #ff00ff;
-    
+    }
+    80% {
+        opacity: 0.2
+    }
+    100% {
+        opacity: 0;
+    }
+}
+@keyframes borderHype {
+    0% {box-shadow: 1px 1px 20px 5px #ff2d2d;
+        border: 5px solid #ffdddd;
+    }
+    25% {box-shadow: 1px 1px 20px 10px #00ff88;
+        border: 5px solid #eafdda;
+    }
+    50% {box-shadow: 1px 1px 20px 5px #05f7ff;
+        border: 5px solid #d1fafc;
+    }
+    75% {box-shadow: 1px 1px 20px 10px #ff5cf1;
+        border: 5px solid #fde6ff;
+    }
+    100% {box-shadow: 1px 1px 20px 5px #ff2d2d;
+        border: 5px solid #ffdddd;
+    }
+}
+@keyframes pet-idles {
+    0% {
+        width: 100%;
+    }
+    50% {
+        width: 97%
+    }
+    100% {
+        width: 100%;
+    }
+}
+@keyframes buttonGlow {
+    0% {
+        box-shadow: 1px 1px 15px 2px #00fdff;
+        border: 5px solid #d1fffa;
 
-
-}
-.player2 {
-    background-image: url(images/bloody-background.png);
-    background-repeat: no-repeat, repeat;
-    background-color: #f76f718a;
-    border: 5px solid #ffd1f4;
-    border-radius: 20px;
-    width: 38%;
-    display: flex;
-    flex-direction: row-reverse;
-    box-shadow: 1px 1px 17px 0px #ff00ff;
-
-}
-.player2 > .player-info {
-    display: flex;
-    flex-direction: column;
-}
-.player-info {
-    display: flex;
-    flex-direction: column;
-    width: 70%;
-    padding: 3%;
-}
-.player-avatar {
-    display: flex;
-    flex-direction: column;
-    width: 40%;
-    padding: 3%;
-    font-family: 'Bowlby One', cursive;
-    font-size: 14px;
-    color: rgb(0, 217, 255);
-    text-align: center;
-    text-shadow: 3px 3px 3px rgb(255, 0, 242)
-}
-.avatar-pic {
-    height: 15vh;
-    border: 5px solid #ffd1f4;
-    border-radius: 10px;
-
-}
-.avatar-pic img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-}
-#ap1 {
-    background: linear-gradient(180deg, #ca0000, #ca0000, #ca0000, #fa0000, #f33f3f, #f15e5e, #FC9D9f, #ECB5B2, #DCD3CE, #cdeee6);
-    background-size: 500% 500%;
-    animation: gradient 5s ease infinite;
-    /* background-image : url(images/dog-crop.png);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    animation: moveX1 2s steps(8) infinite; */
-}
-#ap2 {
-    background: linear-gradient(180deg,  #ca0000, #ca0000, #ca0000, #fa0000, #f33f3f, #f15e5e, #FC9D9f, #ECB5B2, #DCD3CE, #cdeee6);
-    background-size: 500% 500%;
-    animation: gradient 5s ease infinite;
-    /* background-image : url(images/cat-crop-2.png);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    animation: moveX2 2s steps(8) infinite; */
-}
-.control-panel {
-    height: 60%;
-}
-
-/* ---Health & Energy Bars--- */
-.health-bar {
-    height: 20%;
-    padding: 2%;
-    color: white;
-}
-.outer-bar {
-    height: 90%;
-    background: pink;
-    border: 3px solid white;
-    border-radius: 10px;
-}
-.inner-bar {
-    height: 100%;
-    background-image: linear-gradient(rgb(0 202 0), rgb(119, 247, 119), rgb(158 251 158), rgb(97 255 97), rgb(0 202 0));
-    border: 0px solid rgb(57, 221, 57);
-    border-radius: 10px;
-    position: relative;
-    transition: width .5s linear;
-
-}
-#hit {
-    height: 100%;
-    width: 0%;
-    position: absolute;
-}
-#hp-1 {
-    width: 100%;
-}
-#hp-2 {
-    width: 100%;
-}
-.energy-bar {
-    height: 10%;
-    padding: 2%;
-    color: white;
-}
-#energy-1 {
-    width: var(--energy-1)
-}
-.outer-bar-energy {
-    height: 90%;
-    background: rgb(142, 142, 224);
-    border: 3px solid rgb(255, 255, 255);
-    border-radius: 8px;
-}
-.inner-bar-energy {
-    height: 100%;
-    width: 20%;
-    background:rgb(86, 109, 241);
-    background-image: linear-gradient(rgb(80, 80, 255),rgb(125, 125, 255), rgb(148, 148, 255), rgb(125, 125, 255), rgb(80, 80, 255));
-    border-radius: 5px;
-}
-
-/* ---Fight Timer--- */
-.time {
-    display: flex;
-    flex-direction: column;
-    color: rgb(40, 81, 218);
-    font-family: 'Bowlby One', cursive;
-    letter-spacing: 3px;
-    text-shadow: 3px 3px 3px rgb(243, 81, 243);
-    border-radius: 20px;
-    width: 24%;
-    text-align: center;
-}
-.timer img {
-    width: 85%;
-}
-.actual-time span {
-    font-size: 50px;
-    color:rgb(255, 42, 109);
-    text-shadow: -2px 0 rgb(255, 255, 255), 0 2px rgb(255, 255, 255), 2px 0 rgb(255, 255, 255), 0 -2px rgb(255, 255, 255);    
+    }
+    100% {
+        box-shadow: 1px 1px 20px 8px #03ff42;
+        border: 5px solid #d0ffc2;
+    }
 }

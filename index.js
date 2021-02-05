@@ -1,5 +1,5 @@
 window.addEventListener("click", function() {
-  let splashTarget = document.querySelector('#splash-screen')
+  let splashTarget = document.querySelector('.splash-screen')
   let splashEffect = setInterval(function() {
     if (!splashTarget.style.opacity) {
       splashTarget.style.opacity = 1;
@@ -13,6 +13,25 @@ window.addEventListener("click", function() {
   }, 100)
 })
 
+/* ---game over function that doesn't call fades out canvas and plays anims--- */
+function gameOver() {
+  if (player1.health <= 0 || player2.health <= 0) {
+    let gameOver = document.querySelector('#evil-game-over')
+    let bloodBg = document.querySelector('#blood-bg')
+    let deadDog = document.querySelector('#dead-dog')
+    let deadCat = document.querySelector('#dead-cat')
+    let canvasContainer = document.querySelector('.container')
+    canvasContainer.style.animation = "fade-out 1s 1.5s ease-in forwards"
+    gameOver.style.animation = "fade-in 2s 2.5s ease-in forwards, game-drop .6s 5.6s forwards"
+    bloodBg.style.animation = "fade-in 2.5s 2s ease forwards"
+    if (player1.health <= 0) {
+      deadDog.style.animation = "dog-drop 2s 4s ease-in forwards"
+    }
+    else {
+      deadCat.style.animation = "dog-drop 2s 4s ease-in forwards"
+    }
+  }
+}
 
 /////////////////////////////
 //////  Timer ///////////////
@@ -238,12 +257,8 @@ class Player{
     }
     lowHealth() {
       if (this.health <= 40) {
-        document.querySelector('body').style.background = getBodyValue
-        document.querySelector('body').style.backgroundSize = "cover"
-      }
-      if (this.health <= 20) {
-        document.querySelector('body').style.background = getBodyValue1
-        document.querySelector('body').style.backgroundSize = "cover"
+        let lowHealthDarkBg = document.querySelector('#low-health-bg')
+        lowHealthDarkBg.style.animation = "fade-in 1.5s ease-in forwards"
       }
     }
 }
@@ -426,16 +441,19 @@ function playGame() {
           specialP1.reset(player1)
         }
   if (keys[37]) {
+    leftkey.style.animation = "buttonGlow 5s alternate-reverse"
     if((player1.x - 30) > 0) {
       player1.moveLeft()
     }
   }
   if (keys[39]) {
+    rightkey.style.animation = "buttonGlow 5s alternate-reverse"
     if(player1.x < 1365) {
       player1.moveRight()
     }
   }
   if (keys[38]) {
+    upkey.style.animation = "buttonGlow 5s alternate-reverse"
     if((player1.y - player1.h) > 0) {
       if(!player1.jumping && player1.grounded){
         player1.grounded = false
@@ -452,12 +470,15 @@ function playGame() {
   player1.grounded = false
 
   if (keys[65]) {
-   player2.moveLeft()
+    aakey.style.animation = "buttonGlow 5s alternate-reverse"
+    player2.moveLeft()
     }
   if (keys[68]) {
-      player2.moveRight()
+    ddkey.style.animation = "buttonGlow 5s alternate-reverse"
+    player2.moveRight()
   }
   if (keys[87]) {
+    wwkey.style.animation = "buttonGlow 5s alternate-reverse"
       if(!player2.jumping && player2.grounded){
         player2.grounded = false
         player2.jump()
@@ -541,26 +562,39 @@ if ((player2.velX > 0.3 || player2.velX < -0.3)&&player2.grounded) {
 // player2.x
 
 frame++
-  
+  gameOver()
   interval = requestAnimationFrame(playGame)
   canvasDisplay.animate() 
 }
 
 
 // ---listeners for key down and up--- //
+// ---added selectors for key IDs to animate in HUD--- //
+let leftkey = document.querySelector('#leftkey')
+let rightkey = document.querySelector('#rightkey')
+let upkey = document.querySelector('#upkey')
+let downkey = document.querySelector('#downkey')
+let aakey = document.querySelector('#aakey')
+let ddkey = document.querySelector('#ddkey')
+let wwkey = document.querySelector('#wwkey')
+let sskey = document.querySelector('#sskey')
+
 window.onkeydown = function(e) {
   keys[e.keyCode] = true
 }
+
+// ---cancels animations added to keys upon key up--- //
 window.onkeyup = function(e) {
   keys[e.keyCode] = false
+  document.querySelector('#leftkey').style.removeProperty('animation')
+  document.querySelector('#rightkey').style.removeProperty('animation')
+  document.querySelector('#upkey').style.removeProperty('animation')
+  document.querySelector('#downkey').style.removeProperty('animation')
+  document.querySelector('#aakey').style.removeProperty('animation')
+  document.querySelector('#ddkey').style.removeProperty('animation')
+  document.querySelector('#wwkey').style.removeProperty('animation')
+  document.querySelector('#sskey').style.removeProperty('animation')
 }
-// ---dom selectors for healthbar image changes--- //
-let getBody = document.querySelector('body')
-let getBodyCss = window.getComputedStyle(getBody)
-let getBodySize = getBodyCss.getPropertyValue('background-size')
-let getBodyValue = getBodyCss.getPropertyValue('background')
-getBodyValue = "url(images/c2d-background-dark.jpg) no-repeat center center fixed"
-getBodyValue1 = "url(images/c2d-background-blood.png) no-repeat center center fixed"
 
 
 playGame()
