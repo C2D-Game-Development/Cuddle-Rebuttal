@@ -1,15 +1,6 @@
 window.addEventListener("click", function () {
   let splashTarget = document.querySelector(".splash-screen");
-  let splashEffect = setInterval(function () {
-    if (!splashTarget.style.opacity) {
-      splashTarget.style.opacity = 1;
-    }
-    if (splashTarget.style.opacity > 0) {
-      splashTarget.style.opacity -= 0.1;
-    } else {
-      clearInterval(splashTarget);
-    }
-  }, 100);
+  splashTarget.style.animation = "fade-out 1.5s 1 ease forwards"
 });
 
 /* ---game over function that doesn't call fades out canvas and plays anims--- */
