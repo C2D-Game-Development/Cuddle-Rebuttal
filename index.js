@@ -171,6 +171,15 @@ killSound.volume = 0.3 * kS * allAudio;
 let attackSound = new Audio("./Audio/Attack.wav");
 attackSound.volume = 0.09 * SFX * allAudio;
 
+let bloodBlastSound = new Audio("./Audio/bloodBlast.mp3");
+bloodBlastSound.volume = 0.09 * SFX * allAudio;
+
+let bloodyBlastSound = new Audio("./Audio/bloodyBlast.mp3");
+bloodyBlastSound.volume = 0.09 * SFX * allAudio;
+
+let gameOverSound = new Audio("./Audio/gameOverSound.mp3");
+gameOverSounds.volume = 0.09 * kS * allAudio;
+
 let hit1Sound = new Audio("./Audio/Hit 1.mp3");
 hit1Sound.volume = 0.06 * SFX * allAudio;
 let hit2Sound = new Audio("./Audio/Hit 2.mp3");
@@ -811,10 +820,12 @@ function playGame() {
         then execute move functions in class--- */
   if (playerDied == 1) {
     killSound.play();
+    gameOverSound.play();
     playerDied++;
   }
   if (keys[74] && player2.special >= 100) {
     //special attack
+    bloodBlastSound.play();
     specialP1.reset(player1);
     player2.special = 0;
   }
@@ -875,6 +886,7 @@ function playGame() {
 
   //PLAYER2
   if (keys[50] && player1.special >= 100) {
+    bloodyBlastSound.play();
     specialP2.reset(player2);
     player1.special = 0;
     console.log("i pressed it!");
