@@ -7,7 +7,7 @@ window.addEventListener("click", function () {
     soundPlayed = false
   }
   splashTarget.style.animation = "fade-out 2s 1 ease forwards"
-  
+
 });
 let soundPlayed = true
 /* ---game over function that doesn't call fades out canvas and plays anims--- */
