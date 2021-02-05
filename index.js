@@ -247,7 +247,7 @@ class Player {
   draw(ctx) {
     //dead
     if (frame % 3 == 0 && this.special < 100) {
-      this.special++;
+      this.special = this.special + 2;
       if (this.img == cat) {
         document.querySelector("#energy-1").style.width = `${this.special}%`;
       } else {
