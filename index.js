@@ -338,21 +338,22 @@ class Player {
     this.x += this.velX;
     this.direction = "left";
   }
-  receiveDamageP1() {
+  receiveDamageP1(multiplier) {
     if (this.blocking == false) {
-      this.health -= 10;
+      this.health -= 10*multiplier;
+      if (player2.direction == "right") {
+        this.y -= this.h*1;
+        this.x += this.w;
+       
+      } else {
+        this.y -= this.h*1;
+        this.x -= this.w;
+  
+      }
     } else {
-      this.health -= 5;
+      this.health -= 2*multiplier;
     }
-    if (player2.direction == "right") {
-      this.y -= this.h*2;
-      this.x += this.w;
-     
-    } else {
-      this.y -= this.h*2;
-      this.x -= this.w;
 
-    }
     bloodP1.sx = 0;
     bloodP1.sy = 0;
     bloodP1.y = this.y;
@@ -366,21 +367,22 @@ class Player {
     }
     document.querySelector("#hp-1").style.width = `${this.health}%`;
   }
-  receiveDamageP2() {
+  receiveDamageP2(multiplier) {
     if (this.blocking == false) {
-      this.health -= 10;
-    } else {
-      this.health -= 5;
-    }
-    if (player1.direction == "right") {
-      this.y -= this.h*2;
-      this.x -= this.w;
-    
-    } else {
-      this.y += this.h*2;
-      this.x -= this.w;
+      this.health -= 10*multiplier;
+      if (player1.direction == "right") {
+        this.y -= this.h*1;
+        this.x -= this.w;
       
+      } else {
+        this.y -= this.h*1;
+        this.x -= this.w;
+        
+      }
+    } else {
+      this.health -= 2*multiplier;
     }
+
     bloodP2.sx = 0;
     bloodP2.sy = 0;
     bloodP2.y = this.y;
@@ -898,12 +900,12 @@ function playGame() {
       }
     } else if (i == 5) {
       if (dir != null) {
-        player1.receiveDamageP1();
+        player1.receiveDamageP1(3);
         specialP2.y = -500;
       }
     } else if (i == 7) {
       if (dir != null) {
-        player1.receiveDamageP1();
+        player1.receiveDamageP1(1);
       }
     }
   }
@@ -930,12 +932,12 @@ function playGame() {
       }
     } else if (i == 4) {
       if (dir != null) {
-        player2.receiveDamageP2();
+        player2.receiveDamageP2(3);
         specialP1.y = -500;
       }
     } else if (i == 6) {
       if (dir != null) {
-        player2.receiveDamageP2();
+        player2.receiveDamageP2(1);
       }
     }
   }
