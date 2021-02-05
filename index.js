@@ -2,7 +2,7 @@ window.addEventListener("click", function () {
 
   let splashTarget = document.querySelector(".splash-screen");
   let playGameAudio = document.querySelector("#splash-audio");
-  if (soundPlayed) {
+  if (soundPlayed) { 
     playGameAudio.play()
     soundPlayed = false
   }
