@@ -7,6 +7,7 @@ window.addEventListener("click", function () {
     soundPlayed = false
   }
   splashTarget.style.animation = "fade-out 2s 1 ease forwards"
+  if (splashTarget.style.opacity == 0) backgroundMusic.play() 
   
 });
 let soundPlayed = true
@@ -149,9 +150,12 @@ flowers.src = "./PNG Objects/flower.png";
 /////////////////////////////
 let backgroundMusic = new Audio("./Audio/background-music.mp3");
 backgroundMusic.loop = true;
+backgroundMusic.volume = 0.09;
 
 let killSound = new Audio("./Audio/Kill Sound.mp3");
 killSound.loop = false;
+
+
 /////////////////////////////
 //////Classes for game///////
 /////////////////////////////
@@ -672,7 +676,6 @@ let canvasDisplay = new CanvasDisplay();
 /////////////////////////////
 
 let ctx = canvasDisplay.ctx;
-
 let player1 = canvasDisplay.createPlayer1;
 let player2 = canvasDisplay.createPlayer2;
 let specialP1 = canvasDisplay.createSpecialP1;
@@ -685,7 +688,7 @@ let attackP1 = canvasDisplay.createAttackP1;
 let attackP2 = canvasDisplay.createAttackP2;
 
 
-let backgroundMusic = canvasDisplay.createBackgroundMusic;
+
 let platform = canvasDisplay.createPlatform;
 let stage = canvasDisplay.createFloor;
 let leftWall = canvasDisplay.createLeftWall;
