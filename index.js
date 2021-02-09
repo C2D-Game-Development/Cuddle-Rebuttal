@@ -102,17 +102,17 @@ floor.src = "./png-objects/long-platform.png";
 let platform2 = new Image();
 platform2.src = "./png-objects/short-platform.png";
 
-let cat = new Image();
-cat.src = "./images/cat-l.png";
-
-let catReverse = new Image();
-catReverse.src = "./images/cat-r.png";
-
 let dog = new Image();
 dog.src = "./images/dog-l.png";
 
 let dogReverse = new Image();
 dogReverse.src = "./images/dog-r.png";
+
+let cat = new Image();
+cat.src = "./images/cat-l.png";
+
+let catReverse = new Image();
+catReverse.src = "./images/cat-r.png";
 
 let bloodBoltR = new Image();
 bloodBoltR.src = "./images/blood-blast-2.png";
