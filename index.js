@@ -97,16 +97,16 @@ keys = [];
 /////////////////////////////
 
 let floor = new Image();
-floor.src = "./PNG Objects/long-platform.png";
+floor.src = "./png-objects/long-platform.png";
 
 let platform2 = new Image();
-platform2.src = "./PNG Objects/short-platform.png";
-
-let catReverse = new Image();
-catReverse.src = "./images/Cat-r.png";
+platform2.src = "./png-objects/short-platform.png";
 
 let cat = new Image();
-cat.src = "./images/Cat-l.png";
+cat.src = "./images/cat-l.png";
+
+let catReverse = new Image();
+catReverse.src = "./images/cat-r.png";
 
 let dog = new Image();
 dog.src = "./images/dog-l.png";
@@ -130,19 +130,19 @@ let attack = new Image();
 attack.src = "./images/attack-1.png";
 
 let tree = new Image();
-tree.src = "./PNG Objects/tree.png";
+tree.src = "./png-objects/tree.png";
 
 let box = new Image();
-box.src = "./PNG Objects/box.png";
+box.src = "./png-objects/box.png";
 
 let birds = new Image();
-birds.src = "./PNG Objects/birds.png";
+birds.src = "./png-objects/birds.png";
 
 let shrooms = new Image();
-shrooms.src = "./PNG Objects/mushrooms.png";
+shrooms.src = "./png-objects/mushrooms.png";
 
 let flowers = new Image();
-flowers.src = "./PNG Objects/flower.png";
+flowers.src = "./png-objects/flower.png";
 
 let attackDrop = new Image();
 attackDrop.src = "./images/attack-2.png";
@@ -156,7 +156,7 @@ let SFX = 3;
 /////////////////////////////
 //////Audio for game////////
 /////////////////////////////
-let backgroundMusic = new Audio("./Audio/background-music.mp3");
+let backgroundMusic = new Audio("./audio/background-music.mp3");
 backgroundMusic.muted = false;
 backgroundMusic.loop = true;
 backgroundMusic.volume = 0.2 * bM * allAudio;
@@ -164,29 +164,29 @@ backgroundMusic.volume = 0.2 * bM * allAudio;
 let playGameAudioX = document.querySelector("#splash-audio");
 playGameAudioX.volume = 0.2 * kS * allAudio;
 
-let killSound = new Audio("./Audio/Kill Sound.mp3");
+let killSound = new Audio("./audio/Kill Sound.mp3");
 killSound.loop = false;
 killSound.volume = 0.33 * kS * allAudio;
 
-let attackSound = new Audio("./Audio/Attack.wav");
+let attackSound = new Audio("./audio/Attack.wav");
 attackSound.volume = 0.09 * SFX * allAudio;
 
-let bloodBlastSound = new Audio("./Audio/bloodBlast.mp3");
+let bloodBlastSound = new Audio("./audio/bloodBlast.mp3");
 bloodBlastSound.volume = 0.18 * SFX * allAudio;
 
-let bloodyBlastSound = new Audio("./Audio/bloodyBlast.mp3");
+let bloodyBlastSound = new Audio("./audio/bloodyBlast.mp3");
 bloodyBlastSound.volume = 0.18 * SFX * allAudio;
 
-let gameOverSound = new Audio("./Audio/gameOverSound.mp3");
+let gameOverSound = new Audio("./audio/gameOverSound.mp3");
 gameOverSound.volume = 0.27 * kS * allAudio;
 
-let hit1Sound = new Audio("./Audio/Hit 1.mp3");
+let hit1Sound = new Audio("./audio/Hit 1.mp3");
 hit1Sound.volume = 0.06 * SFX * allAudio;
-let hit2Sound = new Audio("./Audio/Hit 2.mp3");
+let hit2Sound = new Audio("./audio/Hit 2.mp3");
 hit2Sound.volume = 0.09 * SFX * allAudio;
-let hit3Sound = new Audio("./Audio/Hit 3.mp3");
+let hit3Sound = new Audio("./audio/Hit 3.mp3");
 hit3Sound.volume = 0.09 * SFX * allAudio;
-let hit4Sound = new Audio("./Audio/Hit 4.mp3");
+let hit4Sound = new Audio("./audio/Hit 4.mp3");
 hit4Sound.volume = 0.09 * SFX * allAudio;
 
 ////Audio Controls
