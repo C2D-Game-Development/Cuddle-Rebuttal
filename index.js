@@ -109,10 +109,10 @@ let dogReverse = new Image();
 dogReverse.src = "./images/dog-r.png";
 
 let cat = new Image();
-cat.src = "./images/cat-l.png";
+cat.src = "./images/Cat-l.png";
 
 let catReverse = new Image();
-catReverse.src = "./images/cat-r.png";
+catReverse.src = "./images/Cat-r.png";
 
 let bloodBoltR = new Image();
 bloodBoltR.src = "./images/blood-blast-2.png";
