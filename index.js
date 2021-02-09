@@ -115,7 +115,7 @@ let catReverse = new Image();
 catReverse.src = "./images/Cat-r.png";
 
 let bloodBoltR = new Image();
-bloodBoltR.src = "./images/blood-blast-2.png";
+bloodBoltR.src = "./images/blood-blast-r.png";
 
 let bloodBoltL = new Image();
 bloodBoltL.src = "./images/blood-blast-l.png";
