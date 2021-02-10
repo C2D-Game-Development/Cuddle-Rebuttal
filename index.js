@@ -1,3 +1,6 @@
+////////////////////////////////////////////
+//////  Opening Game Splash ////////////////
+////////////////////////////////////////////
 window.addEventListener("click", function () {
   let splashTarget = document.querySelector(".splash-screen");
   let playGameAudio = document.querySelector("#splash-audio");
@@ -10,7 +13,9 @@ window.addEventListener("click", function () {
 });
 let soundPlayed = true;
 
-/* ---game over function that doesn't call fades out canvas and plays anims--- */
+////////////////////////////////////////////
+//////  Game Over Animations ///////////////
+////////////////////////////////////////////
 function gameOver() {
   if (player1.health <= 0 || player2.health <= 0) {
     playerDied++;
@@ -45,7 +50,6 @@ document.querySelector(".actual-time").innerHTML = `
       ${formatTimeLeft(timeLeft)}
     </span>
   `;
-startTimer();
 
 function onTimesUp() {
   clearInterval(timerInterval);
@@ -71,6 +75,7 @@ function formatTimeLeft(time) {
   }
   return `${minutes}:${seconds}`;
 }
+startTimer();
 
 /////////////////////////////
 //////Physics variables//////
@@ -147,7 +152,7 @@ flowers.src = "./png-objects/flower.png";
 let attackDrop = new Image();
 attackDrop.src = "./images/attack-2.png";
 
-///declare Audio variables
+///declare Audio variables////
 let allAudio = 1.5;
 let bM = .30;
 let kS = 2;
@@ -189,9 +194,7 @@ hit3Sound.volume = 0.09 * SFX * allAudio;
 let hit4Sound = new Audio("./audio/Hit 4.mp3");
 hit4Sound.volume = 0.09 * SFX * allAudio;
 
-////Audio Controls
-
-/////////////////////////////`
+/////////////////////////////
 //////Classes for game///////
 /////////////////////////////
 class SpecialEffects {
@@ -562,10 +565,10 @@ class Barrier {
     this.h = h;
     this.img = img;
   }
+
   draw(ctx) {
     ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
   }
-
   update(ctx) {
     this.draw(ctx);
   }
@@ -578,7 +581,8 @@ class CanvasDisplay {
     this.stageConfig = {
       width: 1000,
       height: 500,
-    };
+    }
+
     //create game objects to manipulate
     this.canvas.width = this.stageConfig.width;
     this.canvas.height = this.stageConfig.height;
@@ -611,8 +615,8 @@ class CanvasDisplay {
       50,
       platform2
     );
-    this.createPlayer1 = new Player(50, 50, 100, 100, dog, dogReverse, "right");
-    this.createPlayer2 = new Player(825, 50, 100, 100, cat, catReverse, "left");
+    this.createPlayer1 = new Player(30, 50, 100, 100, dog, dogReverse, "right");
+    this.createPlayer2 = new Player(855, 50, 100, 100, cat, catReverse, "left");
     this.createSpecialP1 = new SpecialAttack(
       2000,
       2000,
@@ -728,12 +732,8 @@ class CanvasDisplay {
     this.createAttackP2.update(this.ctx);
     this.createAttackDropP1.update(this.ctx);
     this.createAttackDropP2.update(this.ctx);
-
-    //check collision
-    //check death
   }
 }
-
 let canvasDisplay = new CanvasDisplay();
 
 /////////////////////////////
@@ -770,8 +770,9 @@ let gameObjects = [
   canvasDisplay.createAttackP2,
 ];
 
-//collision check
-
+/////////////////////////////////////
+/////// Collision checks ////////////
+/////////////////////////////////////
 function colCheck(shapeA, shapeB) {
   // get the vectors to check against
   var vX = shapeA.x + shapeA.w / 2 - (shapeB.x + shapeB.w / 2),
@@ -815,6 +816,11 @@ let timeToDissapear1 = 100;
 let interval = null;
 let frame = 0;
 let playerDied = 0;
+
+
+/////////////////////////////////////
+//////////// Play Game //////////////
+/////////////////////////////////////
 function playGame() {
   /*--- key press codes, if true which is set on keydown, will check to see if player1 is within canvas, 
         then execute move functions in class--- */
@@ -829,7 +835,6 @@ function playGame() {
     specialP1.reset(player1);
     player2.special = 0;
   }
-
   if (keys[76] && player2.special > 25) {
     //attack
     attackSound.play();
@@ -955,7 +960,6 @@ function playGame() {
 
   for (var i = 0; i < gameObjects.length; i++) {
     var dir = colCheck(player1, gameObjects[i]);
-
     if (i < 4) {
       if (dir === "l" || dir === "r") {
         player1.velX = 0;
@@ -1046,8 +1050,9 @@ function playGame() {
   canvasDisplay.animate();
 }
 
-// ---listeners for key down and up--- //
-// ---added selectors for key IDs to animate in HUD--- //
+/////////////////////////////////////
+/// Key selectors for css anims /////
+/////////////////////////////////////
 let leftkey = document.querySelector("#leftkey");
 let rightkey = document.querySelector("#rightkey");
 let upkey = document.querySelector("#upkey");
@@ -1057,11 +1062,12 @@ let ddkey = document.querySelector("#ddkey");
 let wwkey = document.querySelector("#wwkey");
 let sskey = document.querySelector("#sskey");
 
+/////////////////////////////////////
+/////// Key listeners  //////////////
+/////////////////////////////////////
 window.onkeydown = function (e) {
   keys[e.keyCode] = true;
 };
-
-// ---cancels animations added to keys upon key up--- //
 window.onkeyup = function (e) {
   keys[e.keyCode] = false;
   document.querySelector("#leftkey").style.removeProperty("animation");
