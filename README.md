@@ -1,6 +1,7 @@
 # Cuddle 2 Death: Cuddle Rebuttal
 
 Group project for week 4 of Ironhack Web Development Full Time Jan 2021 Cohort - Game created with JS, Canvas, CSS, HTML
+
 <img src="/images/play-scrnsht.png" width="100%" />
 <img src="/images/gameplay-2.png" />
 <img src="/images/gameplay-1.png" />
