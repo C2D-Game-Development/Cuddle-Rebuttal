@@ -176,7 +176,7 @@ let bloodyBlastSound = new Audio("./Audio/bloodyBlast.mp3");
 bloodyBlastSound.volume = 0.09 * SFX * allAudio;
 
 let gameOverSound = new Audio("./Audio/gameOverSound.mp3");
-gameOverSounds.volume = 0.09 * kS * allAudio;
+gameOverSound.volume = 0.09 * kS * allAudio;
 
 let hit1Sound = new Audio("./Audio/Hit 1.mp3");
 hit1Sound.volume = 0.06 * SFX * allAudio;
