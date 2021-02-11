@@ -26,11 +26,22 @@ body {
     width: 920px;
 }
 canvas {
+    margin-top: 5%;
     border: 5px solid #baf3f5;
     border-radius: 15px;
     animation: borderHype 4s linear infinite;
 }
+header {
+    text-align: center;
+    position: fixed;
+}
+header img {
+    display: initial;
+    width: 60%;
+    height: 100%;
+}
 
+/* ---Animation Screens--- */
 .splash-screen {
     width: 100%;
     position: absolute;
@@ -46,7 +57,6 @@ canvas {
 #splash-screen-img {
     margin: auto;
     width: 60%;
-
 }
 #low-health-bg {
     background: url(images/c2d-background-dark-2.jpg) no-repeat center center fixed;
@@ -70,7 +80,6 @@ canvas {
     height: 100%;
     opacity: 0;
     z-index: 1
-    /* animation: fade-in 1.5s ease-in; */
 }
 .dead {
     position: absolute;
@@ -82,7 +91,6 @@ canvas {
     bottom: 0;
     z-index: 2;
     opacity: 0;
-    /* animation: dog-drop 2s ease-in forwards; */
 }
 
 #evil-game-over {
@@ -95,25 +103,15 @@ canvas {
     bottom: 0;
     opacity: 0;
     z-index: 1
-    /* animation: fade-in-gameover 1.5s ease-in forwards; */
-}
-header {
-    text-align: center;
-    margin: 1%;
-}
-header img {
-    display: initial;
-    width: 60%;
-    height: 100%;
 }
 
 /* ---HUD Section--- */
 .hud {
     display: flex;
     flex-direction: row;
-    width: 1000px;
-    height: 245px;
-    margin-top: 8%;
+    width: 800px;
+    height: 180px;
+    margin-top: 5%;
 }
 
 /* ---Player 1 & 2 Divs--- */
@@ -139,7 +137,6 @@ header img {
     display: flex;
     flex-direction: row-reverse;
     box-shadow: 1px 1px 20px 5px #ff00ff;
-
 }
 .player-info {
     display: flex;
@@ -158,7 +155,7 @@ header img {
     text-shadow: 3px 3px 3px rgb(255, 0, 242)
 }
 .avatar-pic {
-    height: 15vh;
+    height: 100%;
     border: 5px solid #ffd1f4;
     border-radius: 10px;
     background: linear-gradient(180deg, #ca0000, #ca0000, #ca0000, #fa0000, #f33f3f, #f15e5e, #FC9D9f, #ECB5B2, #DCD3CE, #cdeee6);
@@ -180,7 +177,6 @@ header img {
     padding-top: 8%;
 }
 .control-panel {
-    padding: 8%;
     height: 60%;
     display: flex;
     flex-wrap: wrap-reverse;
@@ -245,6 +241,7 @@ header img {
 #energy-2 {
     width: 0%
 }
+
 /* ---Fight Timer--- */
 .time {
     display: flex;
@@ -383,7 +380,6 @@ header img {
     0% {
         box-shadow: 1px 1px 15px 2px #00fdff;
         border: 5px solid #d1fffa;
-
     }
     100% {
         box-shadow: 1px 1px 20px 8px #03ff42;

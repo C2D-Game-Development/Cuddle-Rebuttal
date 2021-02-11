@@ -1,3 +1,6 @@
+////////////////////////////////////////////
+//////  Opening Game Splash ////////////////
+////////////////////////////////////////////
 window.addEventListener("click", function () {
   let splashTarget = document.querySelector(".splash-screen");
   let playGameAudio = document.querySelector("#splash-audio");
@@ -9,7 +12,10 @@ window.addEventListener("click", function () {
   if (splashTarget.style.opacity == 0) backgroundMusic.play();
 });
 let soundPlayed = true;
-/* ---game over function that doesn't call fades out canvas and plays anims--- */
+
+////////////////////////////////////////////
+//////  Game Over Animations ///////////////
+////////////////////////////////////////////
 function gameOver() {
   if (player1.health <= 0 || player2.health <= 0) {
     playerDied++;
@@ -30,7 +36,7 @@ function gameOver() {
     }
   }
 }
-let muted = false;
+
 /////////////////////////////
 //////  Timer ///////////////
 /////////////////////////////
@@ -44,7 +50,6 @@ document.querySelector(".actual-time").innerHTML = `
       ${formatTimeLeft(timeLeft)}
     </span>
   `;
-startTimer();
 
 function onTimesUp() {
   clearInterval(timerInterval);
@@ -70,6 +75,7 @@ function formatTimeLeft(time) {
   }
   return `${minutes}:${seconds}`;
 }
+startTimer();
 
 /////////////////////////////
 //////Physics variables//////
@@ -96,16 +102,10 @@ keys = [];
 /////////////////////////////
 
 let floor = new Image();
-floor.src = "./PNG Objects/long-platform.png";
+floor.src = "./png-objects/long-platform.png";
 
 let platform2 = new Image();
-platform2.src = "./PNG Objects/short-platform.png";
-
-let catReverse = new Image();
-catReverse.src = "./images/Cat-r.png";
-
-let cat = new Image();
-cat.src = "./images/Cat-l.png";
+platform2.src = "./png-objects/short-platform.png";
 
 let dog = new Image();
 dog.src = "./images/dog-l.png";
@@ -113,8 +113,14 @@ dog.src = "./images/dog-l.png";
 let dogReverse = new Image();
 dogReverse.src = "./images/dog-r.png";
 
+let cat = new Image();
+cat.src = "./images/kitty-l.png";
+
+let catReverse = new Image();
+catReverse.src = "./images/kitty-r.png";
+
 let bloodBoltR = new Image();
-bloodBoltR.src = "./images/blood-blast-2.png";
+bloodBoltR.src = "./images/blood-blast-r.png";
 
 let bloodBoltL = new Image();
 bloodBoltL.src = "./images/blood-blast-l.png";
@@ -129,67 +135,66 @@ let attack = new Image();
 attack.src = "./images/attack-1.png";
 
 let tree = new Image();
-tree.src = "./PNG Objects/tree.png";
+tree.src = "./png-objects/tree.png";
 
 let box = new Image();
-box.src = "./PNG Objects/box.png";
+box.src = "./png-objects/box.png";
 
 let birds = new Image();
-birds.src = "./PNG Objects/birds.png";
+birds.src = "./png-objects/birds.png";
 
 let shrooms = new Image();
-shrooms.src = "./PNG Objects/mushrooms.png";
+shrooms.src = "./png-objects/mushrooms.png";
 
 let flowers = new Image();
-flowers.src = "./PNG Objects/flower.png";
+flowers.src = "./png-objects/flower.png";
 
 let attackDrop = new Image();
 attackDrop.src = "./images/attack-2.png";
 
-///declare Audio variables
-let allAudio = 1;
-let bM = 0.39;
+///declare Audio variables////
+let allAudio = 1.5;
+let bM = 0.3;
 let kS = 2;
-let SFX = 0.8;
-// bM.muted = false;
+let SFX = 3;
+
 /////////////////////////////
 //////Audio for game////////
 /////////////////////////////
-let backgroundMusic = new Audio("./Audio/background-music.mp3");
+let backgroundMusic = new Audio("./audio/background-music.mp3");
+backgroundMusic.muted = false;
 backgroundMusic.loop = true;
-backgroundMusic.volume = 0.04 * bM * allAudio;
+backgroundMusic.volume = 0.2 * bM * allAudio;
 
 let playGameAudioX = document.querySelector("#splash-audio");
-playGameAudioX.volume = 0.09 * kS * allAudio;
+playGameAudioX.volume = 0.2 * kS * allAudio;
 
-let killSound = new Audio("./Audio/Kill Sound.mp3");
+let killSound = new Audio("./audio/Kill Sound.mp3");
 killSound.loop = false;
-killSound.volume = 0.24 * kS * allAudio;
+killSound.volume = 0.33 * kS * allAudio;
 
-let attackSound = new Audio("./Audio/Attack.wav");
+let attackSound = new Audio("./audio/Attack.wav");
 attackSound.volume = 0.09 * SFX * allAudio;
 
-let bloodBlastSound = new Audio("./Audio/bloodBlast.mp3");
-bloodBlastSound.volume = 0.09 * SFX * allAudio;
+let bloodBlastSound = new Audio("./audio/bloodBlast.mp3");
+bloodBlastSound.volume = 0.18 * SFX * allAudio;
 
-let bloodyBlastSound = new Audio("./Audio/bloodyBlast.mp3");
-bloodyBlastSound.volume = 0.09 * SFX * allAudio;
+let bloodyBlastSound = new Audio("./audio/bloodyBlast.mp3");
+bloodyBlastSound.volume = 0.18 * SFX * allAudio;
 
-let gameOverSound = new Audio("./Audio/gameOverSound.mp3");
-gameOverSound.volume = 0.09 * kS * allAudio;
+let gameOverSound = new Audio("./audio/gameOverSound.mp3");
+gameOverSound.volume = 0.27 * kS * allAudio;
 
-let hit1Sound = new Audio("./Audio/Hit 1.mp3");
+let hit1Sound = new Audio("./audio/Hit 1.mp3");
 hit1Sound.volume = 0.06 * SFX * allAudio;
-let hit2Sound = new Audio("./Audio/Hit 2.mp3");
+let hit2Sound = new Audio("./audio/Hit 2.mp3");
 hit2Sound.volume = 0.09 * SFX * allAudio;
-let hit3Sound = new Audio("./Audio/Hit 3.mp3");
+let hit3Sound = new Audio("./audio/Hit 3.mp3");
 hit3Sound.volume = 0.09 * SFX * allAudio;
-let hit4Sound = new Audio("./Audio/Hit 4.mp3");
+let hit4Sound = new Audio("./audio/Hit 4.mp3");
 hit4Sound.volume = 0.09 * SFX * allAudio;
 
-////Audio Controls
-
-/////////////////////////////`
+/////////////////////////////
 //////Classes for game///////
 /////////////////////////////
 class SpecialEffects {
@@ -560,10 +565,10 @@ class Barrier {
     this.h = h;
     this.img = img;
   }
+
   draw(ctx) {
     ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
   }
-
   update(ctx) {
     this.draw(ctx);
   }
@@ -577,6 +582,7 @@ class CanvasDisplay {
       width: 1000,
       height: 500,
     };
+
     //create game objects to manipulate
     this.canvas.width = this.stageConfig.width;
     this.canvas.height = this.stageConfig.height;
@@ -609,8 +615,8 @@ class CanvasDisplay {
       50,
       platform2
     );
-    this.createPlayer1 = new Player(50, 50, 100, 100, dog, dogReverse, "right");
-    this.createPlayer2 = new Player(825, 50, 100, 100, cat, catReverse, "left");
+    this.createPlayer1 = new Player(30, 50, 100, 100, dog, dogReverse, "right");
+    this.createPlayer2 = new Player(855, 50, 100, 100, cat, catReverse, "left");
     this.createSpecialP1 = new SpecialAttack(
       2000,
       2000,
@@ -726,12 +732,8 @@ class CanvasDisplay {
     this.createAttackP2.update(this.ctx);
     this.createAttackDropP1.update(this.ctx);
     this.createAttackDropP2.update(this.ctx);
-
-    //check collision
-    //check death
   }
 }
-
 let canvasDisplay = new CanvasDisplay();
 
 /////////////////////////////
@@ -768,8 +770,9 @@ let gameObjects = [
   canvasDisplay.createAttackP2,
 ];
 
-//collision check
-
+/////////////////////////////////////
+/////// Collision checks ////////////
+/////////////////////////////////////
 function colCheck(shapeA, shapeB) {
   // get the vectors to check against
   var vX = shapeA.x + shapeA.w / 2 - (shapeB.x + shapeB.w / 2),
@@ -813,11 +816,15 @@ let timeToDissapear1 = 100;
 let interval = null;
 let frame = 0;
 let playerDied = 0;
+
+/////////////////////////////////////
+//////////// Play Game //////////////
+/////////////////////////////////////
 function playGame() {
   /*--- key press codes, if true which is set on keydown, will check to see if player1 is within canvas, 
         then execute move functions in class--- */
   if (playerDied == 1) {
-    killSound.play();
+    setTimeout(killSound.play(), 1000);
     gameOverSound.play();
     playerDied++;
   }
@@ -827,7 +834,6 @@ function playGame() {
     specialP1.reset(player1);
     player2.special = 0;
   }
-
   if (keys[76] && player2.special > 25) {
     //attack
     attackSound.play();
@@ -939,15 +945,12 @@ function playGame() {
     shieldP2.y = -1000;
     player2.blocking = false;
   }
-  // if (keys[77]) {
-  //   if (bM.muted == false) {
-  //     bM = 0;
-  //     bM.muted = true;
-  //   } else {
-  //     bM = 0.39;
-  //     bM.muted = false;
-  //   }
-  // }
+  if (keys[77]) {
+    if (backgroundMusic.muted == false) backgroundMusic.muted = true;
+    else {
+      backgroundMusic.muted = false;
+    }
+  }
 
   player2.velY += gravity;
   player2.velX *= friction;
@@ -955,7 +958,6 @@ function playGame() {
 
   for (var i = 0; i < gameObjects.length; i++) {
     var dir = colCheck(player1, gameObjects[i]);
-
     if (i < 4) {
       if (dir === "l" || dir === "r") {
         player1.velX = 0;
@@ -1040,15 +1042,15 @@ function playGame() {
   // player1.x
   // player2.x
 
-  // ---- DON't KNOW IF THIS frame++ IS SUPPOSED TO BE HERE ROBERTO--- //
   frame++;
   gameOver();
   interval = requestAnimationFrame(playGame);
   canvasDisplay.animate();
 }
 
-// ---listeners for key down and up--- //
-// ---added selectors for key IDs to animate in HUD--- //
+/////////////////////////////////////
+/// Key selectors for css anims /////
+/////////////////////////////////////
 let leftkey = document.querySelector("#leftkey");
 let rightkey = document.querySelector("#rightkey");
 let upkey = document.querySelector("#upkey");
@@ -1058,11 +1060,12 @@ let ddkey = document.querySelector("#ddkey");
 let wwkey = document.querySelector("#wwkey");
 let sskey = document.querySelector("#sskey");
 
+/////////////////////////////////////
+/////// Key listeners  //////////////
+/////////////////////////////////////
 window.onkeydown = function (e) {
   keys[e.keyCode] = true;
 };
-
-// ---cancels animations added to keys upon key up--- //
 window.onkeyup = function (e) {
   keys[e.keyCode] = false;
   document.querySelector("#leftkey").style.removeProperty("animation");

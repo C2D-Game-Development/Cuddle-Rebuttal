@@ -1,49 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Bowlby+One&display=swap" rel="stylesheet">
-    <title>Document</title>
+    <title>Cuddle 2 Death: Cuddle Rebuttal</title>
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="#">
 </head>
 
 <body>
     <div class="game-over-splash">
-        <img src='images/c2d-background-blood.png' id="blood-bg">
-        <img src="images/dead-dog.png" class="dead" id="dead-dog">
-        <img src="images/dead-cat.png" class="dead" id="dead-cat">
-        <img src="images/Gameover-new-2.png" id="evil-game-over">
+        <img src='./images/c2d-background-blood.png' id="blood-bg">
+        <img src="./images/dead-dog.png" class="dead" id="dead-dog">
+        <img src="./images/dead-cat.png" class="dead" id="dead-cat">
+        <img src="./images/Gameover-new-2.png" id="evil-game-over">
     </div>
-    <img src="images/c2d-background-dark-2.JPG" id="low-health-bg">
+
+    <img src="./images/c2d-background-dark-2.JPG" id="low-health-bg">
+
     <div class="splash-screen">
-        <img src="images/play-splash.png" id="splash-screen-img">
+        <img src="./images/play-splash.png" id="splash-screen-img">
         <audio id="splash-audio">
-            <source src="Audio/Play Sound.mp3" type="audio/mp3">
+            <source src="./audio/Play Sound.mp3" type="audio/mp3">
         </audio>
     </div>
+
     <div class="container">
         <header>
-            <img src="images/c2dlogo2.png">
+            <img src="./images/c2dlogo2.png">
         </header>
+
         <div class="canvy"> 
             <canvas id="canvas">
             </canvas>
         </div>
+
         <main>
             <div class="hud">
                 <div class="player1">
                     <div class="player-avatar">
                         <div class="avatar-pic" id="ap1">
-                            <img src="images/blood-dog-1.png">
+                            <img src="./images/blood-dog-1.png">
                         </div>
                         <div>
-                            <img src="images/jeffrey-icon.png" id="jeff">
+                            <img src="./images/jeffrey-icon.png" id="jeff">
                         </div>
                     </div>
                     <div class="player-info">
@@ -80,10 +83,10 @@
                 <div class="player2">
                     <div class="player-avatar">
                         <div class="avatar-pic" id="ap2">
-                            <img src="/images/blood-cat.png">
+                            <img src="./images/blood-cat.png">
                         </div>
-                        <div>
-                            <img src="images/ted-icon.png" id="ted">
+                        <div style="text-align: center">
+                            <img src="./images/ted-icon.png" id="ted">
                         </div>
                     </div>
                     <div class="player-info">
@@ -111,8 +114,9 @@
             </div>
         </main>
     </div>
+
     <script src="index.js"></script>
     <script src="supercam.js"></script>
-</body>
 
-</html>
+    </body>
+    </html>
