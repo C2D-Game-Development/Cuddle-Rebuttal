@@ -61,3 +61,4 @@ Michael Power - Github: https://github.com/empower87 </br>
   Valerie Lee, and </br>
   Rabiul Alam </br>
 * [Super Smash Bros.](https://www.smashbros.com/en_US/) and [Happy Tree Friends](https://www.imdb.com/title/tt0770762/) for the fun inspiration!
+* My wonderful team for working tirelessly for 10+ hours a day to put all they could into this!
