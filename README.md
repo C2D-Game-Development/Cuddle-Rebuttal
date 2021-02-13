@@ -58,6 +58,6 @@ Michael Power - Github: https://github.com/empower87 </br>
 
 * Thanks to the awesome instructors at [Ironhack](https://www.ironhack.com/en): </br>
   Niko Tzikas </br>
-  Valerie Lee, and </br
+  Valerie Lee, and </br>
   Rabiul Alam </br>
 * [Super Smash Bros.](https://www.smashbros.com/en_US/) and [Happy Tree Friends](https://www.imdb.com/title/tt0770762/) for the fun inspiration!
