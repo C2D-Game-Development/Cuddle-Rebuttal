@@ -492,11 +492,12 @@ class SpecialAttack {
     this.sx = 0;
     this.sy = 0;
     const reSize = () => {
-      this.sw = img.width / 5;
-      this.sh = img.height;
+      this.sw = 786 / 5;
+      this.sh = 151;
     };
     reSize();
     img.onload = reSize;
+    img2.onload= reSize;
     this.direction = null;
   }
   update(ctx) {
@@ -845,6 +846,14 @@ let playerDied = 0;
 //////////// Play Game //////////////
 /////////////////////////////////////
 function playGame() {
+
+  /////////
+/////Fix On load issues for player 1 
+
+  shieldP1.sh = shieldP1.img.height/shieldP1.numberTall
+  bloodP1.sh=bloodP1.img.height/bloodP1.numberTall
+  bloodP1.sw=bloodP1.img.width/bloodP1.numberWide
+  shieldP1.sw = shieldP1.img.width/shieldP1.numberWide
   /*--- key press codes, if true which is set on keydown, will check to see if player1 is within canvas, 
         then execute move functions in class--- */
   if (playerDied == 1) {
