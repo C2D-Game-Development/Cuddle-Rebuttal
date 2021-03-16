@@ -166,8 +166,7 @@ let SFX = 3;
 /////////////////////////////
 //////Audio for game////////
 /////////////////////////////
-let backgroundMusic = new Audio("./audio/background-music.mp3");
-backgroundMusic.src= backgroundMusic.src || 'https://github.com/C2D-Game-Development/Cuddle-Rebuttal/blob/master/Audio/Attack.wav'
+let backgroundMusic = new Audio("./Audio/background-music.mp3");
 backgroundMusic.muted = false;
 backgroundMusic.loop = true;
 backgroundMusic.volume = 0.2 * bM * allAudio;
@@ -175,29 +174,29 @@ backgroundMusic.volume = 0.2 * bM * allAudio;
 let playGameAudioX = document.querySelector("#splash-audio");
 playGameAudioX.volume = 0.2 * kS * allAudio;
 
-let killSound = new Audio("./audio/Kill Sound.mp3");
+let killSound = new Audio("./Audio/Kill Sound.mp3");
 killSound.loop = false;
 killSound.volume = 0.33 * kS * allAudio;
 
-let attackSound = new Audio("./audio/Attack.wav");
+let attackSound = new Audio("./Audio/Attack.wav");
 attackSound.volume = 0.09 * SFX * allAudio;
 
-let bloodBlastSound = new Audio("./audio/bloodBlast.mp3");
+let bloodBlastSound = new Audio("./Audio/bloodBlast.mp3");
 bloodBlastSound.volume = 0.18 * SFX * allAudio;
 
-let bloodyBlastSound = new Audio("./audio/bloodyBlast.mp3");
+let bloodyBlastSound = new Audio("./Audio/bloodyBlast.mp3");
 bloodyBlastSound.volume = 0.18 * SFX * allAudio;
 
-let gameOverSound = new Audio("./audio/gameOverSound.mp3");
+let gameOverSound = new Audio("./Audio/gameOverSound.mp3");
 gameOverSound.volume = 0.27 * kS * allAudio;
 
-let hit1Sound = new Audio("./audio/Hit 1.mp3");
+let hit1Sound = new Audio("./Audio/Hit 1.mp3");
 hit1Sound.volume = 0.06 * SFX * allAudio;
-let hit2Sound = new Audio("./audio/Hit 2.mp3");
+let hit2Sound = new Audio("./Audio/Hit 2.mp3");
 hit2Sound.volume = 0.09 * SFX * allAudio;
-let hit3Sound = new Audio("./audio/Hit 3.mp3");
+let hit3Sound = new Audio("./Audio/Hit 3.mp3");
 hit3Sound.volume = 0.09 * SFX * allAudio;
-let hit4Sound = new Audio("./audio/Hit 4.mp3");
+let hit4Sound = new Audio("./Audio/Hit 4.mp3");
 hit4Sound.volume = 0.09 * SFX * allAudio;
 
 /////////////////////////////
