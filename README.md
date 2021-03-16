@@ -2,7 +2,6 @@
 
 Group project for week 4 of Ironhack Web Development Full Time Jan 2021 Cohort - Game created with JS, Canvas, CSS, HTML
 </br>
-<b>MUST REFRESH PAGE TO PLAY GAME</b>
 
 <img src="/images/play-scrnsht.png" width="100%" />
 <img src="/images/gameplay-2.png" />
