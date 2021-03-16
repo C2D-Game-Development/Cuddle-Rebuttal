@@ -211,10 +211,14 @@ class SpecialEffects {
     this.img = img;
     this.sx = 0;
     this.sy = 0;
-    this.sw = img.width / numberWide;
-    this.sh = img.height / numberTall;
+    const reSize = () => {
+      this.sw = img.width / numberWide;
+      this.sh = img.height / numberTall;
+    };
     this.numberWide = numberWide;
     this.numberTall = numberTall;
+    reSize();
+    img.onload = reSize;
   }
 
   draw(ctx) {
@@ -486,13 +490,12 @@ class SpecialAttack {
     this.img2 = img2;
     this.sx = 0;
     this.sy = 0;
-    const SAreSize = () => {
+    const reSize = () => {
       this.sw = img.width / 5;
       this.sh = img.height;
     };
-    SAreSize();
-    img.onload = SAreSize;
-    img2.onload = SAreSize;
+    reSize();
+    img.onload = reSize;
     this.direction = null;
   }
   update(ctx) {
