@@ -1,3 +1,6 @@
+///images go here
+
+///function
 ////////////////////////////////////////////
 //////  Opening Game Splash ////////////////
 ////////////////////////////////////////////
@@ -78,28 +81,9 @@ function formatTimeLeft(time) {
 startTimer();
 
 /////////////////////////////
-//////Physics variables//////
-/////////////////////////////
-
-let friction = 0.8;
-let gravity = 0.3;
-keys = [];
-
-// function computerLogic()
-// {
-//     if(player1.x<player2.x)
-//     {
-//         player2.moveLeft()
-//     }
-//     if(player1.x>player2.x)
-//     {
-//         player2.moveRight()
-//     }
-// }
-
-/////////////////////////////
 //////Images for game////////
 /////////////////////////////
+// let allLoaded = 0;
 
 let floor = new Image();
 floor.src = "./png-objects/long-platform.png";
@@ -109,6 +93,7 @@ platform2.src = "./png-objects/short-platform.png";
 
 let dog = new Image();
 dog.src = "./images/dog-l.png";
+// dog.onload = makeCanvas;
 
 let dogReverse = new Image();
 dogReverse.src = "./images/dog-r.png";
@@ -151,6 +136,26 @@ flowers.src = "./png-objects/flower.png";
 
 let attackDrop = new Image();
 attackDrop.src = "./images/attack-2.png";
+
+/////////////////////////////
+//////Physics variables//////
+/////////////////////////////
+
+let friction = 0.8;
+let gravity = 0.3;
+keys = [];
+
+// function computerLogic()
+// {
+//     if(player1.x<player2.x)
+//     {
+//         player2.moveLeft()
+//     }
+//     if(player1.x>player2.x)
+//     {
+//         player2.moveRight()
+//     }
+// }
 
 ///declare Audio variables////
 let allAudio = 1.5;
@@ -211,9 +216,7 @@ class SpecialEffects {
     this.numberWide = numberWide;
     this.numberTall = numberTall;
   }
-  update(ctx) {
-    this.draw(ctx);
-  }
+
   draw(ctx) {
     //animate blood
     if (this.img == blood) {
@@ -255,6 +258,9 @@ class SpecialEffects {
       this.h
     );
   }
+  update(ctx) {
+    this.draw(ctx);
+  }
 }
 class Player {
   constructor(x, y, w, h, img, rImg, direction) {
@@ -270,9 +276,13 @@ class Player {
     this.img = img;
     this.rImg = rImg;
     this.sx = 0; //frame of animation
-    this.sy = img.height / 5; //animation type
-    this.sw = img.width / 10;
-    this.sh = img.height / 5;
+    const reSize = () => {
+      this.sy = img.height / 5; //animation type
+      this.sw = img.width / 10;
+      this.sh = img.height / 5;
+    };
+    reSize();
+    img.onload = reSize;
     this.numberTall = 5;
     this.numberWide = 10;
     this.health = 100;
@@ -282,10 +292,6 @@ class Player {
     this.blocking = false;
   }
 
-  update(ctx) {
-    this.draw(ctx);
-    this.lowHealth();
-  }
   draw(ctx) {
     //dead
     if (frame % 3 == 0 && this.special < 100) {
@@ -340,6 +346,10 @@ class Player {
         this.h
       );
     }
+  }
+  update(ctx) {
+    this.draw(ctx);
+    this.lowHealth();
   }
   jump() {
     this.velY = -this.speed * 2;
@@ -476,8 +486,13 @@ class SpecialAttack {
     this.img2 = img2;
     this.sx = 0;
     this.sy = 0;
-    this.sw = img.width / 5;
-    this.sh = img.height;
+    const SAreSize = () => {
+      this.sw = img.width / 5;
+      this.sh = img.height;
+    };
+    SAreSize();
+    img.onload = SAreSize;
+    img2.onload = SAreSize;
     this.direction = null;
   }
   update(ctx) {
@@ -734,8 +749,13 @@ class CanvasDisplay {
     this.createAttackDropP2.update(this.ctx);
   }
 }
-let canvasDisplay = new CanvasDisplay();
 
+let canvasDisplay = new CanvasDisplay();
+// const makeCanvas = () => {
+//   if (allLoaded > 0) {
+//     let canvasDisplay = new CanvasDisplay();
+//   } else allLoaded++;
+// };
 /////////////////////////////
 //Global pointers to objects/
 /////////////////////////////
