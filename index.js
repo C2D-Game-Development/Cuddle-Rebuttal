@@ -167,6 +167,7 @@ let SFX = 3;
 //////Audio for game////////
 /////////////////////////////
 let backgroundMusic = new Audio("./audio/background-music.mp3");
+backgroundMusic.src= backgroundMusic.src || 'https://github.com/C2D-Game-Development/Cuddle-Rebuttal/blob/master/Audio/Attack.wav'
 backgroundMusic.muted = false;
 backgroundMusic.loop = true;
 backgroundMusic.volume = 0.2 * bM * allAudio;
